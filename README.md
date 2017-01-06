@@ -16,9 +16,8 @@ Everyone with interest in helping us, should now that:
 
 Documentation
 ----
-You can find informations, a manual and furthermore in the Wiki of this project. 
+You can find information, a manual and furthermore in the Wiki of this project. 
 
 License
 ----
-Files in pyBuchaktion are licensed under the Affero General Public License version 3, the text of which can be found in LICENSE-AGPL.txt,
-or any later version of the AGPL, unless otherwise noted.
+Files in pyBuchaktion are licensed under the Affero General Public License version 3, the text of which can be found in LICENSE, or any later version of the AGPL, unless otherwise noted.
