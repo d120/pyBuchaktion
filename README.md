@@ -1,7 +1,8 @@
 # pyBuchaktion #
 
 pyBuchaktion is a Django application for the [Buchaktion of the Fachschaft Informatik](https://www.d120.de/de/studierende/buchaktion/).
-The purpose of the app is to build an interface for participants of the Buchaktion.
+
+The purpose of the app is to build an interface for participants of the Buchaktion. Further it manages the organisation tasks for the members of the Buchaktionsteam.
 
 Development
 ----
