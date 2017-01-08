@@ -1,10 +1,8 @@
 from robobrowser import RoboBrowser
 from threading   import Thread
+from time        import sleep
 import logging
-import math
 import re
-import time
-import sys
 
 # URLs
 TUCAN_URL = 'https://www.tucan.tu-darmstadt.de'
@@ -41,8 +39,11 @@ class ModuleRequestThread(Thread):
 
         modules = []
         for url in self.module_urls:
-            modules.append(tucan.retrieveModule(url))
-            self.processed_entries += 1
+            try:
+                modules.append(tucan.retrieveModule(url))
+                self.processed_entries += 1
+            except:
+                logging.warning("Failed to process module at <%s>! Error:" % url, exc_info = True)
         self.modules = modules
         self.finished = True
 
@@ -145,5 +146,5 @@ tucan = Tucan()
 thread = tucan.retrieveModules()
 while not thread.finished:
     print("Processed entries: %d/%d; %.2f%%" % (thread.processed_entries, thread.total_entries, thread.get_percentage()))
-    time.sleep(10)
+    sleep(10)
 print(thread.modules)
