@@ -1,0 +1,12 @@
+{% extends "page.html" %} {% load cms_tags view_tools %}
+
+{% block content %}
+	<div class="list-group">
+    {% for module in modules %}
+        <a href="{% url "pyBuchaktion:module" module_id=module.id %}" class="list-group-item">
+            <h4 class="list-group-item-heading">{{ module.name }}</h4>
+            TuCaN ID: <i>{{ module.module_id }}</i> 
+        </a>
+    {% endfor %}
+    </div>
+{% endblock content %}

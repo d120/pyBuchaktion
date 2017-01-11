@@ -15,6 +15,14 @@
 		</div>
 	{% endif %}
 		<h2 class="list-group-item-heading">{{ book.title }}</h2>
-		<i>Autor:</i> <b>{{ book.author }}</b><br/>
-		<i>ISBN:</i> <b>{{ book.isbn_13 }}</b>
+		<b>{% trans "Author" %}:</b> <i>{{ book.author }}</i><br/>
+		<b>ISBN:</b> <i>{{ book.isbn_13 }}</i><br/>
+		{% if book.tucanmodule_set.all %}
+		<b>{% trans "Recommended by" %}:</b>
+		<ul>
+			{% for mod in book.tucanmodule_set.all %}
+			<li><a href="{% url "pyBuchaktion:module" module_id=mod.id %}">{{ mod }}</a></li>
+			{% endfor %}
+		</ul>
+		{% endif %}
 {% endblock content %}

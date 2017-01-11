@@ -102,8 +102,8 @@ class Semester(models.Model):
 	WISE='W'
 	SOSE='S'
 	SEASON_CHOICES = (
-		(WISE, 'Wintersemester'),
-		(SOSE, 'Sommersemester'),
+		(WISE, _('Winter term')),
+		(SOSE, _('Summer term')),
 	)
 	class Meta:
 		unique_together = ('season', 'year')
@@ -119,9 +119,9 @@ class Semester(models.Model):
 	budget = models.DecimalField(max_digits=7, decimal_places=2)
 	def __str__(self):
 		if (self.season == 'W'):
-			return 'Wintersemester 20%d/%d' % (self.year, self.year+1)
+			return _('Winter term 20%d/%d') % (self.year, self.year+1)
 		else:
-			return 'Sommersemester 20%d' % (self.year)
+			return _('Summer term 20%d') % (self.year)
 
 # A module (e.g. Readings, Exercises, ...)
 class TucanModule(models.Model):
@@ -135,3 +135,5 @@ class TucanModule(models.Model):
 		on_delete=models.CASCADE
 	)
 	literature = models.ManyToManyField('Book')
+	def __str__(self):
+		return '%(name)s [%(module_id)s]' % {'name': self.name, 'module_id': self.module_id}
