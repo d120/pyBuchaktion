@@ -1,4 +1,5 @@
 from django.db import models
+from django.utils.translation import ugettext as _
 
 # Create your models here.
 
@@ -14,10 +15,10 @@ class Book(models.Model):
 	PROPOSED='PP'
 	OBSOLETE='OL'
 	STATE_CHOICES = (
-		(ACCEPTED, 'Accepted'),
-		(REJECTED, 'Rejected'),
-		(PROPOSED, 'Proposed'),
-		(OBSOLETE, 'Obsolete'),
+		(ACCEPTED, _('Accepted')),
+		(REJECTED, _('Rejected')),
+		(PROPOSED, _('Proposed')),
+		(OBSOLETE, _('Obsolete')),
 	)
 	state = models.CharField(
 		max_length=2,
@@ -31,6 +32,10 @@ class Book(models.Model):
 		decimal_places=2,
 		null=True,
 	)
+	def __str__(self):
+		return '%s (%s) [ISBN: %s]' % (self.title, self.author, self.isbn_13)
+	def statename(self):
+		return [v for s, v in self.STATE_CHOICES if s == self.state][0]
 
 # An order that a particular student has posted
 class Order(models.Model):
@@ -67,11 +72,15 @@ class Order(models.Model):
 		'OrderTimeframe',
 		on_delete=models.CASCADE,
 	)
+	def __str__(self):
+		return '%s: %s [%s]' % (self.student, self.book.title, self.order_timeframe.start_date)
 
 # A student participating in the Buchaktion
 class Student(models.Model):
 	pass
 	# empty until CAS login is figured out
+	def __str__(self):
+		return '#%d' % (self.id)
 
 # A Timeframe for a set of orders
 class OrderTimeframe(models.Model):
@@ -85,6 +94,8 @@ class OrderTimeframe(models.Model):
 		'Semester',
 		on_delete=models.CASCADE
 	)
+	def __str__(self):
+		return "%s - %s (%s)" % (self.start_date, self.end_date, self.semester)
 
 # A semester containing a budget
 class Semester(models.Model):
@@ -106,6 +117,11 @@ class Semester(models.Model):
 		decimal_places=0,
 	)
 	budget = models.DecimalField(max_digits=7, decimal_places=2)
+	def __str__(self):
+		if (self.season == 'W'):
+			return 'Wintersemester 20%d/%d' % (self.year, self.year+1)
+		else:
+			return 'Sommersemester 20%d' % (self.year)
 
 # A module (e.g. Readings, Exercises, ...)
 class TucanModule(models.Model):

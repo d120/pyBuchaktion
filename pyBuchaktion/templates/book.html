@@ -1,0 +1,20 @@
+{% extends "page.html" %} {% load cms_tags i18n %}
+
+{% block content %}
+	{% if book.state == 'RJ' %}
+		<div class="alert alert-danger">
+			{% trans "This book has been rejected, and may not be ordered" %}
+		</div>
+	{% elif book.state == 'OL' %}
+		<div class="alert alert-warning">
+			{% trans "This book has been marked obsolete, a new version is available. It may not be ordered" %}
+		</div>
+	{% elif book.state == 'PP' %}
+		<div class="alert alert-info">
+			{% trans "This book has been proposed, but has yet to be confirmed by our team. Until then it may not be ordered." %}
+		</div>
+	{% endif %}
+		<h2 class="list-group-item-heading">{{ book.title }}</h2>
+		<i>Autor:</i> <b>{{ book.author }}</b><br/>
+		<i>ISBN:</i> <b>{{ book.isbn_13 }}</b>
+{% endblock content %}
