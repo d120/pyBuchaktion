@@ -12,7 +12,7 @@ class PyBuchaktionApphook(CMSApp):
         return ["pyBuchaktion.urls"]
 
     def get_menus(self, page=None, language=None, **kwargs):
-    	return [PyBuchaktionMenu]
+        return [PyBuchaktionMenu]
 
 
 apphook_pool.register(PyBuchaktionApphook)

@@ -1,14 +1,14 @@
 {% extends "page.html" %} {% load cms_tags i18n %}
 
 {% block content %}
-		<h2 class="list-group-item-heading">{{ module.name }}</h2>
-		<b>{% trans "Last offered" %}:</b> {{ module.last_offered }}<br/>
-		{% if module.literature.all %}
-		<b>{% trans "Literature" %}:</b>
-		<ul>
-			{% for book in module.literature.all %}
-			<li><a href="{% url "pyBuchaktion:book" book_id=book.id %}">{{ book }}</a></li>
-			{% endfor %}
-		</ul>
-		{% endif %}
+        <h2 class="list-group-item-heading">{{ module.name }}</h2>
+        <b>{% trans "Last offered" %}:</b> {{ module.last_offered }}<br/>
+        {% if module.literature.all %}
+        <b>{% trans "Literature" %}:</b>
+        <ul>
+            {% for book in module.literature.all %}
+            <li><a href="{% url "pyBuchaktion:book" book_id=book.id %}">{{ book }}</a></li>
+            {% endfor %}
+        </ul>
+        {% endif %}
 {% endblock content %}
