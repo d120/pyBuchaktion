@@ -167,8 +167,6 @@ msgid "Summer term 20%(year)d"
 msgstr "Sommersemester 20%(year)d"
 
 #: models.py:177
-#, fuzzy
-#| msgid "Modules"
 msgid "module id"
 msgstr "Modul ID"
 
@@ -177,14 +175,10 @@ msgid "name"
 msgstr "Name"
 
 #: models.py:186
-#, fuzzy
-#| msgid "Last offered"
 msgid "last offered"
 msgstr "Zuletzt angeboten"
 
 #: models.py:190
-#, fuzzy
-#| msgid "Literature"
 msgid "literature"
 msgstr "Literatur"
 
@@ -193,8 +187,6 @@ msgid "TUCaN module"
 msgstr "TUCaN Modul"
 
 #: models.py:198
-#, fuzzy
-#| msgid "Modules"
 msgid "TUCaN modules"
 msgstr "TUCaN Module"
 
