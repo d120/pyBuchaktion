@@ -19,13 +19,17 @@ class PyBuchaktionMenu(Menu):
 			book_id = match.kwargs['book_id'][0]
 			book = Book.objects.get(pk=book_id)
 			if book:
-				nBook = [NavigationNode(_(book.title), '%s%s/' % (reverse('pyBuchaktion:books'), book_id), 3, 1),]
+				nBook = [NavigationNode(_(book.title), reverse(
+					'pyBuchaktion:book', kwargs={'book_id': book_id}
+				), 3, 1),]
 				nodes += nBook
 		elif match.url_name == 'module':
 			module_id = match.kwargs['module_id'][0]
 			module = TucanModule.objects.get(pk=module_id)
 			if module:
-				nModule = [NavigationNode(_(module.name), '%s%s/' % (reverse('pyBuchaktion:modules'), module_id), 5, 4),]
+				nModule = [NavigationNode(_(module.name), reverse(
+					'pyBuchaktion:module', kwargs={ 'module_id': module_id }
+				), 5, 4),]
 				nodes += nModule
 
 		return nodes;

@@ -2,6 +2,7 @@
 
 {% block content %}
 		<h2 class="list-group-item-heading">{{ module.name }}</h2>
+		<b>{% trans "Last offered" %}:</b> {{ module.last_offered }}<br/>
 		{% if module.literature.all %}
 		<b>{% trans "Literature" %}:</b>
 		<ul>

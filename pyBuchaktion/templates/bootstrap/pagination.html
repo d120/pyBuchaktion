@@ -1,0 +1,32 @@
+{% load i18n %}
+    {% if is_paginated %}
+    <nav aria-label="{% trans "Page Navigation" %}">
+    	<ul class="pagination">
+    		{% spaceless %}
+            <li class="page-item">
+    			{% trans "Previous Page" as previous %}
+    			{% if page_obj.has_previous %}
+    			<a class="page-link" href="?page={{ page_obj.previous_page_number }}">{{ previous }}</a>
+    			{% else %}
+    			<span class="disabled">{{ previous }}</span>
+    			{% endif %}
+    		</li>
+            {% endspaceless %}
+            {% spaceless %}
+			<li class="page-item active">
+				<span>{% trans "Page" %} {{ page_obj.number }} {% trans "of" %} {{ page_obj.paginator.num_pages }}</span>
+			</li>
+            {% endspaceless %}
+            {% spaceless %}
+			<li class="page-item">
+				{% trans "Next Page" as next %}
+    			{% if page_obj.has_next %}
+				<a class="page-link" href="?page={{ page_obj.next_page_number }}">{{ next }}</a>
+				{% else %}
+				<span class="disabled">{{ next }}
+				{% endif %}
+			</li>
+            {% endspaceless %}
+		</ul>
+    </nav>
+    {% endif %}

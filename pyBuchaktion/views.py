@@ -1,30 +1,32 @@
-from django.http import HttpResponse
-from django.shortcuts import get_object_or_404, render
+from django.views.generic import ListView, DetailView
 from pyBuchaktion.models import Book, TucanModule
-from django.core.urlresolvers import reverse, resolve
 
+class BookListView(ListView):
+	queryset = Book.objects.filter(state=Book.ACCEPTED)
+	template_name = 'pyBuchaktion/books.html'
+	context_object_name = 'books'
+	paginate_by = 10
 
-def index(request):
-	return render(request, 'intro.html', {'message': 'Hi'})
-	#return HttpResponse("Hello, world. You're at the pyBuchaktion index.")
+class AllBookListView(BookListView):
+	queryset = Book.objects.all()
+	def get_context_data(self, **kwargs):
+		context = super(AllBookListView, self).get_context_data(**kwargs)
+		context['showtag'] = True
+		return context
 
-def books_all(request):
-	books = Book.objects.all()
-	return render(request, 'books.html', {'books': books, 'showtag': True})
+class BookView(DetailView):
+	model = Book
+	template_name = 'pyBuchaktion/book.html'
+	context_object_name = 'book'
+	pk_url_kwarg = 'book_id'
 
-def books(request):
-	books = Book.objects.all().filter(state=Book.ACCEPTED)
-	return render(request, 'books.html', {'books': books})
+class ModulesView(ListView):
+	model = TucanModule
+	template_name = 'pyBuchaktion/modules.html'
+	context_object_name = 'modules'
 
-def book(request, book_id):
-	book = get_object_or_404(Book, pk=book_id)
-	return render(request, 'book.html', {'book': book})
-
-def modules(request):
-	modules = TucanModule.objects.all()
-	return render(request, 'modules.html', {'modules': modules})
-
-def module(request, module_id):
-	module = get_object_or_404(TucanModule, pk=module_id)
-	return render(request, 'module.html', {'module': module})
-
+class ModuleView(DetailView):
+	model = TucanModule
+	template_name = 'pyBuchaktion/module.html'
+	context_object_name = 'module'
+	pk_url_kwarg = 'module_id'

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-01-11 13:55+0100\n"
+"POT-Creation-Date: 2017-01-16 22:50+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,31 +18,211 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: cms_apps.py:8
+#: cms_apps.py:9
 msgid "pyBuchaktion"
 msgstr ""
 
-#: models.py:18
+#: cms_menus.py:12
+msgid "Books"
+msgstr "Bücher"
+
+#: cms_menus.py:13
+msgid "All Books"
+msgstr "Alle Bücher"
+
+#: cms_menus.py:14
+msgid "Modules"
+msgstr "Module"
+
+#: models.py:16
+msgid "title"
+msgstr "Titel"
+
+#: models.py:23
 msgid "Accepted"
 msgstr "Akzeptiert"
 
-#: models.py:19
+#: models.py:24 models.py:68
 msgid "Rejected"
 msgstr "Abgelehnt"
 
-#: models.py:20
+#: models.py:25
 msgid "Proposed"
 msgstr "Vorgeschlagen"
 
-#: models.py:21
+#: models.py:26
 msgid "Obsolete"
 msgstr "Veraltet"
 
-#: templates/book.html:6
+#: models.py:32 models.py:75
+msgid "status"
+msgstr "Status"
+
+#: models.py:37
+#, fuzzy
+#| msgid "Author"
+msgid "author"
+msgstr "Autor"
+
+#: models.py:43
+msgid "price"
+msgstr "Preis"
+
+#: models.py:52 models.py:84
+msgid "book"
+msgstr "Buch"
+
+#: models.py:53
+msgid "books"
+msgstr "Bücher"
+
+#: models.py:66
+msgid "Pending"
+msgstr "Offen"
+
+#: models.py:67
+msgid "Ordered"
+msgstr "Bestellt"
+
+#: models.py:69
+msgid "Arrived"
+msgstr "Angekommen"
+
+#: models.py:79
+msgid "hint"
+msgstr "Hinweis"
+
+#: models.py:89 models.py:109
+msgid "student"
+msgstr "Student"
+
+#: models.py:94 models.py:133
+msgid "order timeframe"
+msgstr "Bestellzeitraum"
+
+#: models.py:99
+msgid "order"
+msgstr "Bestellung"
+
+#: models.py:100
+msgid "orders"
+msgstr "Bestellungen"
+
+#: models.py:110
+msgid "students"
+msgstr "Studenten"
+
+#: models.py:115
+msgid "start date"
+msgstr "Startdatum"
+
+#: models.py:118
+msgid "end date"
+msgstr "Enddatum"
+
+#: models.py:123
+msgid "spendings"
+msgstr "Ausgaben"
+
+#: models.py:128 models.py:146
+msgid "semester"
+msgstr "Semester"
+
+#: models.py:134
+msgid "order timeframes"
+msgstr "Bestellzeiträume"
+
+#: models.py:141
+msgid "Winter term"
+msgstr "Wintersemester"
+
+#: models.py:142
+msgid "Summer term"
+msgstr "Sommersemester"
+
+#: models.py:147
+msgid "semesters"
+msgstr "Semester"
+
+#: models.py:152
+msgid "season"
+msgstr "Saison"
+
+#: models.py:157
+msgid "year"
+msgstr "Jahr"
+
+#: models.py:162
+msgid "budget"
+msgstr "Budget"
+
+#: models.py:166
+#, python-format
+msgid "Winter term 20%(year)d/%(next_year)d"
+msgstr "Wintersemester 20%(year)d/%(next_year)d"
+
+#: models.py:170
+#, python-format
+msgid "Summer term 20%(year)d"
+msgstr "Sommersemester 20%(year)d"
+
+#: models.py:177
+#, fuzzy
+#| msgid "Modules"
+msgid "module id"
+msgstr "Modul ID"
+
+#: models.py:181
+msgid "name"
+msgstr "Name"
+
+#: models.py:186
+#, fuzzy
+#| msgid "Last offered"
+msgid "last offered"
+msgstr "Zuletzt angeboten"
+
+#: models.py:190
+#, fuzzy
+#| msgid "Literature"
+msgid "literature"
+msgstr "Literatur"
+
+#: models.py:197
+msgid "TUCaN module"
+msgstr "TUCaN Modul"
+
+#: models.py:198
+#, fuzzy
+#| msgid "Modules"
+msgid "TUCaN modules"
+msgstr "TUCaN Module"
+
+#: templates/bootstrap/pagination.html:3
+msgid "Page Navigation"
+msgstr "Seitennavigation"
+
+#: templates/bootstrap/pagination.html:7
+msgid "Previous Page"
+msgstr "Vorherige Seite"
+
+#: templates/bootstrap/pagination.html:17
+msgid "Page"
+msgstr "Seite"
+
+#: templates/bootstrap/pagination.html:17
+msgid "of"
+msgstr "von"
+
+#: templates/bootstrap/pagination.html:22
+msgid "Next Page"
+msgstr "Nächste Seite"
+
+#: templates/pyBuchaktion/book.html:6
 msgid "This book has been rejected, and may not be ordered"
 msgstr "Dieses Buch wurde abgelehnt, und kann nicht bestellt werden"
 
-#: templates/book.html:10
+#: templates/pyBuchaktion/book.html:10
 msgid ""
 "This book has been marked obsolete, a new version is available. It may not "
 "be ordered"
@@ -50,10 +230,26 @@ msgstr ""
 "Dieses Buch ist als veraltet gekennzeichnet, eine neuere Version ist "
 "verfügbar. Es kann nicht bestellt werden."
 
-#: templates/book.html:14
+#: templates/pyBuchaktion/book.html:14
 msgid ""
 "This book has been proposed, but has yet to be confirmed by our team. Until "
 "then it may not be ordered."
 msgstr ""
 "Diese Buch wurde vorgeschlagen, muss aber erst vom Team der Buchaktion "
 "freigeschaltet werden, und kann solange nicht bestellt werden!"
+
+#: templates/pyBuchaktion/book.html:18
+msgid "Author"
+msgstr "Autor"
+
+#: templates/pyBuchaktion/book.html:21
+msgid "Recommended by"
+msgstr "Empfohlen von"
+
+#: templates/pyBuchaktion/module.html:5
+msgid "Last offered"
+msgstr "Zuletzt angeboten"
+
+#: templates/pyBuchaktion/module.html:7
+msgid "Literature"
+msgstr "Literatur"

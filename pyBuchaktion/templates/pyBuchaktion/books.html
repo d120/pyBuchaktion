@@ -1,4 +1,4 @@
-{% extends "page.html" %} {% load cms_tags view_tools %}
+{% extends "page.html" %} {% load cms_tags view_tools i18n %}
 
 {% block content %}
 	<div class="list-group">
@@ -8,5 +8,6 @@
             <i>ISBN:</i> <b>{{ book.isbn_13 }}</b>
         </a>
     {% endfor %}
-    </div>
+	</div>
+    {% include "bootstrap/pagination.html" %}
 {% endblock content %}
