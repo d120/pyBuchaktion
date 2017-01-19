@@ -102,7 +102,7 @@ class Tucan:
             for char in literature_content:
                 if char == '<':
                     if next_book:
-                        books.append(next_book)
+                        books.append(TUCAN_MODULE_COURSE_NAME_NORMALIZE_PATTERN.sub(r'\1', next_book))
                         next_book = None
                     pause = True
                 elif char == '>':
