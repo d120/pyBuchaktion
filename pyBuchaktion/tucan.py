@@ -17,6 +17,7 @@ TUCAN_MODULE_INFORMATION_TYPE_SELECTOR = 'b:nth-of-type(1)'
 TUCAN_MODULE_SELECTOR = '.eventTable td a'
 # RegEx Patterns
 TUCAN_MODULE_COURSE_IDNAME_PATTERN = re.compile(r'^\s*(\w{2,2}-\w{2,2}-\w{4,4}-\w{2,2})\s*(.+?)\s*$');
+TUCAN_MODULE_COURSE_NAME_NORMALIZE_PATTERN = re.compile(r'^(?:\s|\\t)*(.*?)(?:\s|\\t)*$');
 TUCAN_MODULE_LITERATURE_CONTENT_PATTERN = re.compile(r'^\s*<p><b>(.*?)</b>(.*)</p>\s*$');
 
 
@@ -37,10 +38,14 @@ class ModuleRequestThread(Thread):
         self.module_urls = tucan.retrieveModuleUrls()
         self.total_entries = len(self.module_urls)
 
+        module_cids = []
         modules = []
         for url in self.module_urls:
             try:
-                modules.append(tucan.retrieveModule(url))
+                module = tucan.retrieveModule(url)
+                if not module.cid in module_cids:
+                    module_cids.append(module.cid)
+                    modules.append(module)
                 self.processed_entries += 1
             except:
                 logging.warning("Failed to process module at <%s>! Error:" % url, exc_info = True)
@@ -102,10 +107,10 @@ class Tucan:
                     pause = True
                 elif char == '>':
                     pause = False
-                elif not pause and (next_book or (char != '-' and char != ':' and char != ' ' and char != '\t')):
+                elif not pause:
                     next_book = next_book + char if next_book else char
             if next_book:
-                books.append(next_book)
+                books.append(TUCAN_MODULE_COURSE_NAME_NORMALIZE_PATTERN.sub(r'\1', next_book))
 
         return Module(cid, name, module_url, books)
 
@@ -139,12 +144,3 @@ class Tucan:
         browser = RoboBrowser(parser = 'lxml')
         browser.open(TUCAN_STARTPAGE_URL)
         return browser
-
-
-
-tucan = Tucan()
-thread = tucan.retrieveModules()
-while not thread.finished:
-    print("Processed entries: %d/%d; %.2f%%" % (thread.processed_entries, thread.total_entries, thread.get_percentage()))
-    sleep(10)
-print(thread.modules)
