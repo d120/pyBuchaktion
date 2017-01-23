@@ -1,32 +1,38 @@
-{% load i18n %}
+{% load i18n view_tools %}
     {% if is_paginated %}
-    <nav aria-label="{% trans "Page Navigation" %}">
-        <ul class="pagination">
-            {% spaceless %}
-            <li class="page-item">
+    <form method="GET" action="">
+        <nav aria-label="{% trans "Page Navigation" %}">
+            <ul class="pager">
+                {% spaceless %}
                 {% trans "Previous Page" as previous %}
+                
                 {% if page_obj.has_previous %}
-                <a class="page-link" href="?page={{ page_obj.previous_page_number }}">{{ previous }}</a>
+                <li class="previous">
+                    <a href="{% url_set get_params "page" page_obj.previous_page_number %}">{{ previous }}</a>
+                </li>
                 {% else %}
-                <span class="disabled">{{ previous }}</span>
+                <li class="previous disabled"><a href="#">{{ previous }}</a></li>
                 {% endif %}
-            </li>
-            {% endspaceless %}
-            {% spaceless %}
-            <li class="page-item active">
-                <span>{% trans "Page" %} {{ page_obj.number }} {% trans "of" %} {{ page_obj.paginator.num_pages }}</span>
-            </li>
-            {% endspaceless %}
-            {% spaceless %}
-            <li class="page-item">
+                {% endspaceless %}
+                {% spaceless %}
+                <li class="disabled">
+                    <a href="#">
+                        {% trans "Page" %} {{ page_obj.number }} {% trans "of" %} {{ page_obj.paginator.num_pages }}
+                    </a>
+                </li>
+                {% endspaceless %}
+                {% spaceless %}
                 {% trans "Next Page" as next %}
+
                 {% if page_obj.has_next %}
-                <a class="page-link" href="?page={{ page_obj.next_page_number }}">{{ next }}</a>
+                <li class="next">
+                    <a href="{% url_set get_params "page" page_obj.next_page_number %}">{{ next }}</a>
+                </li>
                 {% else %}
-                <span class="disabled">{{ next }}
+                <li class="next disabled"><a href="#">{{ next }}</a></li>
                 {% endif %}
-            </li>
-            {% endspaceless %}
-        </ul>
-    </nav>
+                {% endspaceless %}
+            </div>
+        </nav>
+    </form>
     {% endif %}

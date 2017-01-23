@@ -1,0 +1,5 @@
+{% load i18n %}
+<div class="form-group">
+    <label class="hidden" for="{{ field.id_for_label }}">{% trans field.label %}</label>
+    {{ field_output }}
+</div>

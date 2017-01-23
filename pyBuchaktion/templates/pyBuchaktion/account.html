@@ -1,0 +1,29 @@
+{% extends "page.html" %} {% load cms_tags view_tools i18n %}
+
+{% block content %}
+    {% if student %}
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">{% trans "Orders" %}</h3>
+            </div>
+            <div class="list-group">
+        {% for order in student.order_set.all %}
+                <a href="{% url "pyBuchaktion:order" order_id=order.id %}" class="list-group-item">
+                    <h4 class="list-group-item-heading">#{{order.id}}: {{ order.book }}
+                        <span class="label label-{{ order.status|get_status_class }} pull-right">
+                            {{ order.statusname }}
+                        </span>
+                    </h4>
+            {% if order.hint %}
+                    <b>{% trans "Hint" %}:</b> {{ order.hint }}
+            {% endif %}
+                </a>
+        {% endfor %}
+            </div>
+        </div>
+    {% else %}
+        <div class="alert alert-danger">
+        {% trans "You are not logged in" %}
+        </div>
+    {% endif %}
+{% endblock content %}

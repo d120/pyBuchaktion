@@ -5,7 +5,7 @@ from . import models
 @admin.register(models.Book)
 class BookAdmin(admin.ModelAdmin):
     list_display = ('title', 'author', 'isbn_13')
-    list_filter = ('state', 'author')
+    list_filter = ('state',)
 
 @admin.register(models.Order)
 class OrderAdmin(admin.ModelAdmin):

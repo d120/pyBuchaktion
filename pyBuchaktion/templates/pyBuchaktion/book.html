@@ -1,28 +1,87 @@
-{% extends "page.html" %} {% load cms_tags i18n %}
+{% extends "page.html" %} {% load cms_tags view_tools bootstrap_tags i18n %}
 
 {% block content %}
-    {% if book.state == 'RJ' %}
+    {% if book_order == True %}
+        <div class="alert alert-success">
+            {% trans "Posted order successfully" %}
+        </div>
+    {% elif book_order != False %}
         <div class="alert alert-danger">
-            {% trans "This book has been rejected, and may not be ordered" %}
-        </div>
-    {% elif book.state == 'OL' %}
-        <div class="alert alert-warning">
-            {% trans "This book has been marked obsolete, a new version is available. It may not be ordered" %}
-        </div>
-    {% elif book.state == 'PP' %}
-        <div class="alert alert-info">
-            {% trans "This book has been proposed, but has yet to be confirmed by our team. Until then it may not be ordered." %}
+            {% alert_dismiss_button %}
+            <b>{% trans "Order failed"%}</b>: {{ book_order }}
         </div>
     {% endif %}
-        <h2 class="list-group-item-heading">{{ book.title }}</h2>
-        <b>{% trans "Author" %}:</b> <i>{{ book.author }}</i><br/>
-        <b>ISBN:</b> <i>{{ book.isbn_13 }}</i><br/>
-        {% if book.tucanmodule_set.all %}
-        <b>{% trans "Recommended by" %}:</b>
-        <ul>
-            {% for mod in book.tucanmodule_set.all %}
-            <li><a href="{% url "pyBuchaktion:module" module_id=mod.id %}">{{ mod }}</a></li>
-            {% endfor %}
-        </ul>
+
+        <div class="panel panel-{{ book.state|get_state_class }}">
+            <div class="panel-heading">
+                <h4 class="panel-title">
+                    {{ book.title }}
+                </h4>
+            </div>
+        {% if book.state != 'AC' %}
+            <div class="panel-body">
+                {{ book.state|get_state_text }}
+            </div>
         {% endif %}
+            <table class="table">
+                <tbody>
+                    <tr>
+                        <th>{% trans "Author" %}</th><td>{{ book.author }}</td>
+                        <th>{% trans "Price" %}</th><td>{{ book.price }}&euro;</td>
+                    </tr>
+                    <tr>
+                        <th>{% trans "Status" %}</th><td>{{ book.statename }}</td>
+                        <th>ISBN-13</th><td>{{ book.isbn_13 }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+    {% if book.tucanmodule_set.all %}
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4 class="panel-title">
+                    {% trans "Recommended by" %}:
+                </h4>
+            </div>
+            <div class="list-group">
+                {% for mod in book.tucanmodule_set.all %}
+                <a class="list-group-item" href="{% url "pyBuchaktion:module" module_id=mod.id %}">{{ mod }}</a>
+                {% endfor %}
+            </div>
+        </div>
+    {% endif %}
+
+    {% if student %}
+        {% if book.state == 'AC' or orders %}
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4 class="panel-title">
+                    {% trans "Orders" %}
+                </h4>
+            </div>
+            {% if orders %}
+            <div class="list-group">
+                {% for order in orders %}
+                <a class="list-group-item" href="{% url "pyBuchaktion:order" order_id=order.id %}">
+                    {{ order }}
+                    <span class="label label-{{ order.status|get_status_class }} pull-right">
+                        {{ order.statusname }}
+                    </span>
+                </a>
+                {% endfor %}
+            </div>
+            {% else %}
+            <div class="panel-body">
+                <form method="post">
+                    {% csrf_token %}
+                    <button class="btn btn-primary" type="submit" value="Submit">
+                        {% trans "Order this book" %}
+                    </button>
+                </form>
+            </div>
+            {% endif %}
+        </div>
+        {% endif %}
+    {% endif %}
 {% endblock content %}

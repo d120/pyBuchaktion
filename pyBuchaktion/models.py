@@ -1,5 +1,5 @@
 from django.db import models
-from django.utils.translation import ugettext as _
+from django.utils.translation import ugettext_lazy as _
 from django.core.urlresolvers import reverse
 
 # Create your models here.
@@ -95,6 +95,8 @@ class Order(models.Model):
     )
     def __str__(self):
         return '%s: %s [%s]' % (self.student, self.book.title, self.order_timeframe.start_date)
+    def statusname(self):
+        return [v for s, v in self.STATE_CHOICES if s == self.status][0]
     class Meta:
         verbose_name = _("order")
         verbose_name_plural = _("orders")

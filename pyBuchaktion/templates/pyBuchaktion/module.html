@@ -1,14 +1,27 @@
 {% extends "page.html" %} {% load cms_tags i18n %}
 
 {% block content %}
-        <h2 class="list-group-item-heading">{{ module.name }}</h2>
-        <b>{% trans "Last offered" %}:</b> {{ module.last_offered }}<br/>
-        {% if module.literature.all %}
-        <b>{% trans "Literature" %}:</b>
-        <ul>
-            {% for book in module.literature.all %}
-            <li><a href="{% url "pyBuchaktion:book" book_id=book.id %}">{{ book }}</a></li>
-            {% endfor %}
-        </ul>
-        {% endif %}
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4 class="panel-title">{{ module }}</h4>
+            </div>
+            <div class="panel-body">
+                <b>{% trans "Last offered" %}:</b> {{ module.last_offered }}
+            </div>
+        </div>
+
+    {% if module.literature.all %}
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4 class="panel-title">{% trans "Literature" %}</h4>
+            </div>
+            <div class="list-group">
+        {% for book in module.literature.all %}
+                <a class="list-group-item" href="{% url "pyBuchaktion:book" book_id=book.id %}">
+                    {{ book }}
+                </a>
+        {% endfor %}
+            </div>
+        </div>
+    {% endif %}
 {% endblock content %}

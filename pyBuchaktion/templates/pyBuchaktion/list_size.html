@@ -1,0 +1,11 @@
+{% load view_tools %}
+{% for a_size in sizes %}
+    {% if a_size != sizes.0 %}&nbsp;|&nbsp;{% endif %}
+    {% if a_size == current %}
+        <b>{{ current }}</b>
+    {% elif a_size == default %}
+        <a href="{% url_unset params "size" %}">{{ a_size }}</a>
+    {% else %}
+        <a href="{% url_set params "size" a_size %}">{{ a_size }}</a>
+    {% endif %}
+{% endfor %}

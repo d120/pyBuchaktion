@@ -1,13 +1,52 @@
-{% extends "page.html" %} {% load cms_tags view_tools i18n %}
+{% extends "page.html" %} {% load view_tools bootstrap_tags i18n %}
 
 {% block content %}
-    <div class="list-group">
-    {% for book in books %}
-        <a href="{% url "pyBuchaktion:book" book_id=book.id %}" class="list-group-item">
-            <h4 class="list-group-item-heading">{{ book.title }}{% if showtag %}<span class="label label-{{ book.state|get_state_class }} pull-right">{{ book.statename }}</span>{% endif %}</h4>
-            <i>ISBN:</i> <b>{{ book.isbn_13 }}</b>
-        </a>
-    {% endfor %}
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h4 class="panel-title">{% trans "Search" %}</h4>
+        </div>
+        <div class="panel-body">
+            <form method="GET" class="form-inline">
+                {% for field in form %}
+                {% form_field field %}
+                {% endfor %}
+                <button type="submit" class="btn btn-primary">{% trans "Search" %}</button>
+            </form>
+            <a href="{% url "pyBuchaktion:modules" %}">{% trans "Search for modules" %}</a>
+        </div>
     </div>
+    
+    {% if books %}
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h4 class="panel-title">
+            {% trans "Books" %}
+            <span class="pull-right">
+                {% list_sizes get_params size sizes size_default %}
+            </span>
+            </h4>
+        </div>
+        <div class="list-group">
+        {% for book in books %}
+            <a href="{% url "pyBuchaktion:book" book_id=book.id %}" class="list-group-item">
+                <h4 class="list-group-item-heading">{{ book.title }}
+            {% if book.state != 'AC' %}
+                    <span class="label label-{{ book.state|get_state_class }} pull-right">
+                        {{ book.statename }}
+                    </span>
+            {% endif %}
+                </h4>
+                <b>{% trans "Author" %}:</b> <i>{{ book.author }}</i> <br/>
+                <b>ISBN-13:</b> <i>{{ book.isbn_13 }}</i>
+            </a>
+        {% endfor %}
+        </div>
+    </div>
+    {% else %}
+    <div class="alert alert-danger">
+        {% trans "Sorry, no books matching this query were found!" %} 
+    </div>
+    {% endif %}
+
     {% include "bootstrap/pagination.html" %}
 {% endblock content %}

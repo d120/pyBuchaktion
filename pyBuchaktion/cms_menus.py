@@ -2,7 +2,8 @@ from menus.base import Menu, NavigationNode, Modifier
 from menus.menu_pool import menu_pool
 from django.utils.translation import ugettext_lazy as _
 from django.core.urlresolvers import reverse
-from pyBuchaktion.models import Book, TucanModule
+from pyBuchaktion.models import Book, TucanModule, Order
+from .data import get_logged_in_student
 
 class PyBuchaktionMenu(Menu):
 
@@ -13,6 +14,9 @@ class PyBuchaktionMenu(Menu):
         n3 = NavigationNode(_('All Books'), reverse('pyBuchaktion:books_all'), 2, 1)
         n4 = NavigationNode(_('Modules'), reverse('pyBuchaktion:modules'), 4)
         nodes = [n2, n3, n4]
+
+        if (get_logged_in_student(request) != None):
+            nodes += [NavigationNode(_("Account"), reverse('pyBuchaktion:account'), 6),]
 
         match = request.resolver_match
         if match.url_name == 'book':
@@ -30,6 +34,14 @@ class PyBuchaktionMenu(Menu):
                 nModule = [NavigationNode(_(module.name), reverse(
                     'pyBuchaktion:module', kwargs={ 'module_id': module_id }
                 ), 5, 4),]
+                nodes += nModule
+        elif match.url_name == 'order':
+            order_id = match.kwargs['order_id'][0]
+            module = Order.objects.get(pk=order_id)
+            if module:
+                nModule = [NavigationNode(_("Order #%s") % order_id, reverse(
+                    'pyBuchaktion:order', kwargs={ 'order_id': order_id }
+                ), 7, 6),]
                 nodes += nModule
 
         return nodes;
