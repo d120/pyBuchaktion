@@ -1,0 +1,87 @@
+{% extends "page.html" %} {% load cms_tags view_tools bootstrap_tags i18n %}
+
+{% block content %}
+    {% if book_order == True %}
+        <div class="alert alert-success">
+            {% trans "Posted order successfully" %}
+        </div>
+    {% elif book_order != False %}
+        <div class="alert alert-danger">
+            {% alert_dismiss_button %}
+            <b>{% trans "Order failed"%}</b>: {{ book_order }}
+        </div>
+    {% endif %}
+
+        <div class="panel panel-{{ book.state|get_state_class }}">
+            <div class="panel-heading">
+                <h4 class="panel-title">
+                    {{ book.title }}
+                </h4>
+            </div>
+        {% if book.state != 'AC' %}
+            <div class="panel-body">
+                {{ book.state|get_state_text }}
+            </div>
+        {% endif %}
+            <table class="table">
+                <tbody>
+                    <tr>
+                        <th>{% trans "Author" %}</th><td>{{ book.author }}</td>
+                        <th>{% trans "Price" %}</th><td>{{ book.price }}&euro;</td>
+                    </tr>
+                    <tr>
+                        <th>{% trans "Status" %}</th><td>{{ book.statename }}</td>
+                        <th>ISBN-13</th><td>{{ book.isbn_13 }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+    {% if book.tucanmodule_set.all %}
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4 class="panel-title">
+                    {% trans "Recommended by" %}:
+                </h4>
+            </div>
+            <div class="list-group">
+                {% for mod in book.tucanmodule_set.all %}
+                <a class="list-group-item" href="{% url "pyBuchaktion:module" module_id=mod.id %}">{{ mod }}</a>
+                {% endfor %}
+            </div>
+        </div>
+    {% endif %}
+
+    {% if student %}
+        {% if book.state == 'AC' or orders %}
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4 class="panel-title">
+                    {% trans "Orders" %}
+                </h4>
+            </div>
+            {% if orders %}
+            <div class="list-group">
+                {% for order in orders %}
+                <a class="list-group-item" href="{% url "pyBuchaktion:order" order_id=order.id %}">
+                    {{ order }}
+                    <span class="label label-{{ order.status|get_status_class }} pull-right">
+                        {{ order.statusname }}
+                    </span>
+                </a>
+                {% endfor %}
+            </div>
+            {% else %}
+            <div class="panel-body">
+                <form method="post">
+                    {% csrf_token %}
+                    <button class="btn btn-primary" type="submit" value="Submit">
+                        {% trans "Order this book" %}
+                    </button>
+                </form>
+            </div>
+            {% endif %}
+        </div>
+        {% endif %}
+    {% endif %}
+{% endblock content %}
