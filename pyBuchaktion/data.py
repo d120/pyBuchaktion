@@ -40,3 +40,16 @@ def post_order_book(request, book_id):
         order_timeframe = OrderTimeframe.objects.get(pk=1),
     )
     return True
+
+def post_abort_order(request, order_id):
+    student = get_logged_in_student(request)
+    if (student == None):
+        return _("Not logged in")
+
+    try:
+        order = student.order_set.get(pk=order_id)
+    except Order.DoesNotExist:
+        return _("Order not found")
+
+    order.delete()
+    return True

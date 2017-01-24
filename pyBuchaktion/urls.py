@@ -9,4 +9,5 @@ urlpatterns = [
     url(r'^module/(?P<module_id>\d*)/$', ModuleView.as_view(), name = 'module'),
     url(r'^account/$', AccountView.as_view(), name = 'account'),
     url(r'^order/(?P<order_id>\d*)/$', OrderView.as_view(), name = 'order'),
+    url(r'^order/(?P<order_id>\d*)/abort/$', OrderAbortView.as_view(), name = 'order_abort'),
 ]

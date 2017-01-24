@@ -23,14 +23,10 @@
                 {{ book.state|get_state_text }}
             </div>
         {% endif %}
-            <table class="table">
+            <table class="table table-bordered">
                 <tbody>
                     <tr>
                         <th>{% trans "Author" %}</th><td>{{ book.author }}</td>
-                        <th>{% trans "Price" %}</th><td>{{ book.price }}&euro;</td>
-                    </tr>
-                    <tr>
-                        <th>{% trans "Status" %}</th><td>{{ book.statename }}</td>
                         <th>ISBN-13</th><td>{{ book.isbn_13 }}</td>
                     </tr>
                 </tbody>

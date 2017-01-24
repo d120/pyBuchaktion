@@ -2,7 +2,8 @@ from django.views.generic import ListView, DetailView, TemplateView
 from django.views.generic.edit import ProcessFormView, FormMixin
 from .models import Book, TucanModule, Student, Order
 from django.core.urlresolvers import reverse
-from .data import get_logged_in_student, post_order_book
+from django.http import HttpResponseRedirect
+from .data import get_logged_in_student, post_order_book, post_abort_order
 from .forms import OrderForm, BookSearchForm, ModuleSearchForm
 
 class VarPagedListView(ListView):
@@ -118,13 +119,36 @@ class ModuleView(DetailView):
     context_object_name = 'module'
     pk_url_kwarg = 'module_id'
 
-class OrderView(DetailView):
-    template_name = 'pyBuchaktion/order.html'
+class BaseOrderView(DetailView):
     context_object_name = 'order'
     pk_url_kwarg = 'order_id'
 
     def get_queryset(self):
         return Order.objects.filter(student=get_logged_in_student(self.request))
+
+class OrderView(BaseOrderView):
+    template_name = 'pyBuchaktion/order.html'
+    
+    def post(self, request, *args, **kwargs):
+        return HttpResponseRedirect(reverse("pyBuchaktion:order_abort", kwargs=kwargs))
+
+class OrderAbortView(BaseOrderView):
+    template_name = 'pyBuchaktion/order_abort.html'
+
+    def post(self, request, *args, **kwargs):
+        try:
+            action = request.POST['action']
+            if (action == "Abort"):
+                self.order_abort = post_abort_order(request, kwargs['order_id'])
+                if (self.order_abort):
+                    return HttpResponseRedirect(reverse("pyBuchaktion:account"))
+            elif (action == "Cancel"):
+                return HttpResponseRedirect(reverse("pyBuchaktion:order", kwargs['order_id']))
+        except:
+            pass
+
+        return self.get(request, *args, **kwargs)
+
 
 class AccountView(TemplateView):
     template_name = 'pyBuchaktion/account.html'
