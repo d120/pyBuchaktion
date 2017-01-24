@@ -17,7 +17,7 @@
     + `PP` Proposed
     + `OL` Obsolete
 + author: `Christian Ullenboom` (required, string) - The author of the book.
-+ price: 49.90 (number) - secured - The price of the book.
++ price: `49.90` (number) - secured - The price of the book.
 
 ## order (object)
 + id: `5862` (required, number) - The ID of the order.
@@ -30,6 +30,20 @@
 + book (required, book) - The ordered book.
 + student (required, account) - The student who has ordered the book.
 + timeframe (required, timeframe) - The timeframe in which the book order can be changed/cancelled. At the end of the timeframe the order will be processed.
+
+## module (object)
++ id: `3234` (required, number) - The ID of the module.
++ cid: `20-00-0004-iv` (required, tucanid) - The course ID of TUCaN.
++ name: `Functional and Object-oriented Programming Concepts` (required, string) - The name of the course.
++ lastOffered (required, season) - The season this course was last offered.
++ literature (required, array[book]) - The recommened literature of this course.
+
+## season (object)
++ id: `2156` (required, number) - The ID of the season.
++ season: `W` (required, enum[string]) - The season.
+    + `W` Winter term
+    + `S` Summer term
++ year: `2017` (required, string) - The year of the season.
 
 ## timeframe (object)
 + from: `2017-02-01` (required, date) - The from-date of the timeframe (inclusive).
