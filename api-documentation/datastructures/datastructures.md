@@ -2,8 +2,9 @@
 
 ## date (string) YYYY-MM-DD
 ## isbn (string) ISBN-13
+## tucanid (string) XX-XX-XXXX-XX
 
-<!-- The account has to be updated. -->
+<!-- TODO: To be updated. -->
 ## account (object)
 + id: `0987` (required, number) - The ID of the account.
 
@@ -38,6 +39,7 @@
 + lastOffered (required, season) - The season this course was last offered.
 + literature (required, array[book]) - The recommened literature of this course.
 
+<!-- TODO: To be updated. -->
 ## season (object)
 + id: `2156` (required, number) - The ID of the season.
 + season: `W` (required, enum[string]) - The season.
@@ -69,8 +71,10 @@ If either `secured` or `semi-secured` have been set, the following rules apply:
 - If the user is permitted to see the attribute and neither `optional` nor `required` are set it must be available.
 - If the user is permitted to see the attribute and either `optional` or `required` are set, these rules apply.
 
-<!-- include(basic.md) -->
 <!-- include(account.md) -->
+<!-- include(basic.md) -->
 <!-- include(book.md) -->
+<!-- include(module.md) -->
 <!-- include(order.md) -->
+<!-- include(season.md) -->
 <!-- include(timeframe.md) -->
