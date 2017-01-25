@@ -39,6 +39,12 @@
 + lastOffered (required, season) - The season this course was last offered.
 + literature (required, array[book]) - The recommened literature of this course.
 
+## modulereduced (object)
++ id: `3234` (required, number) - The ID of the module.
++ cid: `20-00-0004-iv` (required, tucanid) - The course ID of TUCaN.
++ name: `Functional and Object-oriented Programming Concepts` (required, string) - The name of the course.
++ lastOffered (required, season) - The season this course was last offered.
+
 <!-- TODO: To be updated. -->
 ## season (object)
 + id: `2156` (required, number) - The ID of the season.

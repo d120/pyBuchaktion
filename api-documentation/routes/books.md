@@ -15,14 +15,14 @@
 + Parameters
     + page: `1` (optional, number) - pagination - The page to return. Defaults to `1`.
     + limit: `10` (optional, number) - pagination - The number of items per page. Defaults to `10`.
-    + isbn: `9783836218023` (optional, isbn) - The ISBN to filter for.
-    + title: `Java ist auch eine Insel` (optional, string) - The title to filter for. Represents a text search.
-    + state: `AC` (optional, enum[string]) - The state to filter for.
+    + isbn: `9783836218023` (optional, isbn) - A comma-separated list of ISBNs to filter for.
+    + title: `java` (optional, string) - The title to filter for. Represents a case-insensitive text search.
+    + state: `AC` (optional, enum[string]) - A comma-separated list of states to filter for.
         + `AC` Accepted
         + `RJ` Rejected
         + `PP` Proposed
         + `OL` Obsolete
-    + author: `Christian Ullenboom` (optional, string) - The author to filter for. Represents a text search.
+    + author: `ullenboom` (optional, string) - The author to filter for. Represents a case-insensitive text search.
     + orderBy: `author` (optional, enum[string]) - The field to order by. Defaults to no specific order.
         + `isbn` Order by the ISBN.
         + `title` Order by the title.
@@ -34,6 +34,7 @@
 
     + Attributes
         + books (required, array[book])
+        + total: `10` (required, number)
 
     + Body
 
@@ -102,7 +103,7 @@
 
 + Response 404
 
-    **Send if:** The given book was not found.
+    **Send if:** The specified book was not found.
 
     + Body
 
@@ -149,7 +150,7 @@
 
 + Response 404
 
-    **Send if:** The specified book is not available.
+    **Send if:** The specified book was not found
 
     + Body
 
@@ -203,7 +204,7 @@
 
 + Response 404
 
-    **Send if:** The specified book is not available.
+    **Send if:** The specified book was not found
 
     + Body
 
@@ -227,7 +228,7 @@
     + bookId: `2444` (required, number) - The ID of the book.
 
 
-+ Response 200 (application/json; charset=utf-8)
++ Response 204 (application/json; charset=utf-8)
 
     + Body
 
@@ -242,6 +243,13 @@
 + Response 403
 
     **Send if:** The user does not have the required permissions.
+
+    + Body
+
+
++ Response 404
+
+    **Send if:** The specified book was not found
 
     + Body
 
