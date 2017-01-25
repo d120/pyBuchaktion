@@ -439,21 +439,7 @@
 </dd><dt>isbn</dt><dd><code>isbn</code>&nbsp;<span>(optional)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>9783836218023</span></span><p>A comma-separated list of ISBNs to filter for.</p>
 </dd><dt>title</dt><dd><code>string</code>&nbsp;<span>(optional)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>java</span></span><p>The title to filter for. Represents a case-insensitive text search.</p>
 </dd><dt>state</dt><dd><code>string</code>&nbsp;<span>(optional)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>AC</span></span><p>A comma-separated list of states to filter for.</p>
-<ul>
-<li>
-<p><code>AC</code> Accepted</p>
-</li>
-<li>
-<p><code>RJ</code> Rejected</p>
-</li>
-<li>
-<p><code>PP</code> Proposed</p>
-</li>
-<li>
-<p><code>OL</code> Obsolete</p>
-</li>
-</ul>
-</dd><dt>author</dt><dd><code>string</code>&nbsp;<span>(optional)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>ullenboom</span></span><p>The author to filter for. Represents a case-insensitive text search.</p>
+<p class="choices"><strong>Choices:&nbsp;</strong><code>AC</code> <code>RJ</code> <code>PP</code> <code>OL</code> </p></dd><dt>author</dt><dd><code>string</code>&nbsp;<span>(optional)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>ullenboom</span></span><p>The author to filter for. Represents a case-insensitive text search.</p>
 </dd><dt>orderBy</dt><dd><code>string</code>&nbsp;<span>(optional)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>author</span></span><p>The field to order by. Defaults to no specific order.</p>
 <ul>
 <li>
@@ -575,10 +561,10 @@
         "<span class="hljs-attribute">state</span>": <span class="hljs-value">{
           "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span></span>,
           "<span class="hljs-attribute">enum</span>": <span class="hljs-value">[
-            <span class="hljs-string">"`AC` Accepted"</span>,
-            <span class="hljs-string">"`RJ` Rejected"</span>,
-            <span class="hljs-string">"`PP` Proposed"</span>,
-            <span class="hljs-string">"`OL` Obsolete"</span>
+            <span class="hljs-string">"AC"</span>,
+            <span class="hljs-string">"RJ"</span>,
+            <span class="hljs-string">"PP"</span>,
+            <span class="hljs-string">"OL"</span>
           ]</span>,
           "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"secured - The state of the book."</span>
         </span>}</span>,
@@ -634,10 +620,10 @@
         "<span class="hljs-attribute">state</span>": <span class="hljs-value">{
           "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span></span>,
           "<span class="hljs-attribute">enum</span>": <span class="hljs-value">[
-            <span class="hljs-string">"`AC` Accepted"</span>,
-            <span class="hljs-string">"`RJ` Rejected"</span>,
-            <span class="hljs-string">"`PP` Proposed"</span>,
-            <span class="hljs-string">"`OL` Obsolete"</span>
+            <span class="hljs-string">"AC"</span>,
+            <span class="hljs-string">"RJ"</span>,
+            <span class="hljs-string">"PP"</span>,
+            <span class="hljs-string">"OL"</span>
           ]</span>,
           "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"secured - The state of the book."</span>
         </span>}</span>,
@@ -699,10 +685,10 @@
         "<span class="hljs-attribute">state</span>": <span class="hljs-value">{
           "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span></span>,
           "<span class="hljs-attribute">enum</span>": <span class="hljs-value">[
-            <span class="hljs-string">"`AC` Accepted"</span>,
-            <span class="hljs-string">"`RJ` Rejected"</span>,
-            <span class="hljs-string">"`PP` Proposed"</span>,
-            <span class="hljs-string">"`OL` Obsolete"</span>
+            <span class="hljs-string">"AC"</span>,
+            <span class="hljs-string">"RJ"</span>,
+            <span class="hljs-string">"PP"</span>,
+            <span class="hljs-string">"OL"</span>
           ]</span>,
           "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"secured - The state of the book."</span>
         </span>}</span>,
@@ -749,10 +735,10 @@
     "<span class="hljs-attribute">state</span>": <span class="hljs-value">{
       "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span></span>,
       "<span class="hljs-attribute">enum</span>": <span class="hljs-value">[
-        <span class="hljs-string">"`AC` Accepted"</span>,
-        <span class="hljs-string">"`RJ` Rejected"</span>,
-        <span class="hljs-string">"`PP` Proposed"</span>,
-        <span class="hljs-string">"`OL` Obsolete"</span>
+        <span class="hljs-string">"AC"</span>,
+        <span class="hljs-string">"RJ"</span>,
+        <span class="hljs-string">"PP"</span>,
+        <span class="hljs-string">"OL"</span>
       ]
     </span>}</span>,
     "<span class="hljs-attribute">author</span>": <span class="hljs-value">{
@@ -793,10 +779,10 @@
         "<span class="hljs-attribute">state</span>": <span class="hljs-value">{
           "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span></span>,
           "<span class="hljs-attribute">enum</span>": <span class="hljs-value">[
-            <span class="hljs-string">"`AC` Accepted"</span>,
-            <span class="hljs-string">"`RJ` Rejected"</span>,
-            <span class="hljs-string">"`PP` Proposed"</span>,
-            <span class="hljs-string">"`OL` Obsolete"</span>
+            <span class="hljs-string">"AC"</span>,
+            <span class="hljs-string">"RJ"</span>,
+            <span class="hljs-string">"PP"</span>,
+            <span class="hljs-string">"OL"</span>
           ]</span>,
           "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"secured - The state of the book."</span>
         </span>}</span>,
@@ -902,8 +888,8 @@
             "<span class="hljs-attribute">season</span>": <span class="hljs-value">{
               "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span></span>,
               "<span class="hljs-attribute">enum</span>": <span class="hljs-value">[
-                <span class="hljs-string">"`W` Winter term"</span>,
-                <span class="hljs-string">"`S` Summer term"</span>
+                <span class="hljs-string">"W"</span>,
+                <span class="hljs-string">"S"</span>
               ]</span>,
               "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"The season."</span>
             </span>}</span>,
@@ -983,8 +969,8 @@
             "<span class="hljs-attribute">season</span>": <span class="hljs-value">{
               "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span></span>,
               "<span class="hljs-attribute">enum</span>": <span class="hljs-value">[
-                <span class="hljs-string">"`W` Winter term"</span>,
-                <span class="hljs-string">"`S` Summer term"</span>
+                <span class="hljs-string">"W"</span>,
+                <span class="hljs-string">"S"</span>
               ]</span>,
               "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"The season."</span>
             </span>}</span>,
@@ -1072,8 +1058,8 @@
             "<span class="hljs-attribute">season</span>": <span class="hljs-value">{
               "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span></span>,
               "<span class="hljs-attribute">enum</span>": <span class="hljs-value">[
-                <span class="hljs-string">"`W` Winter term"</span>,
-                <span class="hljs-string">"`S` Summer term"</span>
+                <span class="hljs-string">"W"</span>,
+                <span class="hljs-string">"S"</span>
               ]</span>,
               "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"The season."</span>
             </span>}</span>,
@@ -1144,8 +1130,8 @@
             "<span class="hljs-attribute">season</span>": <span class="hljs-value">{
               "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span></span>,
               "<span class="hljs-attribute">enum</span>": <span class="hljs-value">[
-                <span class="hljs-string">"`W` Winter term"</span>,
-                <span class="hljs-string">"`S` Summer term"</span>
+                <span class="hljs-string">"W"</span>,
+                <span class="hljs-string">"S"</span>
               ]</span>,
               "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"The season."</span>
             </span>}</span>,
@@ -1220,8 +1206,8 @@
             "<span class="hljs-attribute">season</span>": <span class="hljs-value">{
               "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span></span>,
               "<span class="hljs-attribute">enum</span>": <span class="hljs-value">[
-                <span class="hljs-string">"`W` Winter term"</span>,
-                <span class="hljs-string">"`S` Summer term"</span>
+                <span class="hljs-string">"W"</span>,
+                <span class="hljs-string">"S"</span>
               ]</span>,
               "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"The season."</span>
             </span>}</span>,
@@ -1271,21 +1257,7 @@
 </dd><dt>limit</dt><dd><code>number</code>&nbsp;<span>(optional)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>10</span></span><p>pagination - The number of items per page. Defaults to <code>10</code>.</p>
 </dd><dt>userId</dt><dd><code>number</code>&nbsp;<span>(optional)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>1987</span></span><p>A comma-separated list of user IDs to filter for. This property does not have any functionality if the current user does not have the role <code>admin</code>.</p>
 </dd><dt>status</dt><dd><code>string</code>&nbsp;<span>(optional)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>OD</span></span><p>A comma-separated list of states to filter for.</p>
-<ul>
-<li>
-<p><code>PD</code> Pending</p>
-</li>
-<li>
-<p><code>OD</code> Ordered</p>
-</li>
-<li>
-<p><code>RJ</code> Rejected</p>
-</li>
-<li>
-<p><code>AR</code> Arrived</p>
-</li>
-</ul>
-</dd><dt>orderBy</dt><dd><code>string</code>&nbsp;<span>(optional)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>status</span></span><p>The field to order by. Defaults to no specific order.</p>
+<p class="choices"><strong>Choices:&nbsp;</strong><code>PD</code> <code>OD</code> <code>RJ</code> <code>AR</code> </p></dd><dt>orderBy</dt><dd><code>string</code>&nbsp;<span>(optional)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>status</span></span><p>The field to order by. Defaults to no specific order.</p>
 <ul>
 <li>
 <p><code>status</code> Order by the status.</p>
@@ -1341,7 +1313,7 @@
 <h4>Example URI</h4><div class="definition"><span class="method patch">PATCH</span>&nbsp;<span class="uri"><span class="hostname">https://www.d120.de/studierende/buchaktion/api</span>/orders/<span class="hljs-attribute" title="orderId">5862</span></span></div><div class="title"><strong>URI Parameters</strong><div class="collapse-button show"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><dl class="inner"><dt>orderId</dt><dd><code>number</code>&nbsp;<span class="required">(required)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>5862</span></span><p>The ID of the order.</p>
 </dd></dl></div><div class="title"><strong>Request</strong><div class="collapse-button"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><div class="inner"><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json</span></code></pre><div style="height: 1px;"></div><h5>Body</h5><pre><code>{
   "<span class="hljs-attribute">order</span>": <span class="hljs-value">{
-    "<span class="hljs-attribute">status</span>": <span class="hljs-value"><span class="hljs-string">"`PD` Pending"</span></span>,
+    "<span class="hljs-attribute">status</span>": <span class="hljs-value"><span class="hljs-string">"PD"</span></span>,
     "<span class="hljs-attribute">hint</span>": <span class="hljs-value"><span class="hljs-string">"Enough books available."</span>
   </span>}
 </span>}</code></pre><div style="height: 1px;"></div><h5>Schema</h5><pre><code>{
@@ -1354,10 +1326,10 @@
         "<span class="hljs-attribute">status</span>": <span class="hljs-value">{
           "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span></span>,
           "<span class="hljs-attribute">enum</span>": <span class="hljs-value">[
-            <span class="hljs-string">"`PD` Pending"</span>,
-            <span class="hljs-string">"`OD` Ordered"</span>,
-            <span class="hljs-string">"`RJ` Rejected"</span>,
-            <span class="hljs-string">"`AR` Arrived"</span>
+            <span class="hljs-string">"PD"</span>,
+            <span class="hljs-string">"OD"</span>,
+            <span class="hljs-string">"RJ"</span>,
+            <span class="hljs-string">"AR"</span>
           ]
         </span>}</span>,
         "<span class="hljs-attribute">hint</span>": <span class="hljs-value">{
@@ -1404,10 +1376,10 @@
         "<span class="hljs-attribute">status</span>": <span class="hljs-value">{
           "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span></span>,
           "<span class="hljs-attribute">enum</span>": <span class="hljs-value">[
-            <span class="hljs-string">"`PD` Pending"</span>,
-            <span class="hljs-string">"`OD` Ordered"</span>,
-            <span class="hljs-string">"`RJ` Rejected"</span>,
-            <span class="hljs-string">"`AR` Arrived"</span>
+            <span class="hljs-string">"PD"</span>,
+            <span class="hljs-string">"OD"</span>,
+            <span class="hljs-string">"RJ"</span>,
+            <span class="hljs-string">"AR"</span>
           ]</span>,
           "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"semi-secured - The status of the order."</span>
         </span>}</span>,
@@ -1433,10 +1405,10 @@
             "<span class="hljs-attribute">state</span>": <span class="hljs-value">{
               "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span></span>,
               "<span class="hljs-attribute">enum</span>": <span class="hljs-value">[
-                <span class="hljs-string">"`AC` Accepted"</span>,
-                <span class="hljs-string">"`RJ` Rejected"</span>,
-                <span class="hljs-string">"`PP` Proposed"</span>,
-                <span class="hljs-string">"`OL` Obsolete"</span>
+                <span class="hljs-string">"AC"</span>,
+                <span class="hljs-string">"RJ"</span>,
+                <span class="hljs-string">"PP"</span>,
+                <span class="hljs-string">"OL"</span>
               ]</span>,
               "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"secured - The state of the book."</span>
             </span>}</span>,
