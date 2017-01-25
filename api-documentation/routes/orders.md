@@ -19,10 +19,11 @@
     + limit: `10` (optional, number) - pagination - The number of items per page. Defaults to `10`.
     + userId: `1987` (optional, number) - A comma-separated list of user IDs to filter for. This property does not have any functionality if the current user does not have the role `admin`.
     + status: `OD` (optional, enum[string]) - A comma-separated list of states to filter for.
-        + `PD` Pending
-        + `OD` Ordered
-        + `RJ` Rejected
-        + `AR` Arrived
+        + Members
+            + `PD` - Pending
+            + `OD` - Ordered
+            + `RJ` - Rejected
+            + `AR` - Arrived
     + orderBy: `status` (optional, enum[string]) - The field to order by. Defaults to no specific order.
         + `status` Order by the status.
         + `timeframe` Order by the timeframe.
@@ -82,10 +83,11 @@
     + Attributes
         + order (required)
             + status: `OD` (optional, enum[string])
-                + `PD` Pending
-                + `OD` Ordered
-                + `RJ` Rejected
-                + `AR` Arrived
+                + Members
+                    + `PD` - Pending
+                    + `OD` - Ordered
+                    + `RJ` - Rejected
+                    + `AR` - Arrived
             + hint: `Enough books available.` (optional, string)
 
 

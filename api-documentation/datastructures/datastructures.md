@@ -13,20 +13,22 @@
 + isbn: `9783836218023` (required, isbn) - The ISBN of the book.
 + title: `Java ist auch eine Insel` (required, string) - The title of the book.
 + state: `AC` (enum[string]) - secured - The state of the book.
-    + `AC` Accepted
-    + `RJ` Rejected
-    + `PP` Proposed
-    + `OL` Obsolete
+    + Members
+        + `AC` - Accepted
+        + `RJ` - Rejected
+        + `PP` - Proposed
+        + `OL` - Obsolete
 + author: `Christian Ullenboom` (required, string) - The author of the book.
 + price: `49.90` (number) - secured - The price of the book.
 
 ## order (object)
 + id: `5862` (required, number) - The ID of the order.
 + status: `AR` (enum[string]) - semi-secured - The status of the order.
-    + `PD` Pending
-    + `OD` Ordered
-    + `RJ` Rejected
-    + `AR` Arrived
+    + Members
+        + `PD` - Pending
+        + `OD` - Ordered
+        + `RJ` - Rejected
+        + `AR` - Arrived
 + hint: `Enough books available.` (optional, string) - A hint text including extended information about the status.
 + book (required, book) - The ordered book.
 + student (required, account) - The student who has ordered the book.
@@ -49,8 +51,9 @@
 ## season (object)
 + id: `2156` (required, number) - The ID of the season.
 + season: `W` (required, enum[string]) - The season.
-    + `W` Winter term
-    + `S` Summer term
+    + Members
+        + `W` - Winter term
+        + `S` - Summer term
 + year: `2017` (required, string) - The year of the season.
 
 ## timeframe (object)

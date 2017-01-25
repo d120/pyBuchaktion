@@ -18,10 +18,11 @@
     + isbn: `9783836218023` (optional, isbn) - A comma-separated list of ISBNs to filter for.
     + title: `java` (optional, string) - The title to filter for. Represents a case-insensitive text search.
     + state: `AC` (optional, enum[string]) - A comma-separated list of states to filter for.
-        + `AC` Accepted
-        + `RJ` Rejected
-        + `PP` Proposed
-        + `OL` Obsolete
+        + Members
+            + `AC` - Accepted
+            + `RJ` - Rejected
+            + `PP` - Proposed
+            + `OL` - Obsolete
     + author: `ullenboom` (optional, string) - The author to filter for. Represents a case-insensitive text search.
     + orderBy: `author` (optional, enum[string]) - The field to order by. Defaults to no specific order.
         + `isbn` Order by the ISBN.
@@ -172,10 +173,11 @@
         + isbn: `9783836218023` (optional, isbn)
         + title: `Java ist auch eine Insel` (optional, string)
         + state: `AC` (optional, enum[string])
-            + `AC` Accepted
-            + `RJ` Rejected
-            + `PP` Proposed
-            + `OL` Obsolete
+            + Members
+                + `AC` - Accepted
+                + `RJ` - Rejected
+                + `PP` - Proposed
+                + `OL` - Obsolete
         + author: `Christian Ullenboom` (optional, string)
         + price: `49.90` (optional, number)
 
