@@ -77,11 +77,11 @@ def url_unset(params, key):
 
     return {"url": url}
 
-@register.inclusion_tag('pyBuchaktion/list_size.html')
-def list_sizes(params, current, sizes, default):
+@register.inclusion_tag('pyBuchaktion/list_limits.html')
+def list_limits(params, current, options, default):
     return {
         "params": params,
-        "sizes": sizes,
+        "options": options,
         "default": default,
         "current": current,
     }

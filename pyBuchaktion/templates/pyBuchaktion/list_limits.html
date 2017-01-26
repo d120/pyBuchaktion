@@ -1,0 +1,11 @@
+{% load view_tools %}
+{% for limit in options %}
+    {% if limit != options.0 %}&nbsp;|&nbsp;{% endif %}
+    {% if limit == current %}
+        <b>{{ current }}</b>
+    {% elif limit == default %}
+        <a href="{% url_unset params "limit" %}">{{ limit }}</a>
+    {% else %}
+        <a href="{% url_set params "limit" limit %}">{{ limit }}</a>
+    {% endif %}
+{% endfor %}

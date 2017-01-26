@@ -48,6 +48,8 @@ class Book(models.Model):
         return [v for s, v in self.STATE_CHOICES if s == self.state][0]
     def get_absolute_url(self):
         return reverse("pyBuchaktion:book", kwargs={'book_id': self.pk})
+    def natural_key(self):
+        return { "id": self.id, "isbn": self.isbn_13 }
     class Meta:
         verbose_name = _("book")
         verbose_name_plural = _("books")
@@ -107,6 +109,8 @@ class Student(models.Model):
     # empty until CAS login is figured out
     def __str__(self):
         return '#%d' % (self.id)
+    def natural_key(self):
+        return {"id": self.id}
     class Meta:
         verbose_name = _("student")
         verbose_name_plural = _("students")
@@ -131,6 +135,8 @@ class OrderTimeframe(models.Model):
     )
     def __str__(self):
         return "%s - %s (%s)" % (self.start_date, self.end_date, self.semester)
+    def natural_key(self):
+        return { "from": self.start_date, "to": self.end_date }
     class Meta:
         verbose_name = _("order timeframe")
         verbose_name_plural = _("order timeframes")
@@ -170,6 +176,8 @@ class Semester(models.Model):
             }
         else:
             return _('Summer term 20%(year)d') % {'year': self.year}
+    def natural_key(self):
+        return { "id": self.id, "season": self.season, "year": "20" + str(self.year) }
 
 # A module (e.g. Readings, Exercises, ...)
 class TucanModule(models.Model):
