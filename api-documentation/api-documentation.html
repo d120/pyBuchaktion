@@ -1,0 +1,1708 @@
+<!DOCTYPE html><html><head><meta charset="utf-8"><title>pyBuchaktion</title><link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"><style>@import url('https://fonts.googleapis.com/css?family=Roboto:400,700|Inconsolata|Raleway:200');.hljs-comment,.hljs-title{color:#8e908c}.hljs-variable,.hljs-attribute,.hljs-tag,.hljs-regexp,.ruby .hljs-constant,.xml .hljs-tag .hljs-title,.xml .hljs-pi,.xml .hljs-doctype,.html .hljs-doctype,.css .hljs-id,.css .hljs-class,.css .hljs-pseudo{color:#c82829}.hljs-number,.hljs-preprocessor,.hljs-pragma,.hljs-built_in,.hljs-literal,.hljs-params,.hljs-constant{color:#f5871f}.ruby .hljs-class .hljs-title,.css .hljs-rules .hljs-attribute{color:#eab700}.hljs-string,.hljs-value,.hljs-inheritance,.hljs-header,.ruby .hljs-symbol,.xml .hljs-cdata{color:#718c00}.css .hljs-hexcolor{color:#3e999f}.hljs-function,.python .hljs-decorator,.python .hljs-title,.ruby .hljs-function .hljs-title,.ruby .hljs-title .hljs-keyword,.perl .hljs-sub,.javascript .hljs-title,.coffeescript .hljs-title{color:#4271ae}.hljs-keyword,.javascript .hljs-function{color:#8959a8}.hljs{display:block;background:white;color:#4d4d4c;padding:.5em}.coffeescript .javascript,.javascript .xml,.tex .hljs-formula,.xml .javascript,.xml .vbscript,.xml .css,.xml .hljs-cdata{opacity:.5}.right .hljs-comment{color:#969896}.right .css .hljs-class,.right .css .hljs-id,.right .css .hljs-pseudo,.right .hljs-attribute,.right .hljs-regexp,.right .hljs-tag,.right .hljs-variable,.right .html .hljs-doctype,.right .ruby .hljs-constant,.right .xml .hljs-doctype,.right .xml .hljs-pi,.right .xml .hljs-tag .hljs-title{color:#c66}.right .hljs-built_in,.right .hljs-constant,.right .hljs-literal,.right .hljs-number,.right .hljs-params,.right .hljs-pragma,.right .hljs-preprocessor{color:#de935f}.right .css .hljs-rule .hljs-attribute,.right .ruby .hljs-class .hljs-title{color:#f0c674}.right .hljs-header,.right .hljs-inheritance,.right .hljs-name,.right .hljs-string,.right .hljs-value,.right .ruby .hljs-symbol,.right .xml .hljs-cdata{color:#b5bd68}.right .css .hljs-hexcolor,.right .hljs-title{color:#8abeb7}.right .coffeescript .hljs-title,.right .hljs-function,.right .javascript .hljs-title,.right .perl .hljs-sub,.right .python .hljs-decorator,.right .python .hljs-title,.right .ruby .hljs-function .hljs-title,.right .ruby .hljs-title .hljs-keyword{color:#81a2be}.right .hljs-keyword,.right .javascript .hljs-function{color:#b294bb}.right .hljs{display:block;overflow-x:auto;background:#1d1f21;color:#c5c8c6;padding:.5em;-webkit-text-size-adjust:none}.right .coffeescript .javascript,.right .javascript .xml,.right .tex .hljs-formula,.right .xml .css,.right .xml .hljs-cdata,.right .xml .javascript,.right .xml .vbscript{opacity:.5}body{color:black;background:white;font:400 14px / 1.42 'Roboto',Helvetica,sans-serif}header{border-bottom:1px solid #f2f2f2;margin-bottom:12px}h1,h2,h3,h4,h5{color:black;margin:12px 0}h1 .permalink,h2 .permalink,h3 .permalink,h4 .permalink,h5 .permalink{margin-left:0;opacity:0;transition:opacity .25s ease}h1:hover .permalink,h2:hover .permalink,h3:hover .permalink,h4:hover .permalink,h5:hover .permalink{opacity:1}.triple h1 .permalink,.triple h2 .permalink,.triple h3 .permalink,.triple h4 .permalink,.triple h5 .permalink{opacity:.15}.triple h1:hover .permalink,.triple h2:hover .permalink,.triple h3:hover .permalink,.triple h4:hover .permalink,.triple h5:hover .permalink{opacity:.15}h1{font:200 36px 'Raleway',Helvetica,sans-serif;font-size:36px}h2{font:200 36px 'Raleway',Helvetica,sans-serif;font-size:30px}h3{font-size:100%;text-transform:uppercase}h5{font-size:100%;font-weight:normal}p{margin:0 0 10px}p.choices{line-height:1.6}a{color:#428bca;text-decoration:none}li p{margin:0}hr.split{border:0;height:1px;width:100%;padding-left:6px;margin:12px auto;background-image:linear-gradient(to right, rgba(0,0,0,0) 20%, rgba(0,0,0,0.2) 51.4%, rgba(255,255,255,0.2) 51.4%, rgba(255,255,255,0) 80%)}dl dt{float:left;width:130px;clear:left;text-align:right;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-weight:700}dl dd{margin-left:150px}blockquote{color:rgba(0,0,0,0.5);font-size:15.5px;padding:10px 20px;margin:12px 0;border-left:5px solid #e8e8e8}blockquote p:last-child{margin-bottom:0}pre{background-color:#f5f5f5;padding:12px;border:1px solid #cfcfcf;border-radius:6px;overflow:auto}pre code{color:black;background-color:transparent;padding:0;border:none}code{color:#444;background-color:#f5f5f5;font:'Inconsolata',monospace;padding:1px 4px;border:1px solid #cfcfcf;border-radius:3px}ul,ol{padding-left:2em}table{border-collapse:collapse;border-spacing:0;margin-bottom:12px}table tr:nth-child(2n){background-color:#fafafa}table th,table td{padding:6px 12px;border:1px solid #e6e6e6}.text-muted{opacity:.5}.note,.warning{padding:.3em 1em;margin:1em 0;border-radius:2px;font-size:90%}.note h1,.warning h1,.note h2,.warning h2,.note h3,.warning h3,.note h4,.warning h4,.note h5,.warning h5,.note h6,.warning h6{font-family:200 36px 'Raleway',Helvetica,sans-serif;font-size:135%;font-weight:500}.note p,.warning p{margin:.5em 0}.note{color:black;background-color:#f0f6fb;border-left:4px solid #428bca}.note h1,.note h2,.note h3,.note h4,.note h5,.note h6{color:#428bca}.warning{color:black;background-color:#fbf1f0;border-left:4px solid #c9302c}.warning h1,.warning h2,.warning h3,.warning h4,.warning h5,.warning h6{color:#c9302c}header{margin-top:24px}nav{position:fixed;top:24px;bottom:0;overflow-y:auto}nav .resource-group{padding:0}nav .resource-group .heading{position:relative}nav .resource-group .heading .chevron{position:absolute;top:12px;right:12px;opacity:.5}nav .resource-group .heading a{display:block;color:black;opacity:.7;border-left:2px solid transparent;margin:0}nav .resource-group .heading a:hover{text-decoration:none;background-color:bad-color;border-left:2px solid black}nav ul{list-style-type:none;padding-left:0}nav ul a{display:block;font-size:13px;color:rgba(0,0,0,0.7);padding:8px 12px;border-top:1px solid #d9d9d9;border-left:2px solid transparent;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}nav ul a:hover{text-decoration:none;background-color:bad-color;border-left:2px solid black}nav ul>li{margin:0}nav ul>li:first-child{margin-top:-12px}nav ul>li:last-child{margin-bottom:-12px}nav ul ul a{padding-left:24px}nav ul ul li{margin:0}nav ul ul li:first-child{margin-top:0}nav ul ul li:last-child{margin-bottom:0}nav>div>div>ul>li:first-child>a{border-top:none}.preload *{transition:none !important}.pull-left{float:left}.pull-right{float:right}.badge{display:inline-block;float:right;min-width:10px;min-height:14px;padding:3px 7px;font-size:12px;color:#000;background-color:#f2f2f2;border-radius:10px;margin:-2px 0}.badge.get{color:#70bbe1;background-color:#d9edf7}.badge.head{color:#70bbe1;background-color:#d9edf7}.badge.options{color:#70bbe1;background-color:#d9edf7}.badge.put{color:#f0db70;background-color:#fcf8e3}.badge.patch{color:#f0db70;background-color:#fcf8e3}.badge.post{color:#93cd7c;background-color:#dff0d8}.badge.delete{color:#ce8383;background-color:#f2dede}.collapse-button{float:right}.collapse-button .close{display:none;color:#428bca;cursor:pointer}.collapse-button .open{color:#428bca;cursor:pointer}.collapse-button.show .close{display:inline}.collapse-button.show .open{display:none}.collapse-content{max-height:0;overflow:hidden;transition:max-height .3s ease-in-out}nav{width:220px}.container{max-width:940px;margin-left:auto;margin-right:auto}.container .row .content{margin-left:244px;width:696px}.container .row:after{content:'';display:block;clear:both}.container-fluid nav{width:22%}.container-fluid .row .content{margin-left:24%}.container-fluid.triple nav{width:16.5%;padding-right:1px}.container-fluid.triple .row .content{position:relative;margin-left:16.5%;padding-left:24px}.middle:before,.middle:after{content:'';display:table}.middle:after{clear:both}.middle{box-sizing:border-box;width:51.5%;padding-right:12px}.right{box-sizing:border-box;float:right;width:48.5%;padding-left:12px}.right a{color:#428bca}.right h1,.right h2,.right h3,.right h4,.right h5,.right p,.right div{color:white}.right pre{background-color:#1d1f21;border:1px solid #1d1f21}.right pre code{color:#c5c8c6}.right .description{margin-top:12px}.triple .resource-heading{font-size:125%}.definition{margin-top:12px;margin-bottom:12px}.definition .method{font-weight:bold}.definition .method.get{color:#2e8ab8}.definition .method.head{color:#2e8ab8}.definition .method.options{color:#2e8ab8}.definition .method.post{color:#56b82e}.definition .method.put{color:#b8a22e}.definition .method.patch{color:#b8a22e}.definition .method.delete{color:#b82e2e}.definition .uri{word-break:break-all;word-wrap:break-word}.definition .hostname{opacity:.5}.example-names{background-color:#eee;padding:12px;border-radius:6px}.example-names .tab-button{cursor:pointer;color:black;border:1px solid #ddd;padding:6px;margin-left:12px}.example-names .tab-button.active{background-color:#d5d5d5}.right .example-names{background-color:#444}.right .example-names .tab-button{color:white;border:1px solid #666;border-radius:6px}.right .example-names .tab-button.active{background-color:#5e5e5e}#nav-background{position:fixed;left:0;top:0;bottom:0;width:16.5%;padding-right:14.4px;background-color:#fbfbfb;border-right:1px solid #f0f0f0;z-index:-1}#right-panel-background{position:absolute;right:-12px;top:-12px;bottom:-12px;width:48.6%;background-color:#333;z-index:-1}@media (max-width:1200px){nav{width:198px}.container{max-width:840px}.container .row .content{margin-left:224px;width:606px}}@media (max-width:992px){nav{width:169.4px}.container{max-width:720px}.container .row .content{margin-left:194px;width:526px}}@media (max-width:768px){nav{display:none}.container{width:95%;max-width:none}.container .row .content,.container-fluid .row .content,.container-fluid.triple .row .content{margin-left:auto;margin-right:auto;width:95%}#nav-background{display:none}#right-panel-background{width:48.6%}}.back-to-top{position:fixed;z-index:1;bottom:0;right:24px;padding:4px 8px;color:rgba(0,0,0,0.5);background-color:#f2f2f2;text-decoration:none !important;border-top:1px solid #d9d9d9;border-left:1px solid #d9d9d9;border-right:1px solid #d9d9d9;border-top-left-radius:3px;border-top-right-radius:3px}.resource-group{padding:12px;margin-bottom:12px;background-color:white;border:1px solid #d9d9d9;border-radius:6px}.resource-group h2.group-heading,.resource-group .heading a{padding:12px;margin:-12px -12px 12px -12px;background-color:#f2f2f2;border-bottom:1px solid #d9d9d9;border-top-left-radius:6px;border-top-right-radius:6px;white-space:nowrap;text-overflow:ellipsis;overflow:hidden}.triple .content .resource-group{padding:0;border:none}.triple .content .resource-group h2.group-heading,.triple .content .resource-group .heading a{margin:0 0 12px 0;border:1px solid #d9d9d9}nav .resource-group .heading a{padding:12px;margin-bottom:0}nav .resource-group .collapse-content{padding:0}.action{margin-bottom:12px;padding:12px 12px 0 12px;overflow:hidden;border:1px solid transparent;border-radius:6px}.action h4.action-heading{padding:6px 12px;margin:-12px -12px 12px -12px;border-bottom:1px solid transparent;border-top-left-radius:6px;border-top-right-radius:6px;overflow:hidden}.action h4.action-heading .name{float:right;font-weight:normal;padding:6px 0}.action h4.action-heading .method{padding:6px 12px;margin-right:12px;border-radius:3px;display:inline-block}.action h4.action-heading .method.get{color:#000;background-color:#337ab7}.action h4.action-heading .method.head{color:#000;background-color:#337ab7}.action h4.action-heading .method.options{color:#000;background-color:#337ab7}.action h4.action-heading .method.put{color:#000;background-color:#ed9c28}.action h4.action-heading .method.patch{color:#000;background-color:#ed9c28}.action h4.action-heading .method.post{color:#000;background-color:#5cb85c}.action h4.action-heading .method.delete{color:#000;background-color:#d9534f}.action h4.action-heading code{color:#444;background-color:#f5f5f5;border-color:#cfcfcf;font-weight:normal;word-break:break-all;display:inline-block;margin-top:2px}.action dl.inner{padding-bottom:2px}.action .title{border-bottom:1px solid white;margin:0 -12px -1px -12px;padding:12px}.action.get{border-color:#bce8f1}.action.get h4.action-heading{color:#337ab7;background:#d9edf7;border-bottom-color:#bce8f1}.action.head{border-color:#bce8f1}.action.head h4.action-heading{color:#337ab7;background:#d9edf7;border-bottom-color:#bce8f1}.action.options{border-color:#bce8f1}.action.options h4.action-heading{color:#337ab7;background:#d9edf7;border-bottom-color:#bce8f1}.action.post{border-color:#d6e9c6}.action.post h4.action-heading{color:#5cb85c;background:#dff0d8;border-bottom-color:#d6e9c6}.action.put{border-color:#faebcc}.action.put h4.action-heading{color:#ed9c28;background:#fcf8e3;border-bottom-color:#faebcc}.action.patch{border-color:#faebcc}.action.patch h4.action-heading{color:#ed9c28;background:#fcf8e3;border-bottom-color:#faebcc}.action.delete{border-color:#ebccd1}.action.delete h4.action-heading{color:#d9534f;background:#f2dede;border-bottom-color:#ebccd1}</style></head><body class="preload"><a href="#top" class="text-muted back-to-top"><i class="fa fa-toggle-up"></i>&nbsp;Back to top</a><div class="container"><div class="row"><nav><div class="resource-group"><div class="heading"><div class="chevron"><i class="open fa fa-angle-down"></i></div><a href="#data-structures">Data Structures</a></div><div class="collapse-content"><ul><li><a href="#header-classifier-explanation">Classifier Explanation</a></li><li><a href="#header-account">Account</a></li><li><a href="#header-basic">Basic</a></li><li><a href="#header-date">Date</a></li><li><a href="#header-isbn-13">ISBN-13</a></li><li><a href="#header-tucan-id">TUCaN-ID</a></li><li><a href="#header-book">Book</a></li><li><a href="#header-book-1">Book</a></li><li><a href="#header-book-(reduced)">Book (Reduced)</a></li><li><a href="#header-order">Order</a></li><li><a href="#header-book-2">Book</a></li><li><a href="#header-timeframe">Timeframe</a></li></ul></div></div><div class="resource-group"><div class="heading"><div class="chevron"><i class="open fa fa-angle-down"></i></div><a href="#account-1">Account</a></div><div class="collapse-content"><ul><li><a href="#account-account-management">Account Management</a><ul><li><a href="#account-account-management-get"><span class="badge get"><i class="fa fa-arrow-down"></i></span>Retrieve Account</a></li><li><a href="#account-account-management-patch"><span class="badge patch"><i class="fa fa-pencil"></i></span>Modify Account</a></li><li><a href="#account-account-management-delete"><span class="badge delete"><i class="fa fa-times"></i></span>Delete Account Data</a></li><li><a href="#account-account-management-get-1"><span class="badge get"><i class="fa fa-arrow-down"></i></span>Retrieve Orders</a></li></ul></li></ul></div></div><div class="resource-group"><div class="heading"><div class="chevron"><i class="open fa fa-angle-down"></i></div><a href="#books">Books</a></div><div class="collapse-content"><ul><li><a href="#books-multiple-books">Multiple Books</a><ul><li><a href="#books-multiple-books-get"><span class="badge get"><i class="fa fa-arrow-down"></i></span>Retrieve Books</a></li><li><a href="#books-multiple-books-put"><span class="badge put"><i class="fa fa-pencil"></i></span>Propose Book</a></li></ul></li><li><a href="#books-specific-book">Specific Book</a><ul><li><a href="#books-specific-book-get"><span class="badge get"><i class="fa fa-arrow-down"></i></span>Retrieve Book</a></li><li><a href="#books-specific-book-patch"><span class="badge patch"><i class="fa fa-pencil"></i></span>Modify Book</a></li><li><a href="#books-specific-book-delete"><span class="badge delete"><i class="fa fa-times"></i></span>Delete Book</a></li></ul></li></ul></div></div><div class="resource-group"><div class="heading"><div class="chevron"><i class="open fa fa-angle-down"></i></div><a href="#modules">Modules</a></div><div class="collapse-content"><ul><li><a href="#modules-multiple-modules">Multiple Modules</a><ul><li><a href="#modules-multiple-modules-get"><span class="badge get"><i class="fa fa-arrow-down"></i></span>Retrieve Modules</a></li><li><a href="#modules-multiple-modules-put"><span class="badge put"><i class="fa fa-pencil"></i></span>Create Module</a></li></ul></li><li><a href="#modules-specific-moudle">Specific Moudle</a><ul><li><a href="#modules-specific-moudle-get"><span class="badge get"><i class="fa fa-arrow-down"></i></span>Retrieve Module</a></li><li><a href="#modules-specific-moudle-patch"><span class="badge patch"><i class="fa fa-pencil"></i></span>Modify Module</a></li><li><a href="#modules-specific-moudle-delete"><span class="badge delete"><i class="fa fa-times"></i></span>Delete Module</a></li></ul></li></ul></div></div><div class="resource-group"><div class="heading"><div class="chevron"><i class="open fa fa-angle-down"></i></div><a href="#orders">Orders</a></div><div class="collapse-content"><ul><li><a href="#orders-multiple-orders-get"><span class="badge get"><i class="fa fa-arrow-down"></i></span>Retrieve Orders</a></li><li><a href="#orders-specific-order">Specific Order</a><ul><li><a href="#orders-specific-order-patch"><span class="badge patch"><i class="fa fa-pencil"></i></span>Modify Order</a></li><li><a href="#orders-specific-order-delete"><span class="badge delete"><i class="fa fa-times"></i></span>Delete Order</a></li></ul></li></ul></div></div><p style="text-align: center; word-wrap: break-word;"><a href="https://www.d120.de/studierende/buchaktion/api">https://www.d120.de/studierende/buchaktion/api</a></p></nav><div class="content"><header><h1 id="top">pyBuchaktion</h1></header><p>pyBuchaktion REST API Documentation Version 1.0</p>
+<section id="data-structures" class="resource-group"><h2 class="group-heading">Data Structures <a href="#data-structures" class="permalink">&para;</a></h2><h2 id="header-classifier-explanation">Classifier Explanation <a class="permalink" href="#header-classifier-explanation" aria-hidden="true">¶</a></h2>
+<p>The ‘Classifier’ describes how an attribute has to be applied. The following classifiers are available and can be combined (with some exceptions):</p>
+<ul>
+<li>
+<p><code>optional</code> The attribute does not have to exit. Cannot be combined with <code>required</code>.</p>
+</li>
+<li>
+<p><code>required</code> The attribute has to exist. Cannot be combined with <code>optional</code>.</p>
+</li>
+<li>
+<p><code>secured</code> The attribute may only be read by administrators. Cannot be combined with <code>semi-secured</code>.</p>
+</li>
+<li>
+<p><code>semi-secured</code> The attribute may only be read by administrators and users that are strongly coupled to the object. Cannot be combined with <code>secured</code>.</p>
+</li>
+<li>
+<p><code>transient</code> The attribute is not stored and is calculated on demand by the server. Therefore it is not required to set this attribute when sending an object to the server.</p>
+</li>
+</ul>
+<p>If neither <code>optional</code> nor <code>required</code> are set either <code>secured</code> or <code>semi-secured</code> have to be set.</p>
+<p>If either <code>secured</code> or <code>semi-secured</code> have been set, the following rules apply:</p>
+<ul>
+<li>
+<p>If the user is not permitted to see the attribute it must not be available (really not set, not even <code>null</code> or <code>undefined</code>).</p>
+</li>
+<li>
+<p>If the user is permitted to see the attribute and neither <code>optional</code> nor <code>required</code> are set it must be available.</p>
+</li>
+<li>
+<p>If the user is permitted to see the attribute and either <code>optional</code> or <code>required</code> are set, these rules apply.</p>
+</li>
+</ul>
+<h2 id="header-account">Account <a class="permalink" href="#header-account" aria-hidden="true">¶</a></h2>
+<!-- TODO: To be updated. -->
+<table>
+<thead>
+<tr>
+<th>Attribute</th>
+<th>Type</th>
+<th>Classifier</th>
+<th>Description</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>id</td>
+<td>number</td>
+<td>required</td>
+<td>The ID of the account.</td>
+<td><code>1987</code></td>
+</tr>
+</tbody>
+</table>
+<h2 id="header-basic">Basic <a class="permalink" href="#header-basic" aria-hidden="true">¶</a></h2>
+<h3 id="header-date">Date <a class="permalink" href="#header-date" aria-hidden="true">¶</a></h3>
+<p>A date encoded in the format <code>YYYY-MM-DD</code>.</p>
+<h3 id="header-isbn-13">ISBN-13 <a class="permalink" href="#header-isbn-13" aria-hidden="true">¶</a></h3>
+<p>An ISBN-13 without the dashes.</p>
+<h3 id="header-tucan-id">TUCaN-ID <a class="permalink" href="#header-tucan-id" aria-hidden="true">¶</a></h3>
+<p>A course ID of TUCaN (format: <code>XX-XX-XXXX-XX</code> where <code>X</code> is any alphanumeric character).</p>
+<h2 id="header-book">Book <a class="permalink" href="#header-book" aria-hidden="true">¶</a></h2>
+<table>
+<thead>
+<tr>
+<th>Attribute</th>
+<th>Type</th>
+<th>Classifier</th>
+<th>Description</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>id</td>
+<td>number</td>
+<td>required</td>
+<td>The ID of the book.</td>
+<td><code>2444</code></td>
+</tr>
+<tr>
+<td>isbn</td>
+<td>isbn</td>
+<td>required</td>
+<td>The status of the order.</td>
+<td><code>9783836218023</code></td>
+</tr>
+<tr>
+<td>title</td>
+<td>string</td>
+<td>required</td>
+<td>The title of the book.</td>
+<td><code>Java ist auch eine Insel</code></td>
+</tr>
+<tr>
+<td>state</td>
+<td>enum[string] { <code>AC</code> Accepted, <code>RJ</code> Rejected, <code>PP</code> Proposed, <code>OL</code> Obsolete }</td>
+<td></td>
+<td>The state of the book.</td>
+<td><code>AC</code></td>
+</tr>
+<tr>
+<td>author</td>
+<td>string</td>
+<td>required</td>
+<td>The author of the book.</td>
+<td><code>Christian Ullenboom</code></td>
+</tr>
+<tr>
+<td>price</td>
+<td>number</td>
+<td></td>
+<td>The price of the book.</td>
+<td><code>49.90</code></td>
+</tr>
+</tbody>
+</table>
+<h2 id="header-book-1">Book <a class="permalink" href="#header-book-1" aria-hidden="true">¶</a></h2>
+<table>
+<thead>
+<tr>
+<th>Attribute</th>
+<th>Type</th>
+<th>Classifier</th>
+<th>Description</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>id</td>
+<td>number</td>
+<td>required</td>
+<td>The ID of the module.</td>
+<td><code>3234</code></td>
+</tr>
+<tr>
+<td>cid</td>
+<td>tucanid</td>
+<td>required</td>
+<td>The course ID of TUCaN.</td>
+<td><code>20-00-0004-iv</code></td>
+</tr>
+<tr>
+<td>name</td>
+<td>string</td>
+<td>required</td>
+<td>The name of the course.</td>
+<td><code>Functional and Object-oriented Programming Concepts</code></td>
+</tr>
+<tr>
+<td>lastOffered</td>
+<td>season</td>
+<td>required</td>
+<td>The season this course was last offered.</td>
+<td>See <code>Season</code>.</td>
+</tr>
+<tr>
+<td>literature</td>
+<td>array[book]</td>
+<td>required</td>
+<td>The recommened literature of this course.</td>
+<td>[ See <code>Book</code>. ]</td>
+</tr>
+</tbody>
+</table>
+<h2 id="header-book-(reduced)">Book (Reduced) <a class="permalink" href="#header-book-(reduced)" aria-hidden="true">¶</a></h2>
+<p>Like <code>Book</code>, but <code>literature</code> does not exist.</p>
+<h2 id="header-order">Order <a class="permalink" href="#header-order" aria-hidden="true">¶</a></h2>
+<table>
+<thead>
+<tr>
+<th>Attribute</th>
+<th>Type</th>
+<th>Classifier</th>
+<th>Description</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>id</td>
+<td>number</td>
+<td>required</td>
+<td>The ID of the order.</td>
+<td><code>5862</code></td>
+</tr>
+<tr>
+<td>status</td>
+<td>enum[string] { <code>PD</code> Pending, <code>OD</code> Ordered, <code>RJ</code> Rejected, <code>AR</code> Arrived }</td>
+<td>semi-secured</td>
+<td>The status of the order.</td>
+<td><code>AR</code></td>
+</tr>
+<tr>
+<td>hint</td>
+<td>string</td>
+<td>optional</td>
+<td>A hint text including extended information about the status.</td>
+<td><code>Enough books available.</code></td>
+</tr>
+<tr>
+<td>book</td>
+<td>book</td>
+<td>required</td>
+<td>The ordered book.</td>
+<td>See <code>Book</code>.</td>
+</tr>
+<tr>
+<td>student</td>
+<td>account</td>
+<td>required</td>
+<td>The student who has ordered the book.</td>
+<td>See <code>Account</code>.</td>
+</tr>
+<tr>
+<td>timeframe</td>
+<td>timeframe</td>
+<td>required</td>
+<td>The timeframe in which the book order can be changed/cancelled. At the end of the timeframe the order will be processed.</td>
+<td>See <code>Timeframe</code>.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="header-book-2">Book <a class="permalink" href="#header-book-2" aria-hidden="true">¶</a></h2>
+<table>
+<thead>
+<tr>
+<th>Attribute</th>
+<th>Type</th>
+<th>Classifier</th>
+<th>Description</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>id</td>
+<td>number</td>
+<td>required</td>
+<td>The ID of the season.</td>
+<td><code>2156</code></td>
+</tr>
+<tr>
+<td>season</td>
+<td>enum[string] { <code>W</code> Winter term, <code>S</code> Summer term }</td>
+<td>required</td>
+<td>The season.</td>
+<td><code>W</code></td>
+</tr>
+<tr>
+<td>year</td>
+<td>string</td>
+<td>required</td>
+<td>The year of the season.</td>
+<td><code>2017</code></td>
+</tr>
+</tbody>
+</table>
+<h2 id="header-timeframe">Timeframe <a class="permalink" href="#header-timeframe" aria-hidden="true">¶</a></h2>
+<table>
+<thead>
+<tr>
+<th>Attribute</th>
+<th>Type</th>
+<th>Classifier</th>
+<th>Description</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>from</td>
+<td>date</td>
+<td>required</td>
+<td>The from-date of the timeframe (inclusive).</td>
+<td><code>2017-02-01</code></td>
+</tr>
+<tr>
+<td>to</td>
+<td>date</td>
+<td>required</td>
+<td>The to-date of the timeframe (inclusive).</td>
+<td><code>2017-03-01</code></td>
+</tr>
+</tbody>
+</table>
+</section><section id="account-1" class="resource-group"><h2 class="group-heading">Account <a href="#account-1" class="permalink">&para;</a></h2><div id="account-account-management" class="resource"><h3 class="resource-heading">Account Management <a href="#account-account-management" class="permalink">&nbsp;&para;</a></h3><p><strong>Notice:</strong> An account is bound to the currently logged in user. Therefore these operations may not return the same data for different users.</p>
+<div id="account-account-management-get" class="action get"><h4 class="action-heading"><div class="name">Retrieve Account</div><a href="#account-account-management-get" class="method get">GET</a><code class="uri">/account</code></h4><p><strong>Functionality:</strong> Retrieves the current account.</p>
+<p><strong>Security:</strong> Requires an authenticated user.</p>
+<h4>Example URI</h4><div class="definition"><span class="method get">GET</span>&nbsp;<span class="uri"><span class="hostname">https://www.d120.de/studierende/buchaktion/api</span>/account</span></div><div class="title"><strong>Response&nbsp;&nbsp;<code>200</code></strong><div class="collapse-button"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><div class="inner"><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json; charset=utf-8</span></code></pre><div style="height: 1px;"></div><h5>Body</h5><pre><code>{
+  "<span class="hljs-attribute">account</span>": <span class="hljs-value">{
+    "<span class="hljs-attribute">id</span>": <span class="hljs-value"><span class="hljs-number">987</span>
+  </span>}
+</span>}</code></pre><div style="height: 1px;"></div><h5>Schema</h5><pre><code>{
+  "<span class="hljs-attribute">$schema</span>": <span class="hljs-value"><span class="hljs-string">"http://json-schema.org/draft-04/schema#"</span></span>,
+  "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"object"</span></span>,
+  "<span class="hljs-attribute">properties</span>": <span class="hljs-value">{
+    "<span class="hljs-attribute">account</span>": <span class="hljs-value">{
+      "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"object"</span></span>,
+      "<span class="hljs-attribute">properties</span>": <span class="hljs-value">{
+        "<span class="hljs-attribute">id</span>": <span class="hljs-value">{
+          "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"number"</span></span>,
+          "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"The ID of the account."</span>
+        </span>}
+      </span>}</span>,
+      "<span class="hljs-attribute">required</span>": <span class="hljs-value">[
+        <span class="hljs-string">"id"</span>
+      ]
+    </span>}
+  </span>}</span>,
+  "<span class="hljs-attribute">required</span>": <span class="hljs-value">[
+    <span class="hljs-string">"account"</span>
+  ]
+</span>}</code></pre><div style="height: 1px;"></div></div></div><div class="title"><strong>Response&nbsp;&nbsp;<code>401</code></strong><div class="collapse-button"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><div class="inner"><div class="description"><p><strong>Send if:</strong> The user is not authenticated.</p>
+</div></div></div><div class="title"><strong>Response&nbsp;&nbsp;<code>403</code></strong><div class="collapse-button"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><div class="inner"><div class="description"><p><strong>Send if:</strong> The user does not have the required permissions.</p>
+</div></div></div></div><div id="account-account-management-patch" class="action patch"><h4 class="action-heading"><div class="name">Modify Account</div><a href="#account-account-management-patch" class="method patch">PATCH</a><code class="uri">/account</code></h4><p><strong>Functionality:</strong> Changes the given properties of the current account.</p>
+<p><strong>Security:</strong> Requires an authenticated user.</p>
+<h4>Example URI</h4><div class="definition"><span class="method patch">PATCH</span>&nbsp;<span class="uri"><span class="hostname">https://www.d120.de/studierende/buchaktion/api</span>/account</span></div><div class="title"><strong>Request</strong><div class="collapse-button"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><div class="inner"><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json</span></code></pre><div style="height: 1px;"></div><h5>Body</h5><pre><code>{
+  "<span class="hljs-attribute">account</span>": <span class="hljs-value"><span class="hljs-string">"Hello, world!"</span>
+</span>}</code></pre><div style="height: 1px;"></div><h5>Schema</h5><pre><code>{
+  "<span class="hljs-attribute">$schema</span>": <span class="hljs-value"><span class="hljs-string">"http://json-schema.org/draft-04/schema#"</span></span>,
+  "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"object"</span></span>,
+  "<span class="hljs-attribute">properties</span>": <span class="hljs-value">{
+    "<span class="hljs-attribute">account</span>": <span class="hljs-value">{
+      "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span></span>,
+      "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"&lt;!-- TODO: To be updated. --&gt;"</span>
+    </span>}
+  </span>}</span>,
+  "<span class="hljs-attribute">required</span>": <span class="hljs-value">[
+    <span class="hljs-string">"account"</span>
+  ]
+</span>}</code></pre><div style="height: 1px;"></div></div></div><div class="title"><strong>Response&nbsp;&nbsp;<code>200</code></strong><div class="collapse-button"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><div class="inner"><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json; charset=utf-8</span></code></pre><div style="height: 1px;"></div><h5>Body</h5><pre><code>{
+  "<span class="hljs-attribute">account</span>": <span class="hljs-value">{
+    "<span class="hljs-attribute">id</span>": <span class="hljs-value"><span class="hljs-number">987</span>
+  </span>}
+</span>}</code></pre><div style="height: 1px;"></div><h5>Schema</h5><pre><code>{
+  "<span class="hljs-attribute">$schema</span>": <span class="hljs-value"><span class="hljs-string">"http://json-schema.org/draft-04/schema#"</span></span>,
+  "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"object"</span></span>,
+  "<span class="hljs-attribute">properties</span>": <span class="hljs-value">{
+    "<span class="hljs-attribute">account</span>": <span class="hljs-value">{
+      "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"object"</span></span>,
+      "<span class="hljs-attribute">properties</span>": <span class="hljs-value">{
+        "<span class="hljs-attribute">id</span>": <span class="hljs-value">{
+          "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"number"</span></span>,
+          "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"The ID of the account."</span>
+        </span>}
+      </span>}</span>,
+      "<span class="hljs-attribute">required</span>": <span class="hljs-value">[
+        <span class="hljs-string">"id"</span>
+      ]
+    </span>}
+  </span>}</span>,
+  "<span class="hljs-attribute">required</span>": <span class="hljs-value">[
+    <span class="hljs-string">"account"</span>
+  ]
+</span>}</code></pre><div style="height: 1px;"></div></div></div><div class="title"><strong>Response&nbsp;&nbsp;<code>401</code></strong><div class="collapse-button"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><div class="inner"><div class="description"><p><strong>Send if:</strong> The user is not authenticated.</p>
+</div></div></div><div class="title"><strong>Response&nbsp;&nbsp;<code>403</code></strong><div class="collapse-button"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><div class="inner"><div class="description"><p><strong>Send if:</strong> The user does not have the required permissions.</p>
+</div></div></div><div class="title"><strong>Response&nbsp;&nbsp;<code>422</code></strong><div class="collapse-button"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><div class="inner"><div class="description"><p><strong>Send if:</strong> The given item cannot be processed (e.g. if it is invalid).</p>
+</div></div></div></div><div id="account-account-management-delete" class="action delete"><h4 class="action-heading"><div class="name">Delete Account Data</div><a href="#account-account-management-delete" class="method delete">DELETE</a><code class="uri">/account</code></h4><p><strong>Functionality:</strong> Deletes the data of the current account.</p>
+<p><strong>Security:</strong> Requires an authenticated user.</p>
+<h4>Example URI</h4><div class="definition"><span class="method delete">DELETE</span>&nbsp;<span class="uri"><span class="hostname">https://www.d120.de/studierende/buchaktion/api</span>/account</span></div><div class="title"><strong>Response&nbsp;&nbsp;<code>204</code></strong><div class="collapse-button"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><div class="inner"><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json; charset=utf-8</span></code></pre><div style="height: 1px;"></div></div></div><div class="title"><strong>Response&nbsp;&nbsp;<code>401</code></strong><div class="collapse-button"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><div class="inner"><div class="description"><p><strong>Send if:</strong> The user is not authenticated.</p>
+</div></div></div><div class="title"><strong>Response&nbsp;&nbsp;<code>403</code></strong><div class="collapse-button"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><div class="inner"><div class="description"><p><strong>Send if:</strong> The user does not have the required permissions.</p>
+</div></div></div><div class="title"><strong>Response&nbsp;&nbsp;<code>422</code></strong><div class="collapse-button"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><div class="inner"><div class="description"><p><strong>Send if:</strong> The given item cannot be processed (e.g. if it is invalid).</p>
+</div></div></div></div><div id="account-account-management-get-1" class="action get"><h4 class="action-heading"><div class="name">Retrieve Orders</div><a href="#account-account-management-get-1" class="method get">GET</a><code class="uri">/account/orders{?page,limit,status,orderBy}</code></h4><p><strong>Functionality:</strong> Retrieves the orders of the current account matching the given criteria.</p>
+<p><strong>Security:</strong> Requires an authenticated user.</p>
+<h4>Example URI</h4><div class="definition"><span class="method get">GET</span>&nbsp;<span class="uri"><span class="hostname">https://www.d120.de/studierende/buchaktion/api</span>/account/orders?<span class="hljs-attribute">page=</span><span class="hljs-literal">1</span>&<span class="hljs-attribute">limit=</span><span class="hljs-literal">10</span>&<span class="hljs-attribute">status=</span><span class="hljs-literal">OD</span>&<span class="hljs-attribute">orderBy=</span><span class="hljs-literal">status</span></span></div><div class="title"><strong>URI Parameters</strong><div class="collapse-button show"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><dl class="inner"><dt>page</dt><dd><code>number</code>&nbsp;<span>(optional)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>1</span></span><p>pagination - The page to return. Defaults to <code>1</code>.</p>
+</dd><dt>limit</dt><dd><code>number</code>&nbsp;<span>(optional)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>10</span></span><p>pagination - The number of items per page. Defaults to <code>10</code>.</p>
+</dd><dt>status</dt><dd><code>string</code>&nbsp;<span>(optional)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>OD</span></span><p>A comma-separated list of states to filter for.</p>
+<ul>
+<li>
+<p><code>PD</code> Pending</p>
+</li>
+<li>
+<p><code>OD</code> Ordered</p>
+</li>
+<li>
+<p><code>RJ</code> Rejected</p>
+</li>
+<li>
+<p><code>AR</code> Arrived</p>
+</li>
+</ul>
+</dd><dt>orderBy</dt><dd><code>string</code>&nbsp;<span>(optional)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>status</span></span><p>The field to order by. Defaults to no specific order.</p>
+<ul>
+<li>
+<p><code>status</code> Order by the status.</p>
+</li>
+<li>
+<p><code>timeframe</code> Order by the timeframe.</p>
+</li>
+</ul>
+</dd></dl></div><div class="title"><strong>Response&nbsp;&nbsp;<code>200</code></strong><div class="collapse-button"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><div class="inner"><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json; charset=utf-8</span></code></pre><div style="height: 1px;"></div><h5>Body</h5><pre><code>{
+  "<span class="hljs-attribute">orders</span>": <span class="hljs-value">[
+    {
+      "<span class="hljs-attribute">id</span>": <span class="hljs-value"><span class="hljs-number">5862</span></span>,
+      "<span class="hljs-attribute">status</span>": <span class="hljs-value"><span class="hljs-string">"AR"</span></span>,
+      "<span class="hljs-attribute">hint</span>": <span class="hljs-value"><span class="hljs-string">"Enough books available."</span></span>,
+      "<span class="hljs-attribute">book</span>": <span class="hljs-value">{
+        "<span class="hljs-attribute">id</span>": <span class="hljs-value"><span class="hljs-number">2444</span></span>,
+        "<span class="hljs-attribute">isbn</span>": <span class="hljs-value"><span class="hljs-string">"9783836218023"</span></span>,
+        "<span class="hljs-attribute">title</span>": <span class="hljs-value"><span class="hljs-string">"Java ist auch eine Insel"</span></span>,
+        "<span class="hljs-attribute">state</span>": <span class="hljs-value"><span class="hljs-string">"AC"</span></span>,
+        "<span class="hljs-attribute">author</span>": <span class="hljs-value"><span class="hljs-string">"Christian Ullenboom"</span></span>,
+        "<span class="hljs-attribute">price</span>": <span class="hljs-value"><span class="hljs-number">49.9</span>
+      </span>}</span>,
+      "<span class="hljs-attribute">student</span>": <span class="hljs-value">{
+        "<span class="hljs-attribute">id</span>": <span class="hljs-value"><span class="hljs-number">987</span>
+      </span>}</span>,
+      "<span class="hljs-attribute">timeframe</span>": <span class="hljs-value">{
+        "<span class="hljs-attribute">from</span>": <span class="hljs-value"><span class="hljs-string">"2017-02-01"</span></span>,
+        "<span class="hljs-attribute">to</span>": <span class="hljs-value"><span class="hljs-string">"2017-03-01"</span>
+      </span>}
+    </span>}
+  ]</span>,
+  "<span class="hljs-attribute">total</span>": <span class="hljs-value"><span class="hljs-number">10</span>
+</span>}</code></pre><div style="height: 1px;"></div><h5>Schema</h5><pre><code>{
+  "<span class="hljs-attribute">$schema</span>": <span class="hljs-value"><span class="hljs-string">"http://json-schema.org/draft-04/schema#"</span></span>,
+  "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"object"</span></span>,
+  "<span class="hljs-attribute">properties</span>": <span class="hljs-value">{
+    "<span class="hljs-attribute">orders</span>": <span class="hljs-value">{
+      "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"array"</span>
+    </span>}</span>,
+    "<span class="hljs-attribute">total</span>": <span class="hljs-value">{
+      "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"number"</span>
+    </span>}
+  </span>}</span>,
+  "<span class="hljs-attribute">required</span>": <span class="hljs-value">[
+    <span class="hljs-string">"orders"</span>,
+    <span class="hljs-string">"total"</span>
+  ]
+</span>}</code></pre><div style="height: 1px;"></div></div></div><div class="title"><strong>Response&nbsp;&nbsp;<code>400</code></strong><div class="collapse-button"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><div class="inner"><div class="description"><p><strong>Send if:</strong> Wrong parameters where sent from the user.</p>
+</div></div></div><div class="title"><strong>Response&nbsp;&nbsp;<code>401</code></strong><div class="collapse-button"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><div class="inner"><div class="description"><p><strong>Send if:</strong> The user is not authenticated.</p>
+</div></div></div><div class="title"><strong>Response&nbsp;&nbsp;<code>403</code></strong><div class="collapse-button"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><div class="inner"><div class="description"><p><strong>Send if:</strong> The user does not have the required permissions.</p>
+</div></div></div></div></div></section><section id="books" class="resource-group"><h2 class="group-heading">Books <a href="#books" class="permalink">&para;</a></h2><div id="books-multiple-books" class="resource"><h3 class="resource-heading">Multiple Books <a href="#books-multiple-books" class="permalink">&nbsp;&para;</a></h3><div id="books-multiple-books-get" class="action get"><h4 class="action-heading"><div class="name">Retrieve Books</div><a href="#books-multiple-books-get" class="method get">GET</a><code class="uri">/books{?page,limit,isbn,title,state,author,orderBy}</code></h4><p><strong>Functionality:</strong> Retrieves all books matching the given criteria.</p>
+<h4>Example URI</h4><div class="definition"><span class="method get">GET</span>&nbsp;<span class="uri"><span class="hostname">https://www.d120.de/studierende/buchaktion/api</span>/books?<span class="hljs-attribute">page=</span><span class="hljs-literal">1</span>&<span class="hljs-attribute">limit=</span><span class="hljs-literal">10</span>&<span class="hljs-attribute">isbn=</span><span class="hljs-literal">9783836218023</span>&<span class="hljs-attribute">title=</span><span class="hljs-literal">java</span>&<span class="hljs-attribute">state=</span><span class="hljs-literal">AC</span>&<span class="hljs-attribute">author=</span><span class="hljs-literal">ullenboom</span>&<span class="hljs-attribute">orderBy=</span><span class="hljs-literal">author</span></span></div><div class="title"><strong>URI Parameters</strong><div class="collapse-button show"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><dl class="inner"><dt>page</dt><dd><code>number</code>&nbsp;<span>(optional)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>1</span></span><p>pagination - The page to return. Defaults to <code>1</code>.</p>
+</dd><dt>limit</dt><dd><code>number</code>&nbsp;<span>(optional)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>10</span></span><p>pagination - The number of items per page. Defaults to <code>10</code>.</p>
+</dd><dt>isbn</dt><dd><code>isbn</code>&nbsp;<span>(optional)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>9783836218023</span></span><p>A comma-separated list of ISBNs to filter for.</p>
+</dd><dt>title</dt><dd><code>string</code>&nbsp;<span>(optional)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>java</span></span><p>The title to filter for. Represents a case-insensitive text search.</p>
+</dd><dt>state</dt><dd><code>string</code>&nbsp;<span>(optional)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>AC</span></span><p>A comma-separated list of states to filter for.</p>
+<p class="choices"><strong>Choices:&nbsp;</strong><code>AC</code> <code>RJ</code> <code>PP</code> <code>OL</code> </p></dd><dt>author</dt><dd><code>string</code>&nbsp;<span>(optional)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>ullenboom</span></span><p>The author to filter for. Represents a case-insensitive text search.</p>
+</dd><dt>orderBy</dt><dd><code>string</code>&nbsp;<span>(optional)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>author</span></span><p>The field to order by. Defaults to no specific order.</p>
+<ul>
+<li>
+<p><code>isbn</code> Order by the ISBN.</p>
+</li>
+<li>
+<p><code>title</code> Order by the title.</p>
+</li>
+<li>
+<p><code>state</code> Order by the state.</p>
+</li>
+<li>
+<p><code>author</code> Order by the author.</p>
+</li>
+</ul>
+</dd></dl></div><div class="title"><strong>Response&nbsp;&nbsp;<code>200</code></strong><div class="collapse-button"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><div class="inner"><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json; charset=utf-8</span></code></pre><div style="height: 1px;"></div><h5>Body</h5><pre><code>{
+  "<span class="hljs-attribute">books</span>": <span class="hljs-value">[
+    {
+      "<span class="hljs-attribute">id</span>": <span class="hljs-value"><span class="hljs-number">2444</span></span>,
+      "<span class="hljs-attribute">isbn</span>": <span class="hljs-value"><span class="hljs-string">"9783836218023"</span></span>,
+      "<span class="hljs-attribute">title</span>": <span class="hljs-value"><span class="hljs-string">"Java ist auch eine Insel"</span></span>,
+      "<span class="hljs-attribute">state</span>": <span class="hljs-value"><span class="hljs-string">"AC"</span></span>,
+      "<span class="hljs-attribute">author</span>": <span class="hljs-value"><span class="hljs-string">"Christian Ullenboom"</span></span>,
+      "<span class="hljs-attribute">price</span>": <span class="hljs-value"><span class="hljs-number">49.9</span>
+    </span>}
+  ]</span>,
+  "<span class="hljs-attribute">total</span>": <span class="hljs-value"><span class="hljs-number">10</span>
+</span>}</code></pre><div style="height: 1px;"></div><h5>Schema</h5><pre><code>{
+  "<span class="hljs-attribute">$schema</span>": <span class="hljs-value"><span class="hljs-string">"http://json-schema.org/draft-04/schema#"</span></span>,
+  "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"object"</span></span>,
+  "<span class="hljs-attribute">properties</span>": <span class="hljs-value">{
+    "<span class="hljs-attribute">books</span>": <span class="hljs-value">{
+      "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"array"</span>
+    </span>}</span>,
+    "<span class="hljs-attribute">total</span>": <span class="hljs-value">{
+      "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"number"</span>
+    </span>}
+  </span>}</span>,
+  "<span class="hljs-attribute">required</span>": <span class="hljs-value">[
+    <span class="hljs-string">"books"</span>,
+    <span class="hljs-string">"total"</span>
+  ]
+</span>}</code></pre><div style="height: 1px;"></div></div></div><div class="title"><strong>Response&nbsp;&nbsp;<code>400</code></strong><div class="collapse-button"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><div class="inner"><div class="description"><p><strong>Send if:</strong> Wrong parameters where sent from the user.</p>
+</div></div></div></div><div id="books-multiple-books-put" class="action put"><h4 class="action-heading"><div class="name">Propose Book</div><a href="#books-multiple-books-put" class="method put">PUT</a><code class="uri">/books</code></h4><p><strong>Functionality:</strong> Proposes a new book that has to be approved by an administrator. If this endpoint.</p>
+<p><strong>Security:</strong> Requires an authenticated user.</p>
+<h4>Example URI</h4><div class="definition"><span class="method put">PUT</span>&nbsp;<span class="uri"><span class="hostname">https://www.d120.de/studierende/buchaktion/api</span>/books</span></div><div class="title"><strong>Request&nbsp;&nbsp;<code>Create by ISBN</code></strong><div class="collapse-button"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><div class="inner"><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json</span></code></pre><div style="height: 1px;"></div><h5>Body</h5><pre><code>{
+  "<span class="hljs-attribute">book</span>": <span class="hljs-value">{
+    "<span class="hljs-attribute">isbn</span>": <span class="hljs-value"><span class="hljs-string">"9783836218023"</span>
+  </span>}
+</span>}</code></pre><div style="height: 1px;"></div><h5>Schema</h5><pre><code>{
+  "<span class="hljs-attribute">$schema</span>": <span class="hljs-value"><span class="hljs-string">"http://json-schema.org/draft-04/schema#"</span></span>,
+  "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"object"</span></span>,
+  "<span class="hljs-attribute">properties</span>": <span class="hljs-value">{
+    "<span class="hljs-attribute">book</span>": <span class="hljs-value">{
+      "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"object"</span></span>,
+      "<span class="hljs-attribute">properties</span>": <span class="hljs-value">{
+        "<span class="hljs-attribute">isbn</span>": <span class="hljs-value">{
+          "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span>
+        </span>}
+      </span>}
+    </span>}
+  </span>}</span>,
+  "<span class="hljs-attribute">required</span>": <span class="hljs-value">[
+    <span class="hljs-string">"book"</span>
+  ]
+</span>}</code></pre><div style="height: 1px;"></div></div></div><div class="title"><strong>Request&nbsp;&nbsp;<code>Create by Author/Title</code></strong><div class="collapse-button"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><div class="inner"><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json</span></code></pre><div style="height: 1px;"></div><h5>Body</h5><pre><code>{
+  "<span class="hljs-attribute">book</span>": <span class="hljs-value">{
+    "<span class="hljs-attribute">title</span>": <span class="hljs-value"><span class="hljs-string">"Java ist auch eine Insel"</span></span>,
+    "<span class="hljs-attribute">author</span>": <span class="hljs-value"><span class="hljs-string">"Christian Ullenboom"</span>
+  </span>}
+</span>}</code></pre><div style="height: 1px;"></div><h5>Schema</h5><pre><code>{
+  "<span class="hljs-attribute">$schema</span>": <span class="hljs-value"><span class="hljs-string">"http://json-schema.org/draft-04/schema#"</span></span>,
+  "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"object"</span></span>,
+  "<span class="hljs-attribute">properties</span>": <span class="hljs-value">{
+    "<span class="hljs-attribute">book</span>": <span class="hljs-value">{
+      "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"object"</span></span>,
+      "<span class="hljs-attribute">properties</span>": <span class="hljs-value">{
+        "<span class="hljs-attribute">title</span>": <span class="hljs-value">{
+          "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span>
+        </span>}</span>,
+        "<span class="hljs-attribute">author</span>": <span class="hljs-value">{
+          "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span>
+        </span>}
+      </span>}
+    </span>}
+  </span>}</span>,
+  "<span class="hljs-attribute">required</span>": <span class="hljs-value">[
+    <span class="hljs-string">"book"</span>
+  ]
+</span>}</code></pre><div style="height: 1px;"></div></div></div><div class="title"><strong>Response&nbsp;&nbsp;<code>201</code></strong><div class="collapse-button"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><div class="inner"><div class="description"><p><strong>Send if:</strong> The book was created an accepted (this is only possible if the proposal was sent by an administrator).</p>
+</div><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json; charset=utf-8</span></code></pre><div style="height: 1px;"></div><h5>Body</h5><pre><code>{
+  "<span class="hljs-attribute">book</span>": <span class="hljs-value">{
+    "<span class="hljs-attribute">id</span>": <span class="hljs-value"><span class="hljs-number">2444</span></span>,
+    "<span class="hljs-attribute">isbn</span>": <span class="hljs-value"><span class="hljs-string">"9783836218023"</span></span>,
+    "<span class="hljs-attribute">title</span>": <span class="hljs-value"><span class="hljs-string">"Java ist auch eine Insel"</span></span>,
+    "<span class="hljs-attribute">state</span>": <span class="hljs-value"><span class="hljs-string">"AC"</span></span>,
+    "<span class="hljs-attribute">author</span>": <span class="hljs-value"><span class="hljs-string">"Christian Ullenboom"</span></span>,
+    "<span class="hljs-attribute">price</span>": <span class="hljs-value"><span class="hljs-number">49.9</span>
+  </span>}
+</span>}</code></pre><div style="height: 1px;"></div><h5>Schema</h5><pre><code>{
+  "<span class="hljs-attribute">$schema</span>": <span class="hljs-value"><span class="hljs-string">"http://json-schema.org/draft-04/schema#"</span></span>,
+  "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"object"</span></span>,
+  "<span class="hljs-attribute">properties</span>": <span class="hljs-value">{
+    "<span class="hljs-attribute">book</span>": <span class="hljs-value">{
+      "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"object"</span></span>,
+      "<span class="hljs-attribute">properties</span>": <span class="hljs-value">{
+        "<span class="hljs-attribute">id</span>": <span class="hljs-value">{
+          "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"number"</span></span>,
+          "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"The ID of the book."</span>
+        </span>}</span>,
+        "<span class="hljs-attribute">isbn</span>": <span class="hljs-value">{
+          "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span></span>,
+          "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"The ISBN of the book."</span>
+        </span>}</span>,
+        "<span class="hljs-attribute">title</span>": <span class="hljs-value">{
+          "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span></span>,
+          "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"The title of the book."</span>
+        </span>}</span>,
+        "<span class="hljs-attribute">state</span>": <span class="hljs-value">{
+          "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span></span>,
+          "<span class="hljs-attribute">enum</span>": <span class="hljs-value">[
+            <span class="hljs-string">"AC"</span>,
+            <span class="hljs-string">"RJ"</span>,
+            <span class="hljs-string">"PP"</span>,
+            <span class="hljs-string">"OL"</span>
+          ]</span>,
+          "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"secured - The state of the book."</span>
+        </span>}</span>,
+        "<span class="hljs-attribute">author</span>": <span class="hljs-value">{
+          "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span></span>,
+          "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"The author of the book."</span>
+        </span>}</span>,
+        "<span class="hljs-attribute">price</span>": <span class="hljs-value">{
+          "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"number"</span></span>,
+          "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"secured - The price of the book."</span>
+        </span>}
+      </span>}</span>,
+      "<span class="hljs-attribute">required</span>": <span class="hljs-value">[
+        <span class="hljs-string">"id"</span>,
+        <span class="hljs-string">"isbn"</span>,
+        <span class="hljs-string">"title"</span>,
+        <span class="hljs-string">"author"</span>
+      ]
+    </span>}
+  </span>}</span>,
+  "<span class="hljs-attribute">required</span>": <span class="hljs-value">[
+    <span class="hljs-string">"book"</span>
+  ]
+</span>}</code></pre><div style="height: 1px;"></div></div></div><div class="title"><strong>Response&nbsp;&nbsp;<code>202</code></strong><div class="collapse-button"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><div class="inner"><div class="description"><p><strong>Send if:</strong> The book was created and is waiting for approval.</p>
+</div><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json; charset=utf-8</span></code></pre><div style="height: 1px;"></div><h5>Body</h5><pre><code>{
+  "<span class="hljs-attribute">book</span>": <span class="hljs-value">{
+    "<span class="hljs-attribute">id</span>": <span class="hljs-value"><span class="hljs-number">2444</span></span>,
+    "<span class="hljs-attribute">isbn</span>": <span class="hljs-value"><span class="hljs-string">"9783836218023"</span></span>,
+    "<span class="hljs-attribute">title</span>": <span class="hljs-value"><span class="hljs-string">"Java ist auch eine Insel"</span></span>,
+    "<span class="hljs-attribute">state</span>": <span class="hljs-value"><span class="hljs-string">"AC"</span></span>,
+    "<span class="hljs-attribute">author</span>": <span class="hljs-value"><span class="hljs-string">"Christian Ullenboom"</span></span>,
+    "<span class="hljs-attribute">price</span>": <span class="hljs-value"><span class="hljs-number">49.9</span>
+  </span>}
+</span>}</code></pre><div style="height: 1px;"></div><h5>Schema</h5><pre><code>{
+  "<span class="hljs-attribute">$schema</span>": <span class="hljs-value"><span class="hljs-string">"http://json-schema.org/draft-04/schema#"</span></span>,
+  "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"object"</span></span>,
+  "<span class="hljs-attribute">properties</span>": <span class="hljs-value">{
+    "<span class="hljs-attribute">book</span>": <span class="hljs-value">{
+      "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"object"</span></span>,
+      "<span class="hljs-attribute">properties</span>": <span class="hljs-value">{
+        "<span class="hljs-attribute">id</span>": <span class="hljs-value">{
+          "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"number"</span></span>,
+          "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"The ID of the book."</span>
+        </span>}</span>,
+        "<span class="hljs-attribute">isbn</span>": <span class="hljs-value">{
+          "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span></span>,
+          "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"The ISBN of the book."</span>
+        </span>}</span>,
+        "<span class="hljs-attribute">title</span>": <span class="hljs-value">{
+          "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span></span>,
+          "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"The title of the book."</span>
+        </span>}</span>,
+        "<span class="hljs-attribute">state</span>": <span class="hljs-value">{
+          "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span></span>,
+          "<span class="hljs-attribute">enum</span>": <span class="hljs-value">[
+            <span class="hljs-string">"AC"</span>,
+            <span class="hljs-string">"RJ"</span>,
+            <span class="hljs-string">"PP"</span>,
+            <span class="hljs-string">"OL"</span>
+          ]</span>,
+          "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"secured - The state of the book."</span>
+        </span>}</span>,
+        "<span class="hljs-attribute">author</span>": <span class="hljs-value">{
+          "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span></span>,
+          "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"The author of the book."</span>
+        </span>}</span>,
+        "<span class="hljs-attribute">price</span>": <span class="hljs-value">{
+          "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"number"</span></span>,
+          "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"secured - The price of the book."</span>
+        </span>}
+      </span>}</span>,
+      "<span class="hljs-attribute">required</span>": <span class="hljs-value">[
+        <span class="hljs-string">"id"</span>,
+        <span class="hljs-string">"isbn"</span>,
+        <span class="hljs-string">"title"</span>,
+        <span class="hljs-string">"author"</span>
+      ]
+    </span>}
+  </span>}</span>,
+  "<span class="hljs-attribute">required</span>": <span class="hljs-value">[
+    <span class="hljs-string">"book"</span>
+  ]
+</span>}</code></pre><div style="height: 1px;"></div></div></div><div class="title"><strong>Response&nbsp;&nbsp;<code>401</code></strong><div class="collapse-button"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><div class="inner"><div class="description"><p><strong>Send if:</strong> The user is not authenticated.</p>
+</div></div></div><div class="title"><strong>Response&nbsp;&nbsp;<code>403</code></strong><div class="collapse-button"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><div class="inner"><div class="description"><p><strong>Send if:</strong> The user does not have the required permissions.</p>
+</div></div></div><div class="title"><strong>Response&nbsp;&nbsp;<code>404</code></strong><div class="collapse-button"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><div class="inner"><div class="description"><p><strong>Send if:</strong> The specified book was not found.</p>
+</div></div></div><div class="title"><strong>Response&nbsp;&nbsp;<code>409</code></strong><div class="collapse-button"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><div class="inner"><div class="description"><p><strong>Send if:</strong> The book already exists.</p>
+</div></div></div><div class="title"><strong>Response&nbsp;&nbsp;<code>422</code></strong><div class="collapse-button"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><div class="inner"><div class="description"><p><strong>Send if:</strong> The given item cannot be processed (e.g. if it is invalid).</p>
+</div></div></div></div></div><div id="books-specific-book" class="resource"><h3 class="resource-heading">Specific Book <a href="#books-specific-book" class="permalink">&nbsp;&para;</a></h3><div id="books-specific-book-get" class="action get"><h4 class="action-heading"><div class="name">Retrieve Book</div><a href="#books-specific-book-get" class="method get">GET</a><code class="uri">/books/{bookId}</code></h4><p><strong>Functionality:</strong> Retrieves the specified book.</p>
+<h4>Example URI</h4><div class="definition"><span class="method get">GET</span>&nbsp;<span class="uri"><span class="hostname">https://www.d120.de/studierende/buchaktion/api</span>/books/<span class="hljs-attribute" title="bookId">2444</span></span></div><div class="title"><strong>URI Parameters</strong><div class="collapse-button show"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><dl class="inner"><dt>bookId</dt><dd><code>number</code>&nbsp;<span class="required">(required)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>2444</span></span><p>The ID of the book.</p>
+</dd></dl></div><div class="title"><strong>Response&nbsp;&nbsp;<code>200</code></strong><div class="collapse-button"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><div class="inner"><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json; charset=utf-8</span></code></pre><div style="height: 1px;"></div><h5>Body</h5><pre><code>{
+  "<span class="hljs-attribute">book</span>": <span class="hljs-value">{
+    "<span class="hljs-attribute">id</span>": <span class="hljs-value"><span class="hljs-number">2444</span></span>,
+    "<span class="hljs-attribute">isbn</span>": <span class="hljs-value"><span class="hljs-string">"9783836218023"</span></span>,
+    "<span class="hljs-attribute">title</span>": <span class="hljs-value"><span class="hljs-string">"Java ist auch eine Insel"</span></span>,
+    "<span class="hljs-attribute">state</span>": <span class="hljs-value"><span class="hljs-string">"AC"</span></span>,
+    "<span class="hljs-attribute">author</span>": <span class="hljs-value"><span class="hljs-string">"Christian Ullenboom"</span></span>,
+    "<span class="hljs-attribute">price</span>": <span class="hljs-value"><span class="hljs-number">49.9</span>
+  </span>}
+</span>}</code></pre><div style="height: 1px;"></div><h5>Schema</h5><pre><code>{
+  "<span class="hljs-attribute">$schema</span>": <span class="hljs-value"><span class="hljs-string">"http://json-schema.org/draft-04/schema#"</span></span>,
+  "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"object"</span></span>,
+  "<span class="hljs-attribute">properties</span>": <span class="hljs-value">{
+    "<span class="hljs-attribute">book</span>": <span class="hljs-value">{
+      "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"object"</span></span>,
+      "<span class="hljs-attribute">properties</span>": <span class="hljs-value">{
+        "<span class="hljs-attribute">id</span>": <span class="hljs-value">{
+          "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"number"</span></span>,
+          "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"The ID of the book."</span>
+        </span>}</span>,
+        "<span class="hljs-attribute">isbn</span>": <span class="hljs-value">{
+          "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span></span>,
+          "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"The ISBN of the book."</span>
+        </span>}</span>,
+        "<span class="hljs-attribute">title</span>": <span class="hljs-value">{
+          "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span></span>,
+          "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"The title of the book."</span>
+        </span>}</span>,
+        "<span class="hljs-attribute">state</span>": <span class="hljs-value">{
+          "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span></span>,
+          "<span class="hljs-attribute">enum</span>": <span class="hljs-value">[
+            <span class="hljs-string">"AC"</span>,
+            <span class="hljs-string">"RJ"</span>,
+            <span class="hljs-string">"PP"</span>,
+            <span class="hljs-string">"OL"</span>
+          ]</span>,
+          "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"secured - The state of the book."</span>
+        </span>}</span>,
+        "<span class="hljs-attribute">author</span>": <span class="hljs-value">{
+          "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span></span>,
+          "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"The author of the book."</span>
+        </span>}</span>,
+        "<span class="hljs-attribute">price</span>": <span class="hljs-value">{
+          "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"number"</span></span>,
+          "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"secured - The price of the book."</span>
+        </span>}
+      </span>}</span>,
+      "<span class="hljs-attribute">required</span>": <span class="hljs-value">[
+        <span class="hljs-string">"id"</span>,
+        <span class="hljs-string">"isbn"</span>,
+        <span class="hljs-string">"title"</span>,
+        <span class="hljs-string">"author"</span>
+      ]
+    </span>}
+  </span>}</span>,
+  "<span class="hljs-attribute">required</span>": <span class="hljs-value">[
+    <span class="hljs-string">"book"</span>
+  ]
+</span>}</code></pre><div style="height: 1px;"></div></div></div><div class="title"><strong>Response&nbsp;&nbsp;<code>404</code></strong><div class="collapse-button"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><div class="inner"><div class="description"><p><strong>Send if:</strong> The specified book was not found</p>
+</div></div></div></div><div id="books-specific-book-patch" class="action patch"><h4 class="action-heading"><div class="name">Modify Book</div><a href="#books-specific-book-patch" class="method patch">PATCH</a><code class="uri">/books/{bookId}</code></h4><p><strong>Functionality:</strong> Changes the given properties of the specified book.</p>
+<p><strong>Security:</strong> Requires an authenticated user with the role <code>admin</code>.</p>
+<h4>Example URI</h4><div class="definition"><span class="method patch">PATCH</span>&nbsp;<span class="uri"><span class="hostname">https://www.d120.de/studierende/buchaktion/api</span>/books/<span class="hljs-attribute" title="bookId">2444</span></span></div><div class="title"><strong>URI Parameters</strong><div class="collapse-button show"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><dl class="inner"><dt>bookId</dt><dd><code>number</code>&nbsp;<span class="required">(required)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>2444</span></span><p>The ID of the book.</p>
+</dd></dl></div><div class="title"><strong>Request</strong><div class="collapse-button"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><div class="inner"><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json</span></code></pre><div style="height: 1px;"></div><h5>Body</h5><pre><code>{
+  "<span class="hljs-attribute">isbn</span>": <span class="hljs-value"><span class="hljs-string">"9783836218023"</span></span>,
+  "<span class="hljs-attribute">title</span>": <span class="hljs-value"><span class="hljs-string">"Java ist auch eine Insel"</span></span>,
+  "<span class="hljs-attribute">state</span>": <span class="hljs-value"><span class="hljs-string">"AC"</span></span>,
+  "<span class="hljs-attribute">author</span>": <span class="hljs-value"><span class="hljs-string">"Christian Ullenboom"</span></span>,
+  "<span class="hljs-attribute">price</span>": <span class="hljs-value"><span class="hljs-number">49.9</span>
+</span>}</code></pre><div style="height: 1px;"></div><h5>Schema</h5><pre><code>{
+  "<span class="hljs-attribute">$schema</span>": <span class="hljs-value"><span class="hljs-string">"http://json-schema.org/draft-04/schema#"</span></span>,
+  "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"object"</span></span>,
+  "<span class="hljs-attribute">properties</span>": <span class="hljs-value">{
+    "<span class="hljs-attribute">isbn</span>": <span class="hljs-value">{
+      "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span>
+    </span>}</span>,
+    "<span class="hljs-attribute">title</span>": <span class="hljs-value">{
+      "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span>
+    </span>}</span>,
+    "<span class="hljs-attribute">state</span>": <span class="hljs-value">{
+      "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span></span>,
+      "<span class="hljs-attribute">enum</span>": <span class="hljs-value">[
+        <span class="hljs-string">"AC"</span>,
+        <span class="hljs-string">"RJ"</span>,
+        <span class="hljs-string">"PP"</span>,
+        <span class="hljs-string">"OL"</span>
+      ]
+    </span>}</span>,
+    "<span class="hljs-attribute">author</span>": <span class="hljs-value">{
+      "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span>
+    </span>}</span>,
+    "<span class="hljs-attribute">price</span>": <span class="hljs-value">{
+      "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"number"</span>
+    </span>}
+  </span>}
+</span>}</code></pre><div style="height: 1px;"></div></div></div><div class="title"><strong>Response&nbsp;&nbsp;<code>200</code></strong><div class="collapse-button"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><div class="inner"><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json; charset=utf-8</span></code></pre><div style="height: 1px;"></div><h5>Body</h5><pre><code>{
+  "<span class="hljs-attribute">book</span>": <span class="hljs-value">{
+    "<span class="hljs-attribute">id</span>": <span class="hljs-value"><span class="hljs-number">2444</span></span>,
+    "<span class="hljs-attribute">isbn</span>": <span class="hljs-value"><span class="hljs-string">"9783836218023"</span></span>,
+    "<span class="hljs-attribute">title</span>": <span class="hljs-value"><span class="hljs-string">"Java ist auch eine Insel"</span></span>,
+    "<span class="hljs-attribute">state</span>": <span class="hljs-value"><span class="hljs-string">"AC"</span></span>,
+    "<span class="hljs-attribute">author</span>": <span class="hljs-value"><span class="hljs-string">"Christian Ullenboom"</span></span>,
+    "<span class="hljs-attribute">price</span>": <span class="hljs-value"><span class="hljs-number">49.9</span>
+  </span>}
+</span>}</code></pre><div style="height: 1px;"></div><h5>Schema</h5><pre><code>{
+  "<span class="hljs-attribute">$schema</span>": <span class="hljs-value"><span class="hljs-string">"http://json-schema.org/draft-04/schema#"</span></span>,
+  "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"object"</span></span>,
+  "<span class="hljs-attribute">properties</span>": <span class="hljs-value">{
+    "<span class="hljs-attribute">book</span>": <span class="hljs-value">{
+      "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"object"</span></span>,
+      "<span class="hljs-attribute">properties</span>": <span class="hljs-value">{
+        "<span class="hljs-attribute">id</span>": <span class="hljs-value">{
+          "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"number"</span></span>,
+          "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"The ID of the book."</span>
+        </span>}</span>,
+        "<span class="hljs-attribute">isbn</span>": <span class="hljs-value">{
+          "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span></span>,
+          "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"The ISBN of the book."</span>
+        </span>}</span>,
+        "<span class="hljs-attribute">title</span>": <span class="hljs-value">{
+          "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span></span>,
+          "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"The title of the book."</span>
+        </span>}</span>,
+        "<span class="hljs-attribute">state</span>": <span class="hljs-value">{
+          "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span></span>,
+          "<span class="hljs-attribute">enum</span>": <span class="hljs-value">[
+            <span class="hljs-string">"AC"</span>,
+            <span class="hljs-string">"RJ"</span>,
+            <span class="hljs-string">"PP"</span>,
+            <span class="hljs-string">"OL"</span>
+          ]</span>,
+          "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"secured - The state of the book."</span>
+        </span>}</span>,
+        "<span class="hljs-attribute">author</span>": <span class="hljs-value">{
+          "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span></span>,
+          "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"The author of the book."</span>
+        </span>}</span>,
+        "<span class="hljs-attribute">price</span>": <span class="hljs-value">{
+          "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"number"</span></span>,
+          "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"secured - The price of the book."</span>
+        </span>}
+      </span>}</span>,
+      "<span class="hljs-attribute">required</span>": <span class="hljs-value">[
+        <span class="hljs-string">"id"</span>,
+        <span class="hljs-string">"isbn"</span>,
+        <span class="hljs-string">"title"</span>,
+        <span class="hljs-string">"author"</span>
+      ]
+    </span>}
+  </span>}</span>,
+  "<span class="hljs-attribute">required</span>": <span class="hljs-value">[
+    <span class="hljs-string">"book"</span>
+  ]
+</span>}</code></pre><div style="height: 1px;"></div></div></div><div class="title"><strong>Response&nbsp;&nbsp;<code>401</code></strong><div class="collapse-button"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><div class="inner"><div class="description"><p><strong>Send if:</strong> The user is not authenticated.</p>
+</div></div></div><div class="title"><strong>Response&nbsp;&nbsp;<code>403</code></strong><div class="collapse-button"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><div class="inner"><div class="description"><p><strong>Send if:</strong> The user does not have the required permissions.</p>
+</div></div></div><div class="title"><strong>Response&nbsp;&nbsp;<code>404</code></strong><div class="collapse-button"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><div class="inner"><div class="description"><p><strong>Send if:</strong> The specified book was not found</p>
+</div></div></div><div class="title"><strong>Response&nbsp;&nbsp;<code>422</code></strong><div class="collapse-button"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><div class="inner"><div class="description"><p><strong>Send if:</strong> The given item cannot be processed (e.g. if it is invalid).</p>
+</div></div></div></div><div id="books-specific-book-delete" class="action delete"><h4 class="action-heading"><div class="name">Delete Book</div><a href="#books-specific-book-delete" class="method delete">DELETE</a><code class="uri">/books/{bookId}</code></h4><p><strong>Functionality:</strong> Deletes the specified book.</p>
+<p><strong>Security:</strong> Requires an authenticated user with the role <code>admin</code>.</p>
+<h4>Example URI</h4><div class="definition"><span class="method delete">DELETE</span>&nbsp;<span class="uri"><span class="hostname">https://www.d120.de/studierende/buchaktion/api</span>/books/<span class="hljs-attribute" title="bookId">2444</span></span></div><div class="title"><strong>URI Parameters</strong><div class="collapse-button show"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><dl class="inner"><dt>bookId</dt><dd><code>number</code>&nbsp;<span class="required">(required)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>2444</span></span><p>The ID of the book.</p>
+</dd></dl></div><div class="title"><strong>Response&nbsp;&nbsp;<code>204</code></strong><div class="collapse-button"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><div class="inner"><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json; charset=utf-8</span></code></pre><div style="height: 1px;"></div></div></div><div class="title"><strong>Response&nbsp;&nbsp;<code>401</code></strong><div class="collapse-button"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><div class="inner"><div class="description"><p><strong>Send if:</strong> The user is not authenticated.</p>
+</div></div></div><div class="title"><strong>Response&nbsp;&nbsp;<code>403</code></strong><div class="collapse-button"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><div class="inner"><div class="description"><p><strong>Send if:</strong> The user does not have the required permissions.</p>
+</div></div></div><div class="title"><strong>Response&nbsp;&nbsp;<code>404</code></strong><div class="collapse-button"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><div class="inner"><div class="description"><p><strong>Send if:</strong> The specified book was not found</p>
+</div></div></div><div class="title"><strong>Response&nbsp;&nbsp;<code>422</code></strong><div class="collapse-button"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><div class="inner"><div class="description"><p><strong>Send if:</strong> The given item cannot be processed (e.g. if it is invalid).</p>
+</div></div></div></div></div></section><section id="modules" class="resource-group"><h2 class="group-heading">Modules <a href="#modules" class="permalink">&para;</a></h2><div id="modules-multiple-modules" class="resource"><h3 class="resource-heading">Multiple Modules <a href="#modules-multiple-modules" class="permalink">&nbsp;&para;</a></h3><div id="modules-multiple-modules-get" class="action get"><h4 class="action-heading"><div class="name">Retrieve Modules</div><a href="#modules-multiple-modules-get" class="method get">GET</a><code class="uri">/modules{?page,limit,cid,name}</code></h4><p><strong>Functionality:</strong> Retrieves all modules matching the given criteria.</p>
+<h4>Example URI</h4><div class="definition"><span class="method get">GET</span>&nbsp;<span class="uri"><span class="hostname">https://www.d120.de/studierende/buchaktion/api</span>/modules?<span class="hljs-attribute">page=</span><span class="hljs-literal">1</span>&<span class="hljs-attribute">limit=</span><span class="hljs-literal">10</span>&<span class="hljs-attribute">cid=</span><span class="hljs-literal">20-00-0004-iv</span>&<span class="hljs-attribute">name=</span><span class="hljs-literal">programming</span></span></div><div class="title"><strong>URI Parameters</strong><div class="collapse-button show"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><dl class="inner"><dt>page</dt><dd><code>number</code>&nbsp;<span>(optional)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>1</span></span><p>pagination - The page to return. Defaults to <code>1</code>.</p>
+</dd><dt>limit</dt><dd><code>number</code>&nbsp;<span>(optional)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>10</span></span><p>pagination - The number of items per page. Defaults to <code>10</code>.</p>
+</dd><dt>cid</dt><dd><code>tucanid</code>&nbsp;<span>(optional)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>20-00-0004-iv</span></span><p>A comma-separated list of TUCaN course IDs to filter for.</p>
+</dd><dt>name</dt><dd><code>string</code>&nbsp;<span>(optional)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>programming</span></span><p>The course name to filter for. Represents a case-insensitive text search.</p>
+</dd></dl></div><div class="title"><strong>Response&nbsp;&nbsp;<code>200</code></strong><div class="collapse-button"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><div class="inner"><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json; charset=utf-8</span></code></pre><div style="height: 1px;"></div><h5>Body</h5><pre><code>{
+  "<span class="hljs-attribute">modules</span>": <span class="hljs-value">[
+    {
+      "<span class="hljs-attribute">id</span>": <span class="hljs-value"><span class="hljs-number">3234</span></span>,
+      "<span class="hljs-attribute">cid</span>": <span class="hljs-value"><span class="hljs-string">"20-00-0004-iv"</span></span>,
+      "<span class="hljs-attribute">name</span>": <span class="hljs-value"><span class="hljs-string">"Functional and Object-oriented Programming Concepts"</span></span>,
+      "<span class="hljs-attribute">lastOffered</span>": <span class="hljs-value">{
+        "<span class="hljs-attribute">id</span>": <span class="hljs-value"><span class="hljs-number">2156</span></span>,
+        "<span class="hljs-attribute">season</span>": <span class="hljs-value"><span class="hljs-string">"W"</span></span>,
+        "<span class="hljs-attribute">year</span>": <span class="hljs-value"><span class="hljs-string">"2017"</span>
+      </span>}
+    </span>}
+  ]</span>,
+  "<span class="hljs-attribute">total</span>": <span class="hljs-value"><span class="hljs-number">0</span>
+</span>}</code></pre><div style="height: 1px;"></div><h5>Schema</h5><pre><code>{
+  "<span class="hljs-attribute">$schema</span>": <span class="hljs-value"><span class="hljs-string">"http://json-schema.org/draft-04/schema#"</span></span>,
+  "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"object"</span></span>,
+  "<span class="hljs-attribute">properties</span>": <span class="hljs-value">{
+    "<span class="hljs-attribute">modules</span>": <span class="hljs-value">{
+      "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"array"</span>
+    </span>}</span>,
+    "<span class="hljs-attribute">total</span>": <span class="hljs-value">{
+      "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"number"</span>
+    </span>}
+  </span>}</span>,
+  "<span class="hljs-attribute">required</span>": <span class="hljs-value">[
+    <span class="hljs-string">"modules"</span>,
+    <span class="hljs-string">"total"</span>
+  ]
+</span>}</code></pre><div style="height: 1px;"></div></div></div><div class="title"><strong>Response&nbsp;&nbsp;<code>400</code></strong><div class="collapse-button"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><div class="inner"><div class="description"><p><strong>Send if:</strong> Wrong parameters where sent from the user.</p>
+</div></div></div></div><div id="modules-multiple-modules-put" class="action put"><h4 class="action-heading"><div class="name">Create Module</div><a href="#modules-multiple-modules-put" class="method put">PUT</a><code class="uri">/modules</code></h4><p><strong>Functionality:</strong> Creates a new module.</p>
+<p><strong>Security:</strong> Requires an authenticated user with the role <code>admin</code>.</p>
+<h4>Example URI</h4><div class="definition"><span class="method put">PUT</span>&nbsp;<span class="uri"><span class="hostname">https://www.d120.de/studierende/buchaktion/api</span>/modules</span></div><div class="title"><strong>Request</strong><div class="collapse-button"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><div class="inner"><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json</span></code></pre><div style="height: 1px;"></div><h5>Body</h5><pre><code>{
+  "<span class="hljs-attribute">module</span>": <span class="hljs-value">{
+    "<span class="hljs-attribute">cid</span>": <span class="hljs-value"><span class="hljs-string">"20-00-0004-iv"</span></span>,
+    "<span class="hljs-attribute">name</span>": <span class="hljs-value"><span class="hljs-string">"Functional and Object-oriented Programming Concepts"</span></span>,
+    "<span class="hljs-attribute">lastOffered</span>": <span class="hljs-value">{
+      "<span class="hljs-attribute">id</span>": <span class="hljs-value"><span class="hljs-number">2156</span></span>,
+      "<span class="hljs-attribute">season</span>": <span class="hljs-value"><span class="hljs-string">"W"</span></span>,
+      "<span class="hljs-attribute">year</span>": <span class="hljs-value"><span class="hljs-string">"2017"</span>
+    </span>}</span>,
+    "<span class="hljs-attribute">literature</span>": <span class="hljs-value">[]
+  </span>}
+</span>}</code></pre><div style="height: 1px;"></div><h5>Schema</h5><pre><code>{
+  "<span class="hljs-attribute">$schema</span>": <span class="hljs-value"><span class="hljs-string">"http://json-schema.org/draft-04/schema#"</span></span>,
+  "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"object"</span></span>,
+  "<span class="hljs-attribute">properties</span>": <span class="hljs-value">{
+    "<span class="hljs-attribute">module</span>": <span class="hljs-value">{
+      "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"object"</span></span>,
+      "<span class="hljs-attribute">properties</span>": <span class="hljs-value">{
+        "<span class="hljs-attribute">cid</span>": <span class="hljs-value">{
+          "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span>
+        </span>}</span>,
+        "<span class="hljs-attribute">name</span>": <span class="hljs-value">{
+          "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span>
+        </span>}</span>,
+        "<span class="hljs-attribute">lastOffered</span>": <span class="hljs-value">{
+          "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"object"</span></span>,
+          "<span class="hljs-attribute">properties</span>": <span class="hljs-value">{
+            "<span class="hljs-attribute">id</span>": <span class="hljs-value">{
+              "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"number"</span></span>,
+              "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"The ID of the season."</span>
+            </span>}</span>,
+            "<span class="hljs-attribute">season</span>": <span class="hljs-value">{
+              "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span></span>,
+              "<span class="hljs-attribute">enum</span>": <span class="hljs-value">[
+                <span class="hljs-string">"W"</span>,
+                <span class="hljs-string">"S"</span>
+              ]</span>,
+              "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"The season."</span>
+            </span>}</span>,
+            "<span class="hljs-attribute">year</span>": <span class="hljs-value">{
+              "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span></span>,
+              "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"The year of the season."</span>
+            </span>}
+          </span>}</span>,
+          "<span class="hljs-attribute">required</span>": <span class="hljs-value">[
+            <span class="hljs-string">"id"</span>,
+            <span class="hljs-string">"season"</span>,
+            <span class="hljs-string">"year"</span>
+          ]
+        </span>}</span>,
+        "<span class="hljs-attribute">literature</span>": <span class="hljs-value">{
+          "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"array"</span></span>,
+          "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"The IDs of the proposed books."</span>
+        </span>}
+      </span>}</span>,
+      "<span class="hljs-attribute">required</span>": <span class="hljs-value">[
+        <span class="hljs-string">"cid"</span>,
+        <span class="hljs-string">"name"</span>,
+        <span class="hljs-string">"lastOffered"</span>
+      ]
+    </span>}
+  </span>}</span>,
+  "<span class="hljs-attribute">required</span>": <span class="hljs-value">[
+    <span class="hljs-string">"module"</span>
+  ]
+</span>}</code></pre><div style="height: 1px;"></div></div></div><div class="title"><strong>Response&nbsp;&nbsp;<code>201</code></strong><div class="collapse-button"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><div class="inner"><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json; charset=utf-8</span></code></pre><div style="height: 1px;"></div><h5>Body</h5><pre><code>{
+  "<span class="hljs-attribute">module</span>": <span class="hljs-value">{
+    "<span class="hljs-attribute">id</span>": <span class="hljs-value"><span class="hljs-number">3234</span></span>,
+    "<span class="hljs-attribute">cid</span>": <span class="hljs-value"><span class="hljs-string">"20-00-0004-iv"</span></span>,
+    "<span class="hljs-attribute">name</span>": <span class="hljs-value"><span class="hljs-string">"Functional and Object-oriented Programming Concepts"</span></span>,
+    "<span class="hljs-attribute">lastOffered</span>": <span class="hljs-value">{
+      "<span class="hljs-attribute">id</span>": <span class="hljs-value"><span class="hljs-number">2156</span></span>,
+      "<span class="hljs-attribute">season</span>": <span class="hljs-value"><span class="hljs-string">"W"</span></span>,
+      "<span class="hljs-attribute">year</span>": <span class="hljs-value"><span class="hljs-string">"2017"</span>
+    </span>}</span>,
+    "<span class="hljs-attribute">literature</span>": <span class="hljs-value">[
+      {
+        "<span class="hljs-attribute">id</span>": <span class="hljs-value"><span class="hljs-number">2444</span></span>,
+        "<span class="hljs-attribute">isbn</span>": <span class="hljs-value"><span class="hljs-string">"9783836218023"</span></span>,
+        "<span class="hljs-attribute">title</span>": <span class="hljs-value"><span class="hljs-string">"Java ist auch eine Insel"</span></span>,
+        "<span class="hljs-attribute">state</span>": <span class="hljs-value"><span class="hljs-string">"AC"</span></span>,
+        "<span class="hljs-attribute">author</span>": <span class="hljs-value"><span class="hljs-string">"Christian Ullenboom"</span></span>,
+        "<span class="hljs-attribute">price</span>": <span class="hljs-value"><span class="hljs-number">49.9</span>
+      </span>}
+    ]
+  </span>}
+</span>}</code></pre><div style="height: 1px;"></div><h5>Schema</h5><pre><code>{
+  "<span class="hljs-attribute">$schema</span>": <span class="hljs-value"><span class="hljs-string">"http://json-schema.org/draft-04/schema#"</span></span>,
+  "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"object"</span></span>,
+  "<span class="hljs-attribute">properties</span>": <span class="hljs-value">{
+    "<span class="hljs-attribute">module</span>": <span class="hljs-value">{
+      "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"object"</span></span>,
+      "<span class="hljs-attribute">properties</span>": <span class="hljs-value">{
+        "<span class="hljs-attribute">id</span>": <span class="hljs-value">{
+          "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"number"</span></span>,
+          "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"The ID of the module."</span>
+        </span>}</span>,
+        "<span class="hljs-attribute">cid</span>": <span class="hljs-value">{
+          "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span></span>,
+          "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"The course ID of TUCaN."</span>
+        </span>}</span>,
+        "<span class="hljs-attribute">name</span>": <span class="hljs-value">{
+          "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span></span>,
+          "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"The name of the course."</span>
+        </span>}</span>,
+        "<span class="hljs-attribute">lastOffered</span>": <span class="hljs-value">{
+          "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"object"</span></span>,
+          "<span class="hljs-attribute">properties</span>": <span class="hljs-value">{
+            "<span class="hljs-attribute">id</span>": <span class="hljs-value">{
+              "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"number"</span></span>,
+              "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"The ID of the season."</span>
+            </span>}</span>,
+            "<span class="hljs-attribute">season</span>": <span class="hljs-value">{
+              "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span></span>,
+              "<span class="hljs-attribute">enum</span>": <span class="hljs-value">[
+                <span class="hljs-string">"W"</span>,
+                <span class="hljs-string">"S"</span>
+              ]</span>,
+              "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"The season."</span>
+            </span>}</span>,
+            "<span class="hljs-attribute">year</span>": <span class="hljs-value">{
+              "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span></span>,
+              "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"The year of the season."</span>
+            </span>}
+          </span>}</span>,
+          "<span class="hljs-attribute">required</span>": <span class="hljs-value">[
+            <span class="hljs-string">"id"</span>,
+            <span class="hljs-string">"season"</span>,
+            <span class="hljs-string">"year"</span>
+          ]</span>,
+          "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"The season this course was last offered."</span>
+        </span>}</span>,
+        "<span class="hljs-attribute">literature</span>": <span class="hljs-value">{
+          "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"array"</span></span>,
+          "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"The recommened literature of this course."</span>
+        </span>}
+      </span>}</span>,
+      "<span class="hljs-attribute">required</span>": <span class="hljs-value">[
+        <span class="hljs-string">"id"</span>,
+        <span class="hljs-string">"cid"</span>,
+        <span class="hljs-string">"name"</span>,
+        <span class="hljs-string">"lastOffered"</span>,
+        <span class="hljs-string">"literature"</span>
+      ]
+    </span>}
+  </span>}</span>,
+  "<span class="hljs-attribute">required</span>": <span class="hljs-value">[
+    <span class="hljs-string">"module"</span>
+  ]
+</span>}</code></pre><div style="height: 1px;"></div></div></div><div class="title"><strong>Response&nbsp;&nbsp;<code>401</code></strong><div class="collapse-button"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><div class="inner"><div class="description"><p><strong>Send if:</strong> The user is not authenticated.</p>
+</div></div></div><div class="title"><strong>Response&nbsp;&nbsp;<code>403</code></strong><div class="collapse-button"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><div class="inner"><div class="description"><p><strong>Send if:</strong> The user does not have the required permissions.</p>
+</div></div></div><div class="title"><strong>Response&nbsp;&nbsp;<code>422</code></strong><div class="collapse-button"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><div class="inner"><div class="description"><p><strong>Send if:</strong> The given item cannot be processed (e.g. if it is invalid).</p>
+</div></div></div></div></div><div id="modules-specific-moudle" class="resource"><h3 class="resource-heading">Specific Moudle <a href="#modules-specific-moudle" class="permalink">&nbsp;&para;</a></h3><div id="modules-specific-moudle-get" class="action get"><h4 class="action-heading"><div class="name">Retrieve Module</div><a href="#modules-specific-moudle-get" class="method get">GET</a><code class="uri">/modules/{moduleId}</code></h4><p><strong>Functionality:</strong> Retrieves the specified module.</p>
+<h4>Example URI</h4><div class="definition"><span class="method get">GET</span>&nbsp;<span class="uri"><span class="hostname">https://www.d120.de/studierende/buchaktion/api</span>/modules/<span class="hljs-attribute" title="moduleId">3234</span></span></div><div class="title"><strong>URI Parameters</strong><div class="collapse-button show"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><dl class="inner"><dt>moduleId</dt><dd><code>number</code>&nbsp;<span class="required">(required)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>3234</span></span><p>The ID of the module.</p>
+</dd></dl></div><div class="title"><strong>Response&nbsp;&nbsp;<code>200</code></strong><div class="collapse-button"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><div class="inner"><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json; charset=utf-8</span></code></pre><div style="height: 1px;"></div><h5>Body</h5><pre><code>{
+  "<span class="hljs-attribute">module</span>": <span class="hljs-value">{
+    "<span class="hljs-attribute">id</span>": <span class="hljs-value"><span class="hljs-number">3234</span></span>,
+    "<span class="hljs-attribute">cid</span>": <span class="hljs-value"><span class="hljs-string">"20-00-0004-iv"</span></span>,
+    "<span class="hljs-attribute">name</span>": <span class="hljs-value"><span class="hljs-string">"Functional and Object-oriented Programming Concepts"</span></span>,
+    "<span class="hljs-attribute">lastOffered</span>": <span class="hljs-value">{
+      "<span class="hljs-attribute">id</span>": <span class="hljs-value"><span class="hljs-number">2156</span></span>,
+      "<span class="hljs-attribute">season</span>": <span class="hljs-value"><span class="hljs-string">"W"</span></span>,
+      "<span class="hljs-attribute">year</span>": <span class="hljs-value"><span class="hljs-string">"2017"</span>
+    </span>}</span>,
+    "<span class="hljs-attribute">literature</span>": <span class="hljs-value">[
+      {
+        "<span class="hljs-attribute">id</span>": <span class="hljs-value"><span class="hljs-number">2444</span></span>,
+        "<span class="hljs-attribute">isbn</span>": <span class="hljs-value"><span class="hljs-string">"9783836218023"</span></span>,
+        "<span class="hljs-attribute">title</span>": <span class="hljs-value"><span class="hljs-string">"Java ist auch eine Insel"</span></span>,
+        "<span class="hljs-attribute">state</span>": <span class="hljs-value"><span class="hljs-string">"AC"</span></span>,
+        "<span class="hljs-attribute">author</span>": <span class="hljs-value"><span class="hljs-string">"Christian Ullenboom"</span></span>,
+        "<span class="hljs-attribute">price</span>": <span class="hljs-value"><span class="hljs-number">49.9</span>
+      </span>}
+    ]
+  </span>}
+</span>}</code></pre><div style="height: 1px;"></div><h5>Schema</h5><pre><code>{
+  "<span class="hljs-attribute">$schema</span>": <span class="hljs-value"><span class="hljs-string">"http://json-schema.org/draft-04/schema#"</span></span>,
+  "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"object"</span></span>,
+  "<span class="hljs-attribute">properties</span>": <span class="hljs-value">{
+    "<span class="hljs-attribute">module</span>": <span class="hljs-value">{
+      "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"object"</span></span>,
+      "<span class="hljs-attribute">properties</span>": <span class="hljs-value">{
+        "<span class="hljs-attribute">id</span>": <span class="hljs-value">{
+          "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"number"</span></span>,
+          "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"The ID of the module."</span>
+        </span>}</span>,
+        "<span class="hljs-attribute">cid</span>": <span class="hljs-value">{
+          "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span></span>,
+          "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"The course ID of TUCaN."</span>
+        </span>}</span>,
+        "<span class="hljs-attribute">name</span>": <span class="hljs-value">{
+          "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span></span>,
+          "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"The name of the course."</span>
+        </span>}</span>,
+        "<span class="hljs-attribute">lastOffered</span>": <span class="hljs-value">{
+          "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"object"</span></span>,
+          "<span class="hljs-attribute">properties</span>": <span class="hljs-value">{
+            "<span class="hljs-attribute">id</span>": <span class="hljs-value">{
+              "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"number"</span></span>,
+              "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"The ID of the season."</span>
+            </span>}</span>,
+            "<span class="hljs-attribute">season</span>": <span class="hljs-value">{
+              "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span></span>,
+              "<span class="hljs-attribute">enum</span>": <span class="hljs-value">[
+                <span class="hljs-string">"W"</span>,
+                <span class="hljs-string">"S"</span>
+              ]</span>,
+              "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"The season."</span>
+            </span>}</span>,
+            "<span class="hljs-attribute">year</span>": <span class="hljs-value">{
+              "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span></span>,
+              "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"The year of the season."</span>
+            </span>}
+          </span>}</span>,
+          "<span class="hljs-attribute">required</span>": <span class="hljs-value">[
+            <span class="hljs-string">"id"</span>,
+            <span class="hljs-string">"season"</span>,
+            <span class="hljs-string">"year"</span>
+          ]</span>,
+          "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"The season this course was last offered."</span>
+        </span>}</span>,
+        "<span class="hljs-attribute">literature</span>": <span class="hljs-value">{
+          "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"array"</span></span>,
+          "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"The recommened literature of this course."</span>
+        </span>}
+      </span>}</span>,
+      "<span class="hljs-attribute">required</span>": <span class="hljs-value">[
+        <span class="hljs-string">"id"</span>,
+        <span class="hljs-string">"cid"</span>,
+        <span class="hljs-string">"name"</span>,
+        <span class="hljs-string">"lastOffered"</span>,
+        <span class="hljs-string">"literature"</span>
+      ]
+    </span>}
+  </span>}</span>,
+  "<span class="hljs-attribute">required</span>": <span class="hljs-value">[
+    <span class="hljs-string">"module"</span>
+  ]
+</span>}</code></pre><div style="height: 1px;"></div></div></div><div class="title"><strong>Response&nbsp;&nbsp;<code>404</code></strong><div class="collapse-button"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><div class="inner"><div class="description"><p><strong>Send if:</strong> The specified module was not found.</p>
+</div></div></div></div><div id="modules-specific-moudle-patch" class="action patch"><h4 class="action-heading"><div class="name">Modify Module</div><a href="#modules-specific-moudle-patch" class="method patch">PATCH</a><code class="uri">/modules/{moduleId}</code></h4><p><strong>Functionality:</strong> Changes the given properties of the specified module.</p>
+<p><strong>Security:</strong> Requires an authenticated user with the role <code>admin</code>.</p>
+<h4>Example URI</h4><div class="definition"><span class="method patch">PATCH</span>&nbsp;<span class="uri"><span class="hostname">https://www.d120.de/studierende/buchaktion/api</span>/modules/<span class="hljs-attribute" title="moduleId">3234</span></span></div><div class="title"><strong>URI Parameters</strong><div class="collapse-button show"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><dl class="inner"><dt>moduleId</dt><dd><code>number</code>&nbsp;<span class="required">(required)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>3234</span></span><p>The ID of the module.</p>
+</dd></dl></div><div class="title"><strong>Request</strong><div class="collapse-button"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><div class="inner"><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json</span></code></pre><div style="height: 1px;"></div><h5>Body</h5><pre><code>{
+  "<span class="hljs-attribute">module</span>": <span class="hljs-value">{
+    "<span class="hljs-attribute">cid</span>": <span class="hljs-value"><span class="hljs-string">"20-00-0004-iv"</span></span>,
+    "<span class="hljs-attribute">name</span>": <span class="hljs-value"><span class="hljs-string">"Functional and Object-oriented Programming Concepts"</span></span>,
+    "<span class="hljs-attribute">lastOffered</span>": <span class="hljs-value">{
+      "<span class="hljs-attribute">id</span>": <span class="hljs-value"><span class="hljs-number">2156</span></span>,
+      "<span class="hljs-attribute">season</span>": <span class="hljs-value"><span class="hljs-string">"W"</span></span>,
+      "<span class="hljs-attribute">year</span>": <span class="hljs-value"><span class="hljs-string">"2017"</span>
+    </span>}</span>,
+    "<span class="hljs-attribute">literature</span>": <span class="hljs-value">[]
+  </span>}
+</span>}</code></pre><div style="height: 1px;"></div><h5>Schema</h5><pre><code>{
+  "<span class="hljs-attribute">$schema</span>": <span class="hljs-value"><span class="hljs-string">"http://json-schema.org/draft-04/schema#"</span></span>,
+  "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"object"</span></span>,
+  "<span class="hljs-attribute">properties</span>": <span class="hljs-value">{
+    "<span class="hljs-attribute">module</span>": <span class="hljs-value">{
+      "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"object"</span></span>,
+      "<span class="hljs-attribute">properties</span>": <span class="hljs-value">{
+        "<span class="hljs-attribute">cid</span>": <span class="hljs-value">{
+          "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span>
+        </span>}</span>,
+        "<span class="hljs-attribute">name</span>": <span class="hljs-value">{
+          "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span>
+        </span>}</span>,
+        "<span class="hljs-attribute">lastOffered</span>": <span class="hljs-value">{
+          "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"object"</span></span>,
+          "<span class="hljs-attribute">properties</span>": <span class="hljs-value">{
+            "<span class="hljs-attribute">id</span>": <span class="hljs-value">{
+              "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"number"</span></span>,
+              "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"The ID of the season."</span>
+            </span>}</span>,
+            "<span class="hljs-attribute">season</span>": <span class="hljs-value">{
+              "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span></span>,
+              "<span class="hljs-attribute">enum</span>": <span class="hljs-value">[
+                <span class="hljs-string">"W"</span>,
+                <span class="hljs-string">"S"</span>
+              ]</span>,
+              "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"The season."</span>
+            </span>}</span>,
+            "<span class="hljs-attribute">year</span>": <span class="hljs-value">{
+              "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span></span>,
+              "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"The year of the season."</span>
+            </span>}
+          </span>}</span>,
+          "<span class="hljs-attribute">required</span>": <span class="hljs-value">[
+            <span class="hljs-string">"id"</span>,
+            <span class="hljs-string">"season"</span>,
+            <span class="hljs-string">"year"</span>
+          ]
+        </span>}</span>,
+        "<span class="hljs-attribute">literature</span>": <span class="hljs-value">{
+          "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"array"</span></span>,
+          "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"The IDs of the proposed books."</span>
+        </span>}
+      </span>}
+    </span>}
+  </span>}</span>,
+  "<span class="hljs-attribute">required</span>": <span class="hljs-value">[
+    <span class="hljs-string">"module"</span>
+  ]
+</span>}</code></pre><div style="height: 1px;"></div></div></div><div class="title"><strong>Response&nbsp;&nbsp;<code>200</code></strong><div class="collapse-button"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><div class="inner"><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json; charset=utf-8</span></code></pre><div style="height: 1px;"></div><h5>Body</h5><pre><code>{
+  "<span class="hljs-attribute">module</span>": <span class="hljs-value">{
+    "<span class="hljs-attribute">id</span>": <span class="hljs-value"><span class="hljs-number">3234</span></span>,
+    "<span class="hljs-attribute">cid</span>": <span class="hljs-value"><span class="hljs-string">"20-00-0004-iv"</span></span>,
+    "<span class="hljs-attribute">name</span>": <span class="hljs-value"><span class="hljs-string">"Functional and Object-oriented Programming Concepts"</span></span>,
+    "<span class="hljs-attribute">lastOffered</span>": <span class="hljs-value">{
+      "<span class="hljs-attribute">id</span>": <span class="hljs-value"><span class="hljs-number">2156</span></span>,
+      "<span class="hljs-attribute">season</span>": <span class="hljs-value"><span class="hljs-string">"W"</span></span>,
+      "<span class="hljs-attribute">year</span>": <span class="hljs-value"><span class="hljs-string">"2017"</span>
+    </span>}</span>,
+    "<span class="hljs-attribute">literature</span>": <span class="hljs-value">[
+      {
+        "<span class="hljs-attribute">id</span>": <span class="hljs-value"><span class="hljs-number">2444</span></span>,
+        "<span class="hljs-attribute">isbn</span>": <span class="hljs-value"><span class="hljs-string">"9783836218023"</span></span>,
+        "<span class="hljs-attribute">title</span>": <span class="hljs-value"><span class="hljs-string">"Java ist auch eine Insel"</span></span>,
+        "<span class="hljs-attribute">state</span>": <span class="hljs-value"><span class="hljs-string">"AC"</span></span>,
+        "<span class="hljs-attribute">author</span>": <span class="hljs-value"><span class="hljs-string">"Christian Ullenboom"</span></span>,
+        "<span class="hljs-attribute">price</span>": <span class="hljs-value"><span class="hljs-number">49.9</span>
+      </span>}
+    ]
+  </span>}
+</span>}</code></pre><div style="height: 1px;"></div><h5>Schema</h5><pre><code>{
+  "<span class="hljs-attribute">$schema</span>": <span class="hljs-value"><span class="hljs-string">"http://json-schema.org/draft-04/schema#"</span></span>,
+  "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"object"</span></span>,
+  "<span class="hljs-attribute">properties</span>": <span class="hljs-value">{
+    "<span class="hljs-attribute">module</span>": <span class="hljs-value">{
+      "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"object"</span></span>,
+      "<span class="hljs-attribute">properties</span>": <span class="hljs-value">{
+        "<span class="hljs-attribute">id</span>": <span class="hljs-value">{
+          "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"number"</span></span>,
+          "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"The ID of the module."</span>
+        </span>}</span>,
+        "<span class="hljs-attribute">cid</span>": <span class="hljs-value">{
+          "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span></span>,
+          "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"The course ID of TUCaN."</span>
+        </span>}</span>,
+        "<span class="hljs-attribute">name</span>": <span class="hljs-value">{
+          "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span></span>,
+          "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"The name of the course."</span>
+        </span>}</span>,
+        "<span class="hljs-attribute">lastOffered</span>": <span class="hljs-value">{
+          "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"object"</span></span>,
+          "<span class="hljs-attribute">properties</span>": <span class="hljs-value">{
+            "<span class="hljs-attribute">id</span>": <span class="hljs-value">{
+              "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"number"</span></span>,
+              "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"The ID of the season."</span>
+            </span>}</span>,
+            "<span class="hljs-attribute">season</span>": <span class="hljs-value">{
+              "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span></span>,
+              "<span class="hljs-attribute">enum</span>": <span class="hljs-value">[
+                <span class="hljs-string">"W"</span>,
+                <span class="hljs-string">"S"</span>
+              ]</span>,
+              "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"The season."</span>
+            </span>}</span>,
+            "<span class="hljs-attribute">year</span>": <span class="hljs-value">{
+              "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span></span>,
+              "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"The year of the season."</span>
+            </span>}
+          </span>}</span>,
+          "<span class="hljs-attribute">required</span>": <span class="hljs-value">[
+            <span class="hljs-string">"id"</span>,
+            <span class="hljs-string">"season"</span>,
+            <span class="hljs-string">"year"</span>
+          ]</span>,
+          "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"The season this course was last offered."</span>
+        </span>}</span>,
+        "<span class="hljs-attribute">literature</span>": <span class="hljs-value">{
+          "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"array"</span></span>,
+          "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"The recommened literature of this course."</span>
+        </span>}
+      </span>}</span>,
+      "<span class="hljs-attribute">required</span>": <span class="hljs-value">[
+        <span class="hljs-string">"id"</span>,
+        <span class="hljs-string">"cid"</span>,
+        <span class="hljs-string">"name"</span>,
+        <span class="hljs-string">"lastOffered"</span>,
+        <span class="hljs-string">"literature"</span>
+      ]
+    </span>}
+  </span>}</span>,
+  "<span class="hljs-attribute">required</span>": <span class="hljs-value">[
+    <span class="hljs-string">"module"</span>
+  ]
+</span>}</code></pre><div style="height: 1px;"></div></div></div><div class="title"><strong>Response&nbsp;&nbsp;<code>401</code></strong><div class="collapse-button"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><div class="inner"><div class="description"><p><strong>Send if:</strong> The user is not authenticated.</p>
+</div></div></div><div class="title"><strong>Response&nbsp;&nbsp;<code>403</code></strong><div class="collapse-button"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><div class="inner"><div class="description"><p><strong>Send if:</strong> The user does not have the required permissions.</p>
+</div></div></div><div class="title"><strong>Response&nbsp;&nbsp;<code>404</code></strong><div class="collapse-button"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><div class="inner"><div class="description"><p><strong>Send if:</strong> The specified module was not found.</p>
+</div></div></div><div class="title"><strong>Response&nbsp;&nbsp;<code>422</code></strong><div class="collapse-button"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><div class="inner"><div class="description"><p><strong>Send if:</strong> The given item cannot be processed (e.g. if it is invalid).</p>
+</div></div></div></div><div id="modules-specific-moudle-delete" class="action delete"><h4 class="action-heading"><div class="name">Delete Module</div><a href="#modules-specific-moudle-delete" class="method delete">DELETE</a><code class="uri">/modules/{moduleId}</code></h4><p><strong>Functionality:</strong> Deletes the specified module.</p>
+<p><strong>Security:</strong> Requires an authenticated user with the role <code>admin</code>.</p>
+<h4>Example URI</h4><div class="definition"><span class="method delete">DELETE</span>&nbsp;<span class="uri"><span class="hostname">https://www.d120.de/studierende/buchaktion/api</span>/modules/<span class="hljs-attribute" title="moduleId">3234</span></span></div><div class="title"><strong>URI Parameters</strong><div class="collapse-button show"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><dl class="inner"><dt>moduleId</dt><dd><code>number</code>&nbsp;<span class="required">(required)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>3234</span></span><p>The ID of the module.</p>
+</dd></dl></div><div class="title"><strong>Response&nbsp;&nbsp;<code>204</code></strong><div class="collapse-button"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><div class="inner"><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json; charset=utf-8</span></code></pre><div style="height: 1px;"></div></div></div><div class="title"><strong>Response&nbsp;&nbsp;<code>401</code></strong><div class="collapse-button"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><div class="inner"><div class="description"><p><strong>Send if:</strong> The user is not authenticated.</p>
+</div></div></div><div class="title"><strong>Response&nbsp;&nbsp;<code>403</code></strong><div class="collapse-button"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><div class="inner"><div class="description"><p><strong>Send if:</strong> The user does not have the required permissions.</p>
+</div></div></div><div class="title"><strong>Response&nbsp;&nbsp;<code>404</code></strong><div class="collapse-button"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><div class="inner"><div class="description"><p><strong>Send if:</strong> The specified module was not found.</p>
+</div></div></div><div class="title"><strong>Response&nbsp;&nbsp;<code>422</code></strong><div class="collapse-button"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><div class="inner"><div class="description"><p><strong>Send if:</strong> The given item cannot be processed (e.g. if it is invalid).</p>
+</div></div></div></div></div></section><section id="orders" class="resource-group"><h2 class="group-heading">Orders <a href="#orders" class="permalink">&para;</a></h2><div id="orders-multiple-orders" class="resource"><h3 class="resource-heading">Multiple Orders <a href="#orders-multiple-orders" class="permalink">&nbsp;&para;</a></h3><div id="orders-multiple-orders-get" class="action get"><h4 class="action-heading"><div class="name">Retrieve Orders</div><a href="#orders-multiple-orders-get" class="method get">GET</a><code class="uri">/orders{?page,limit,userId,status,orderBy}</code></h4><p><strong>Functionality:</strong> Retrieves all orders that are visible to the current user (that is, only the orders of the logged in user or all orders if the logged in user as the role <code>admin</code>).</p>
+<p><strong>Security:</strong> Requires an authenticated user.</p>
+<h4>Example URI</h4><div class="definition"><span class="method get">GET</span>&nbsp;<span class="uri"><span class="hostname">https://www.d120.de/studierende/buchaktion/api</span>/orders?<span class="hljs-attribute">page=</span><span class="hljs-literal">1</span>&<span class="hljs-attribute">limit=</span><span class="hljs-literal">10</span>&<span class="hljs-attribute">userId=</span><span class="hljs-literal">1987</span>&<span class="hljs-attribute">status=</span><span class="hljs-literal">OD</span>&<span class="hljs-attribute">orderBy=</span><span class="hljs-literal">status</span></span></div><div class="title"><strong>URI Parameters</strong><div class="collapse-button show"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><dl class="inner"><dt>page</dt><dd><code>number</code>&nbsp;<span>(optional)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>1</span></span><p>pagination - The page to return. Defaults to <code>1</code>.</p>
+</dd><dt>limit</dt><dd><code>number</code>&nbsp;<span>(optional)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>10</span></span><p>pagination - The number of items per page. Defaults to <code>10</code>.</p>
+</dd><dt>userId</dt><dd><code>number</code>&nbsp;<span>(optional)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>1987</span></span><p>A comma-separated list of user IDs to filter for. This property does not have any functionality if the current user does not have the role <code>admin</code>.</p>
+</dd><dt>status</dt><dd><code>string</code>&nbsp;<span>(optional)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>OD</span></span><p>A comma-separated list of states to filter for.</p>
+<p class="choices"><strong>Choices:&nbsp;</strong><code>PD</code> <code>OD</code> <code>RJ</code> <code>AR</code> </p></dd><dt>orderBy</dt><dd><code>string</code>&nbsp;<span>(optional)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>status</span></span><p>The field to order by. Defaults to no specific order.</p>
+<ul>
+<li>
+<p><code>status</code> Order by the status.</p>
+</li>
+<li>
+<p><code>timeframe</code> Order by the timeframe.</p>
+</li>
+</ul>
+</dd></dl></div><div class="title"><strong>Response&nbsp;&nbsp;<code>200</code></strong><div class="collapse-button"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><div class="inner"><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json; charset=utf-8</span></code></pre><div style="height: 1px;"></div><h5>Body</h5><pre><code>{
+  "<span class="hljs-attribute">orders</span>": <span class="hljs-value">[
+    {
+      "<span class="hljs-attribute">id</span>": <span class="hljs-value"><span class="hljs-number">5862</span></span>,
+      "<span class="hljs-attribute">status</span>": <span class="hljs-value"><span class="hljs-string">"AR"</span></span>,
+      "<span class="hljs-attribute">hint</span>": <span class="hljs-value"><span class="hljs-string">"Enough books available."</span></span>,
+      "<span class="hljs-attribute">book</span>": <span class="hljs-value">{
+        "<span class="hljs-attribute">id</span>": <span class="hljs-value"><span class="hljs-number">2444</span></span>,
+        "<span class="hljs-attribute">isbn</span>": <span class="hljs-value"><span class="hljs-string">"9783836218023"</span></span>,
+        "<span class="hljs-attribute">title</span>": <span class="hljs-value"><span class="hljs-string">"Java ist auch eine Insel"</span></span>,
+        "<span class="hljs-attribute">state</span>": <span class="hljs-value"><span class="hljs-string">"AC"</span></span>,
+        "<span class="hljs-attribute">author</span>": <span class="hljs-value"><span class="hljs-string">"Christian Ullenboom"</span></span>,
+        "<span class="hljs-attribute">price</span>": <span class="hljs-value"><span class="hljs-number">49.9</span>
+      </span>}</span>,
+      "<span class="hljs-attribute">student</span>": <span class="hljs-value">{
+        "<span class="hljs-attribute">id</span>": <span class="hljs-value"><span class="hljs-number">987</span>
+      </span>}</span>,
+      "<span class="hljs-attribute">timeframe</span>": <span class="hljs-value">{
+        "<span class="hljs-attribute">from</span>": <span class="hljs-value"><span class="hljs-string">"2017-02-01"</span></span>,
+        "<span class="hljs-attribute">to</span>": <span class="hljs-value"><span class="hljs-string">"2017-03-01"</span>
+      </span>}
+    </span>}
+  ]</span>,
+  "<span class="hljs-attribute">total</span>": <span class="hljs-value"><span class="hljs-number">10</span>
+</span>}</code></pre><div style="height: 1px;"></div><h5>Schema</h5><pre><code>{
+  "<span class="hljs-attribute">$schema</span>": <span class="hljs-value"><span class="hljs-string">"http://json-schema.org/draft-04/schema#"</span></span>,
+  "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"object"</span></span>,
+  "<span class="hljs-attribute">properties</span>": <span class="hljs-value">{
+    "<span class="hljs-attribute">orders</span>": <span class="hljs-value">{
+      "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"array"</span>
+    </span>}</span>,
+    "<span class="hljs-attribute">total</span>": <span class="hljs-value">{
+      "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"number"</span>
+    </span>}
+  </span>}</span>,
+  "<span class="hljs-attribute">required</span>": <span class="hljs-value">[
+    <span class="hljs-string">"orders"</span>,
+    <span class="hljs-string">"total"</span>
+  ]
+</span>}</code></pre><div style="height: 1px;"></div></div></div><div class="title"><strong>Response&nbsp;&nbsp;<code>400</code></strong><div class="collapse-button"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><div class="inner"><div class="description"><p><strong>Send if:</strong> Wrong parameters where sent from the user.</p>
+</div></div></div><div class="title"><strong>Response&nbsp;&nbsp;<code>401</code></strong><div class="collapse-button"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><div class="inner"><div class="description"><p><strong>Send if:</strong> The user is not authenticated.</p>
+</div></div></div><div class="title"><strong>Response&nbsp;&nbsp;<code>403</code></strong><div class="collapse-button"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><div class="inner"><div class="description"><p><strong>Send if:</strong> The user does not have the required permissions.</p>
+</div></div></div></div></div><div id="orders-specific-order" class="resource"><h3 class="resource-heading">Specific Order <a href="#orders-specific-order" class="permalink">&nbsp;&para;</a></h3><div id="orders-specific-order-patch" class="action patch"><h4 class="action-heading"><div class="name">Modify Order</div><a href="#orders-specific-order-patch" class="method patch">PATCH</a><code class="uri">/orders/{orderId}</code></h4><p><strong>Functionality:</strong> Changes the given properties of the specified order.</p>
+<p><strong>Security:</strong> Requires an authenticated user with the role <code>admin</code>.</p>
+<h4>Example URI</h4><div class="definition"><span class="method patch">PATCH</span>&nbsp;<span class="uri"><span class="hostname">https://www.d120.de/studierende/buchaktion/api</span>/orders/<span class="hljs-attribute" title="orderId">5862</span></span></div><div class="title"><strong>URI Parameters</strong><div class="collapse-button show"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><dl class="inner"><dt>orderId</dt><dd><code>number</code>&nbsp;<span class="required">(required)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>5862</span></span><p>The ID of the order.</p>
+</dd></dl></div><div class="title"><strong>Request</strong><div class="collapse-button"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><div class="inner"><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json</span></code></pre><div style="height: 1px;"></div><h5>Body</h5><pre><code>{
+  "<span class="hljs-attribute">order</span>": <span class="hljs-value">{
+    "<span class="hljs-attribute">status</span>": <span class="hljs-value"><span class="hljs-string">"PD"</span></span>,
+    "<span class="hljs-attribute">hint</span>": <span class="hljs-value"><span class="hljs-string">"Enough books available."</span>
+  </span>}
+</span>}</code></pre><div style="height: 1px;"></div><h5>Schema</h5><pre><code>{
+  "<span class="hljs-attribute">$schema</span>": <span class="hljs-value"><span class="hljs-string">"http://json-schema.org/draft-04/schema#"</span></span>,
+  "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"object"</span></span>,
+  "<span class="hljs-attribute">properties</span>": <span class="hljs-value">{
+    "<span class="hljs-attribute">order</span>": <span class="hljs-value">{
+      "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"object"</span></span>,
+      "<span class="hljs-attribute">properties</span>": <span class="hljs-value">{
+        "<span class="hljs-attribute">status</span>": <span class="hljs-value">{
+          "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span></span>,
+          "<span class="hljs-attribute">enum</span>": <span class="hljs-value">[
+            <span class="hljs-string">"PD"</span>,
+            <span class="hljs-string">"OD"</span>,
+            <span class="hljs-string">"RJ"</span>,
+            <span class="hljs-string">"AR"</span>
+          ]
+        </span>}</span>,
+        "<span class="hljs-attribute">hint</span>": <span class="hljs-value">{
+          "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span>
+        </span>}
+      </span>}
+    </span>}
+  </span>}</span>,
+  "<span class="hljs-attribute">required</span>": <span class="hljs-value">[
+    <span class="hljs-string">"order"</span>
+  ]
+</span>}</code></pre><div style="height: 1px;"></div></div></div><div class="title"><strong>Response&nbsp;&nbsp;<code>200</code></strong><div class="collapse-button"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><div class="inner"><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json; charset=utf-8</span></code></pre><div style="height: 1px;"></div><h5>Body</h5><pre><code>{
+  "<span class="hljs-attribute">order</span>": <span class="hljs-value">{
+    "<span class="hljs-attribute">id</span>": <span class="hljs-value"><span class="hljs-number">5862</span></span>,
+    "<span class="hljs-attribute">status</span>": <span class="hljs-value"><span class="hljs-string">"AR"</span></span>,
+    "<span class="hljs-attribute">hint</span>": <span class="hljs-value"><span class="hljs-string">"Enough books available."</span></span>,
+    "<span class="hljs-attribute">book</span>": <span class="hljs-value">{
+      "<span class="hljs-attribute">id</span>": <span class="hljs-value"><span class="hljs-number">2444</span></span>,
+      "<span class="hljs-attribute">isbn</span>": <span class="hljs-value"><span class="hljs-string">"9783836218023"</span></span>,
+      "<span class="hljs-attribute">title</span>": <span class="hljs-value"><span class="hljs-string">"Java ist auch eine Insel"</span></span>,
+      "<span class="hljs-attribute">state</span>": <span class="hljs-value"><span class="hljs-string">"AC"</span></span>,
+      "<span class="hljs-attribute">author</span>": <span class="hljs-value"><span class="hljs-string">"Christian Ullenboom"</span></span>,
+      "<span class="hljs-attribute">price</span>": <span class="hljs-value"><span class="hljs-number">49.9</span>
+    </span>}</span>,
+    "<span class="hljs-attribute">student</span>": <span class="hljs-value">{
+      "<span class="hljs-attribute">id</span>": <span class="hljs-value"><span class="hljs-number">987</span>
+    </span>}</span>,
+    "<span class="hljs-attribute">timeframe</span>": <span class="hljs-value">{
+      "<span class="hljs-attribute">from</span>": <span class="hljs-value"><span class="hljs-string">"2017-02-01"</span></span>,
+      "<span class="hljs-attribute">to</span>": <span class="hljs-value"><span class="hljs-string">"2017-03-01"</span>
+    </span>}
+  </span>}
+</span>}</code></pre><div style="height: 1px;"></div><h5>Schema</h5><pre><code>{
+  "<span class="hljs-attribute">$schema</span>": <span class="hljs-value"><span class="hljs-string">"http://json-schema.org/draft-04/schema#"</span></span>,
+  "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"object"</span></span>,
+  "<span class="hljs-attribute">properties</span>": <span class="hljs-value">{
+    "<span class="hljs-attribute">order</span>": <span class="hljs-value">{
+      "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"object"</span></span>,
+      "<span class="hljs-attribute">properties</span>": <span class="hljs-value">{
+        "<span class="hljs-attribute">id</span>": <span class="hljs-value">{
+          "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"number"</span></span>,
+          "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"The ID of the order."</span>
+        </span>}</span>,
+        "<span class="hljs-attribute">status</span>": <span class="hljs-value">{
+          "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span></span>,
+          "<span class="hljs-attribute">enum</span>": <span class="hljs-value">[
+            <span class="hljs-string">"PD"</span>,
+            <span class="hljs-string">"OD"</span>,
+            <span class="hljs-string">"RJ"</span>,
+            <span class="hljs-string">"AR"</span>
+          ]</span>,
+          "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"semi-secured - The status of the order."</span>
+        </span>}</span>,
+        "<span class="hljs-attribute">hint</span>": <span class="hljs-value">{
+          "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span></span>,
+          "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"A hint text including extended information about the status."</span>
+        </span>}</span>,
+        "<span class="hljs-attribute">book</span>": <span class="hljs-value">{
+          "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"object"</span></span>,
+          "<span class="hljs-attribute">properties</span>": <span class="hljs-value">{
+            "<span class="hljs-attribute">id</span>": <span class="hljs-value">{
+              "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"number"</span></span>,
+              "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"The ID of the book."</span>
+            </span>}</span>,
+            "<span class="hljs-attribute">isbn</span>": <span class="hljs-value">{
+              "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span></span>,
+              "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"The ISBN of the book."</span>
+            </span>}</span>,
+            "<span class="hljs-attribute">title</span>": <span class="hljs-value">{
+              "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span></span>,
+              "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"The title of the book."</span>
+            </span>}</span>,
+            "<span class="hljs-attribute">state</span>": <span class="hljs-value">{
+              "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span></span>,
+              "<span class="hljs-attribute">enum</span>": <span class="hljs-value">[
+                <span class="hljs-string">"AC"</span>,
+                <span class="hljs-string">"RJ"</span>,
+                <span class="hljs-string">"PP"</span>,
+                <span class="hljs-string">"OL"</span>
+              ]</span>,
+              "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"secured - The state of the book."</span>
+            </span>}</span>,
+            "<span class="hljs-attribute">author</span>": <span class="hljs-value">{
+              "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span></span>,
+              "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"The author of the book."</span>
+            </span>}</span>,
+            "<span class="hljs-attribute">price</span>": <span class="hljs-value">{
+              "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"number"</span></span>,
+              "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"secured - The price of the book."</span>
+            </span>}
+          </span>}</span>,
+          "<span class="hljs-attribute">required</span>": <span class="hljs-value">[
+            <span class="hljs-string">"id"</span>,
+            <span class="hljs-string">"isbn"</span>,
+            <span class="hljs-string">"title"</span>,
+            <span class="hljs-string">"author"</span>
+          ]</span>,
+          "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"The ordered book."</span>
+        </span>}</span>,
+        "<span class="hljs-attribute">student</span>": <span class="hljs-value">{
+          "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"object"</span></span>,
+          "<span class="hljs-attribute">properties</span>": <span class="hljs-value">{
+            "<span class="hljs-attribute">id</span>": <span class="hljs-value">{
+              "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"number"</span></span>,
+              "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"The ID of the account."</span>
+            </span>}
+          </span>}</span>,
+          "<span class="hljs-attribute">required</span>": <span class="hljs-value">[
+            <span class="hljs-string">"id"</span>
+          ]</span>,
+          "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"The student who has ordered the book."</span>
+        </span>}</span>,
+        "<span class="hljs-attribute">timeframe</span>": <span class="hljs-value">{
+          "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"object"</span></span>,
+          "<span class="hljs-attribute">properties</span>": <span class="hljs-value">{
+            "<span class="hljs-attribute">from</span>": <span class="hljs-value">{
+              "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span></span>,
+              "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"The from-date of the timeframe (inclusive)."</span>
+            </span>}</span>,
+            "<span class="hljs-attribute">to</span>": <span class="hljs-value">{
+              "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span></span>,
+              "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"The to-date of the timeframe (inclusive)."</span>
+            </span>}
+          </span>}</span>,
+          "<span class="hljs-attribute">required</span>": <span class="hljs-value">[
+            <span class="hljs-string">"from"</span>,
+            <span class="hljs-string">"to"</span>
+          ]</span>,
+          "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"The timeframe in which the book order can be changed/cancelled. At the end of the timeframe the order will be processed."</span>
+        </span>}
+      </span>}</span>,
+      "<span class="hljs-attribute">required</span>": <span class="hljs-value">[
+        <span class="hljs-string">"id"</span>,
+        <span class="hljs-string">"book"</span>,
+        <span class="hljs-string">"student"</span>,
+        <span class="hljs-string">"timeframe"</span>
+      ]
+    </span>}
+  </span>}</span>,
+  "<span class="hljs-attribute">required</span>": <span class="hljs-value">[
+    <span class="hljs-string">"order"</span>
+  ]
+</span>}</code></pre><div style="height: 1px;"></div></div></div><div class="title"><strong>Response&nbsp;&nbsp;<code>401</code></strong><div class="collapse-button"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><div class="inner"><div class="description"><p><strong>Send if:</strong> The user is not authenticated.</p>
+</div></div></div><div class="title"><strong>Response&nbsp;&nbsp;<code>403</code></strong><div class="collapse-button"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><div class="inner"><div class="description"><p><strong>Send if:</strong> The user does not have the required permissions.</p>
+</div></div></div><div class="title"><strong>Response&nbsp;&nbsp;<code>404</code></strong><div class="collapse-button"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><div class="inner"><div class="description"><p><strong>Send if:</strong> The specified order was not found.</p>
+</div></div></div><div class="title"><strong>Response&nbsp;&nbsp;<code>422</code></strong><div class="collapse-button"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><div class="inner"><div class="description"><p><strong>Send if:</strong> The given item cannot be processed (e.g. if it is invalid).</p>
+</div></div></div></div><div id="orders-specific-order-delete" class="action delete"><h4 class="action-heading"><div class="name">Delete Order</div><a href="#orders-specific-order-delete" class="method delete">DELETE</a><code class="uri">/orders/{orderId}</code></h4><p><strong>Functionality:</strong> Deletes the specified order.</p>
+<p><strong>Security:</strong> Requires an authenticated user with the role <code>admin</code> or the user who has created the order.</p>
+<h4>Example URI</h4><div class="definition"><span class="method delete">DELETE</span>&nbsp;<span class="uri"><span class="hostname">https://www.d120.de/studierende/buchaktion/api</span>/orders/<span class="hljs-attribute" title="orderId">5862</span></span></div><div class="title"><strong>URI Parameters</strong><div class="collapse-button show"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><dl class="inner"><dt>orderId</dt><dd><code>number</code>&nbsp;<span class="required">(required)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>5862</span></span><p>The ID of the order.</p>
+</dd></dl></div><div class="title"><strong>Response&nbsp;&nbsp;<code>204</code></strong><div class="collapse-button"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><div class="inner"><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json; charset=utf-8</span></code></pre><div style="height: 1px;"></div></div></div><div class="title"><strong>Response&nbsp;&nbsp;<code>401</code></strong><div class="collapse-button"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><div class="inner"><div class="description"><p><strong>Send if:</strong> The user is not authenticated.</p>
+</div></div></div><div class="title"><strong>Response&nbsp;&nbsp;<code>403</code></strong><div class="collapse-button"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><div class="inner"><div class="description"><p><strong>Send if:</strong> The user does not have the required permissions.</p>
+</div></div></div><div class="title"><strong>Response&nbsp;&nbsp;<code>404</code></strong><div class="collapse-button"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><div class="inner"><div class="description"><p><strong>Send if:</strong> The specified order was not found.</p>
+</div></div></div></div></div></section></div></div></div><p style="text-align: center;" class="text-muted">Generated by&nbsp;<a href="https://github.com/danielgtaylor/aglio" class="aglio">aglio</a>&nbsp;on 25 Jan 2017</p><script>/* eslint-env browser */
+/* eslint quotes: [2, "single"] */
+'use strict';
+
+/*
+  Determine if a string ends with another string.
+*/
+function endsWith(str, suffix) {
+    return str.indexOf(suffix, str.length - suffix.length) !== -1;
+}
+
+/*
+  Get a list of direct child elements by class name.
+*/
+function childrenByClass(element, name) {
+  var filtered = [];
+
+  for (var i = 0; i < element.children.length; i++) {
+    var child = element.children[i];
+    var classNames = child.className.split(' ');
+    if (classNames.indexOf(name) !== -1) {
+      filtered.push(child);
+    }
+  }
+
+  return filtered;
+}
+
+/*
+  Get an array [width, height] of the window.
+*/
+function getWindowDimensions() {
+  var w = window,
+      d = document,
+      e = d.documentElement,
+      g = d.body,
+      x = w.innerWidth || e.clientWidth || g.clientWidth,
+      y = w.innerHeight || e.clientHeight || g.clientHeight;
+
+  return [x, y];
+}
+
+/*
+  Collapse or show a request/response example.
+*/
+function toggleCollapseButton(event) {
+    var button = event.target.parentNode;
+    var content = button.parentNode.nextSibling;
+    var inner = content.children[0];
+
+    if (button.className.indexOf('collapse-button') === -1) {
+      // Clicked without hitting the right element?
+      return;
+    }
+
+    if (content.style.maxHeight && content.style.maxHeight !== '0px') {
+        // Currently showing, so let's hide it
+        button.className = 'collapse-button';
+        content.style.maxHeight = '0px';
+    } else {
+        // Currently hidden, so let's show it
+        button.className = 'collapse-button show';
+        content.style.maxHeight = inner.offsetHeight + 12 + 'px';
+    }
+}
+
+function toggleTabButton(event) {
+    var i, index;
+    var button = event.target;
+
+    // Get index of the current button.
+    var buttons = childrenByClass(button.parentNode, 'tab-button');
+    for (i = 0; i < buttons.length; i++) {
+        if (buttons[i] === button) {
+            index = i;
+            button.className = 'tab-button active';
+        } else {
+            buttons[i].className = 'tab-button';
+        }
+    }
+
+    // Hide other tabs and show this one.
+    var tabs = childrenByClass(button.parentNode.parentNode, 'tab');
+    for (i = 0; i < tabs.length; i++) {
+        if (i === index) {
+            tabs[i].style.display = 'block';
+        } else {
+            tabs[i].style.display = 'none';
+        }
+    }
+}
+
+/*
+  Collapse or show a navigation menu. It will not be hidden unless it
+  is currently selected or `force` has been passed.
+*/
+function toggleCollapseNav(event, force) {
+    var heading = event.target.parentNode;
+    var content = heading.nextSibling;
+    var inner = content.children[0];
+
+    if (heading.className.indexOf('heading') === -1) {
+      // Clicked without hitting the right element?
+      return;
+    }
+
+    if (content.style.maxHeight && content.style.maxHeight !== '0px') {
+      // Currently showing, so let's hide it, but only if this nav item
+      // is already selected. This prevents newly selected items from
+      // collapsing in an annoying fashion.
+      if (force || window.location.hash && endsWith(event.target.href, window.location.hash)) {
+        content.style.maxHeight = '0px';
+      }
+    } else {
+      // Currently hidden, so let's show it
+      content.style.maxHeight = inner.offsetHeight + 12 + 'px';
+    }
+}
+
+/*
+  Refresh the page after a live update from the server. This only
+  works in live preview mode (using the `--server` parameter).
+*/
+function refresh(body) {
+    document.querySelector('body').className = 'preload';
+    document.body.innerHTML = body;
+
+    // Re-initialize the page
+    init();
+    autoCollapse();
+
+    document.querySelector('body').className = '';
+}
+
+/*
+  Determine which navigation items should be auto-collapsed to show as many
+  as possible on the screen, based on the current window height. This also
+  collapses them.
+*/
+function autoCollapse() {
+  var windowHeight = getWindowDimensions()[1];
+  var itemsHeight = 64; /* Account for some padding */
+  var itemsArray = Array.prototype.slice.call(
+    document.querySelectorAll('nav .resource-group .heading'));
+
+  // Get the total height of the navigation items
+  itemsArray.forEach(function (item) {
+    itemsHeight += item.parentNode.offsetHeight;
+  });
+
+  // Should we auto-collapse any nav items? Try to find the smallest item
+  // that can be collapsed to show all items on the screen. If not possible,
+  // then collapse the largest item and do it again. First, sort the items
+  // by height from smallest to largest.
+  var sortedItems = itemsArray.sort(function (a, b) {
+    return a.parentNode.offsetHeight - b.parentNode.offsetHeight;
+  });
+
+  while (sortedItems.length && itemsHeight > windowHeight) {
+    for (var i = 0; i < sortedItems.length; i++) {
+      // Will collapsing this item help?
+      var itemHeight = sortedItems[i].nextSibling.offsetHeight;
+      if ((itemsHeight - itemHeight <= windowHeight) || i === sortedItems.length - 1) {
+        // It will, so let's collapse it, remove its content height from
+        // our total and then remove it from our list of candidates
+        // that can be collapsed.
+        itemsHeight -= itemHeight;
+        toggleCollapseNav({target: sortedItems[i].children[0]}, true);
+        sortedItems.splice(i, 1);
+        break;
+      }
+    }
+  }
+}
+
+/*
+  Initialize the interactive functionality of the page.
+*/
+function init() {
+    var i, j;
+
+    // Make collapse buttons clickable
+    var buttons = document.querySelectorAll('.collapse-button');
+    for (i = 0; i < buttons.length; i++) {
+        buttons[i].onclick = toggleCollapseButton;
+
+        // Show by default? Then toggle now.
+        if (buttons[i].className.indexOf('show') !== -1) {
+            toggleCollapseButton({target: buttons[i].children[0]});
+        }
+    }
+
+    var responseCodes = document.querySelectorAll('.example-names');
+    for (i = 0; i < responseCodes.length; i++) {
+        var tabButtons = childrenByClass(responseCodes[i], 'tab-button');
+        for (j = 0; j < tabButtons.length; j++) {
+            tabButtons[j].onclick = toggleTabButton;
+
+            // Show by default?
+            if (j === 0) {
+                toggleTabButton({target: tabButtons[j]});
+            }
+        }
+    }
+
+    // Make nav items clickable to collapse/expand their content.
+    var navItems = document.querySelectorAll('nav .resource-group .heading');
+    for (i = 0; i < navItems.length; i++) {
+        navItems[i].onclick = toggleCollapseNav;
+
+        // Show all by default
+        toggleCollapseNav({target: navItems[i].children[0]});
+    }
+}
+
+// Initial call to set up buttons
+init();
+
+window.onload = function () {
+    autoCollapse();
+    // Remove the `preload` class to enable animations
+    document.querySelector('body').className = '';
+};
+</script></body></html>
