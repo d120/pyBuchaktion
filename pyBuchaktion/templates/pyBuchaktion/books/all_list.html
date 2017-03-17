@@ -1,0 +1,32 @@
+{% extends "pyBuchaktion/books.html" %}{% load i18n %}
+
+{% block noresults %}
+	<div class="panel panel-danger">
+        <div class="panel-heading">
+            <h4 class="panel-title">
+                {% trans "Sorry, no books matching this query were found!" %}
+            </h4>
+        </div>
+        <div class="panel-body">
+            {% trans "Do you want to propose this book to us to be added for ordering?" %}
+        </div>
+        <table class="table table-bordered">
+            {% for field in form %}
+            {% if field.value %}
+            <tr><th>{% trans field.label %}</th><td>{{ field.value }}</td></tr>
+            {% endif %}
+            {% endfor %}
+        </table>
+        <div class="panel-body">
+        <form method="POST" class="form-horizontal">
+            {% for field in form %}
+            {% if field.value %}
+            <input type="hidden" name="{{ field.name }}" value="{{ field.value }}" />
+            {% endif %}
+            {% endfor %}
+            {% csrf_token %}
+            <button type="submit" class="btn btn-success">{% trans "Propose" %}</button>
+        </form>
+        </div>
+    </div>
+{% endblock noresults %}

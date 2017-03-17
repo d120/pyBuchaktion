@@ -1,0 +1,9 @@
+{% extends "pyBuchaktion/books.html" %}{% load i18n %}
+
+{% block noresults %}
+    <div class="alert alert-danger">
+        {% trans "Sorry, no books matching this query were found!" %}<br/>
+        {% trans "The book you are searching for may have already been proposed, rejected or marked as obsolete. That means that this book cannot be ordered right now, but you can check the full list to find out and possibly propose the book to us." %}
+        <a href="{% url "pyBuchaktion:books_all" %}?{{ form.to_dict.urlencode }}">{% trans "Full list" %}</a>
+    </div>
+{% endblock noresults %}

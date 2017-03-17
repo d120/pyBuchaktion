@@ -57,9 +57,12 @@ register.filter('get_status_text', get_status_text)
 
 
 @register.inclusion_tag('url.html')
-def url_set(params, key, value):
+def url_set(params, key, value, drop = None):
     params_ = params.copy()
     params_[key] = value
+
+    if (drop != None and drop in params_):
+        params_.pop(drop)
 
     url = "?" + params_.urlencode()
     return {"url": url}
@@ -67,10 +70,8 @@ def url_set(params, key, value):
 @register.inclusion_tag('url.html')
 def url_unset(params, key):
     params_ = params.copy()
-    try:
+    if key in params_:
         params_.pop(key)
-    except:
-        pass
     
     # always return at least '?' to have a valid link
     url = "?" + params_.urlencode()

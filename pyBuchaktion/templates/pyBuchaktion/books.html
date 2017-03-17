@@ -43,9 +43,7 @@
         </div>
     </div>
     {% else %}
-    <div class="alert alert-danger">
-        {% trans "Sorry, no books matching this query were found!" %} 
-    </div>
+        {% block noresults %}{% endblock noresults %}
     {% endif %}
 
     {% include "bootstrap/pagination.html" %}

@@ -74,14 +74,18 @@ class BookList(VarPagedMultipleObjectMixin):
 
         return queryset
 
+    def put(self, request, *args, **kwargs):
+        a = it
+
 class AllBooksList(BookList):
     queryset = Book.objects.all()
 
 class BookListView(BookList, VarPagedListView, FormContextMixin):
-    template_name = 'pyBuchaktion/books.html'
+    template_name = 'pyBuchaktion/books/active_list.html'
     context_object_name = 'books'
 
 class AllBookListView(AllBooksList, BookListView):
+    template_name = 'pyBuchaktion/books/all_list.html'
 
     def get_context_data(self, **kwargs):
         context = super(AllBookListView, self).get_context_data(**kwargs)
@@ -195,10 +199,13 @@ class ApiListView(View):
             return {self.wrap_name: data}
         return data
 
+    def get_object_list(self):
+        return self.get_queryset()
+
     def get(self, request, *args, **kwargs):
         serializer = ObjectSerializer()
         data = serializer.serialize(
-            self.get_queryset(),
+            self.get_object_list(),
             use_natural_foreign_keys=True,
             fields=self.fields,
         )
@@ -223,7 +230,32 @@ class ApiDetailView(View):
         json = json_encoder.encode(self.wrap(_model_to_dict(self.get_object())))
         return HttpResponse(json, content_type='application/json')
 
-class BooksApiListView(BookList, ApiListView):
+class PagedApiListView(ApiListView, MultipleObjectMixin):
+    is_paginated = False
+    paginator = None
+    page = None
+    object_list = {}
+
+    def wrap(self, data):
+        wrapped = super(PagedApiListView, self).wrap(data)
+        if (self.is_paginated):
+            wrapped["total"] =  self.paginator.count
+        return wrapped
+
+    def get_object_list(self):
+        queryset = self.get_queryset()
+        paginate_by = self.get_paginate_by(queryset)
+        data = self.paginate_queryset(queryset, paginate_by)
+        self.paginator = data[0]
+        self.page = data[1]
+        self.object_list = data[2]
+        self.is_paginated = data[3]
+        return self.object_list
+
+class VarPagedApiListView(PagedApiListView, VarPagedMultipleObjectMixin):
+    pass
+
+class BooksApiListView(BookList, VarPagedApiListView):
     fields = ('isbn_13', 'title', 'author')
     wrap_name = "books"
 

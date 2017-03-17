@@ -12,3 +12,9 @@ def form_field(field):
         'field_output': field.as_widget(attrs={'class': "form-control", 'placeholder':field.label}),
         'field': field,
     }
+
+@register.inclusion_tag('bootstrap/form_field_static.html')
+def form_field_static(field):
+    return {
+        'field': field,
+    }
