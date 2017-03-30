@@ -1,0 +1,62 @@
+[
+    Course-ID: 20-00-0000-tt; Name: Mentoring System; Books: [],
+    Course-ID: 20-00-0005-iv; Name: Algorithms and data structures; Books: [
+        ':',
+        'To be appointed in the lecture.'
+    ],
+    Course-ID: 20-00-0011-iv; Name: Computational Engineering and Robotics; Books: [
+        ':',
+        'Literature:',
+        'F. Föllinger: Einführung in die Zustandsbeschreibung dynamischer Systeme (Oldenbourg, 1982)',
+        'P. Corke: Robotics, Vision &amp; Control, Springer, 2011',
+        'F.L. Severance: System Modeling and Simulation: An Introduction, J. Wiley &amp; Sons, 2001'
+    ],
+    Course-ID: 20-00-0015-iv; Name: Information Management; Books: [
+        ':',
+        'To be announced in the lecture. Recommendations include:'
+    ],
+    Course-ID: 20-00-0016-iv; Name: Computer Networks and distributed Systems; Books: [
+        ':',
+        'A. Tanenbaum: Computernetzwerke, Pearson Studium (2003, 2012 oder neuer)',
+        'G. Coulouris, J. Dollimore, T. Kindberg: Verteilte Systeme, Pearson Studium 2002',
+        'A. Tanenbaum, M. van Steen: Verteilte Systeme, Pearson Studium 2003',
+        'R. Steinmetz: Multimedia-Technologie, Springer 2000',
+        'J. Kurose, K. Ross: Computernetzwerke; Pearson Studium 2012'
+    ],
+    Course-ID: 20-00-0901-iv; Name: Formale Methods in Software Design; Books: [
+        ':',
+        'First part of lecture:',
+        '- Ben-Ari: Principles of the SPIN Model Checker, Springer',
+        '- Holzmann: The SPIN Model Checker, Addison-Wesley',
+        '',
+        'Second part of lecture:',
+        '- Beckert et al.: Verification of Object-Oriented Software, Springer',
+        '',
+        'Literature recommendations will be updated regularly.'
+    ],
+    Course-ID: 20-00-0902-iv; Name: Computer Organisation; Books: [
+        ':',
+        'Literatur recommendations will be updated regularly, an example might be:',
+        'Harris/Harris: Digital Design and Computer Architecture'
+    ],
+    Course-ID: 20-00-0906-pr; Name: Practical Lab for Bachelors; Books: [
+        ':',
+        'General:',
+        '- Lehrbuch der Softwaretechnik: Softwaremanagement; H. Balzert; Springer',
+        '- Design Patterns - Elements of Reusable Object-Oriented Software; E. Gamma, R. Helm, R. Johnson, J. Vlissides; Prentice Hall',
+        '- Software Qualität - Testen, Analysieren und Verifizieren von Software; P. Liggesmeyer; Springer',
+        '- Writing Effective Use Cases; A. Cockburn; Pearson',
+        '- Clean Code: A Handbook of Agile Software Craftsmanship; R. C. Martin; Prentice Hall',
+        'Depending on exercise other literature may be necessary.'
+    ],
+    Course-ID: 04-00-0218-vu; Name: Side-Channel Attacks on IT Systems; Books: [
+        ':',
+        'H.-O. Georgii: Stochastik - Einführung in die Wahrscheinlichkeitstheorie und Statistik. 5. Auflage, De Gruyter, Berlin 2015.',
+        'F.E. Beichelt, D.C. Montgomery: Teubner Taschenbuch der Stochastik -Wahrscheinlichkeitstheorie, Stochastische Prozesse, Mathematische Statistik. Teubner, Wiesbaden 2003.',
+        'O.J.W.F. Kardaun: Classical Methods of Statistics. Springer, Berlin 2005.',
+        'J. Buchmann: Einführung in die Kryptographie. 5. erw. Auflage, Springer, Berlin',
+        'S. Mangard, E. Oswald, T. Popp: Power Analysis Attacks - Revealing the Secrets of Smart Cards. Springer, Berlin 2007.',
+        'and a number of relevant papers'
+    ],
+    Course-ID: 20-00-0063-iv; Name: Public Key Infrastrukturen (PK I); Books: []
+]
