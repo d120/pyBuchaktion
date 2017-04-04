@@ -33,8 +33,6 @@ class OrderAdmin(admin.ModelAdmin):
 
     def export(self, request, queryset):
 
-        self.message_user(request, "We did something!")
-
         out_stream = io.StringIO()
         writer = csv.writer(out_stream, delimiter='|', quotechar="\"", quoting=csv.QUOTE_MINIMAL)
         for order in queryset:
