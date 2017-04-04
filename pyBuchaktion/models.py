@@ -113,6 +113,13 @@ class Order(models.Model):
 # A student participating in the Buchaktion
 class Student(models.Model):
     pass
+    library_id = models.DecimalField(
+        max_digits=12,
+        decimal_places=0,
+        verbose_name=_("library id"),
+        default=0,
+    )
+        
     # empty until CAS login is figured out
     def __str__(self):
         return '#%d' % (self.id)
