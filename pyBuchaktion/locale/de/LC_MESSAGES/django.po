@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: pyBuchaktion\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-04-04 17:51+0200\n"
-"PO-Revision-Date: 2017-04-04 17:58+0100\n"
+"POT-Creation-Date: 2017-04-04 18:01+0200\n"
+"PO-Revision-Date: 2017-04-04 18:02+0100\n"
 "Last-Translator: Daniel Schweighöfer <dschweighoefer@d120.de>\n"
 "Language-Team: UA Buchaktion <buchaktion@d120.de>\n"
 "Language: de\n"
@@ -82,7 +82,6 @@ msgid "Author"
 msgstr "Autor"
 
 #: forms.py:21
-#, fuzzy
 msgid "Name"
 msgstr "Name"
 
@@ -94,7 +93,7 @@ msgstr "Titel"
 msgid "Accepted"
 msgstr "Akzeptiert"
 
-#: models.py:24 models.py:70
+#: models.py:24 models.py:77
 msgid "Rejected"
 msgstr "Abgelehnt"
 
@@ -106,7 +105,7 @@ msgstr "Vorgeschlagen"
 msgid "Obsolete"
 msgstr "Veraltet"
 
-#: models.py:32 models.py:77
+#: models.py:32 models.py:84
 msgid "status"
 msgstr "Status"
 
@@ -118,125 +117,129 @@ msgstr "Autor"
 msgid "price"
 msgstr "Preis"
 
-#: models.py:54 models.py:86
-msgid "book"
-msgstr "Buch"
+#: models.py:47
+msgid "publisher"
+msgstr "Verlag"
 
-#: models.py:55
-msgid "books"
-msgstr "Bücher"
-
-#: models.py:68
-msgid "Pending"
-msgstr "Offen"
-
-#: models.py:69
-msgid "Ordered"
-msgstr "Bestellt"
-
-#: models.py:71
-msgid "Arrived"
-msgstr "Angekommen"
-
-#: models.py:81
-msgid "hint"
-msgstr "Hinweis"
-
-#: models.py:91 models.py:115
-msgid "student"
-msgstr "Student"
-
-#: models.py:96 models.py:141
-msgid "order timeframe"
-msgstr "Bestellzeitraum"
-
-#: models.py:103
-msgid "order"
-msgstr "Bestellung"
-
-#: models.py:104
-msgid "orders"
-msgstr "Bestellungen"
-
-#: models.py:116
-msgid "students"
-msgstr "Studenten"
-
-#: models.py:121
-msgid "start date"
-msgstr "Startdatum"
-
-#: models.py:124
-msgid "end date"
-msgstr "Enddatum"
-
-#: models.py:129
-msgid "spendings"
-msgstr "Ausgaben"
-
-#: models.py:134 models.py:154
-msgid "semester"
-msgstr "Semester"
-
-#: models.py:142
-msgid "order timeframes"
-msgstr "Bestellzeiträume"
-
-#: models.py:149
-msgid "Winter term"
-msgstr "Wintersemester"
-
-#: models.py:150
-msgid "Summer term"
-msgstr "Sommersemester"
-
-#: models.py:155
-msgid "semesters"
-msgstr "Semester"
-
-#: models.py:160
-msgid "season"
-msgstr "Saison"
-
-#: models.py:165
+#: models.py:50 models.py:172
 msgid "year"
 msgstr "Jahr"
 
-#: models.py:170
+#: models.py:61 models.py:93
+msgid "book"
+msgstr "Buch"
+
+#: models.py:62
+msgid "books"
+msgstr "Bücher"
+
+#: models.py:75
+msgid "Pending"
+msgstr "Offen"
+
+#: models.py:76
+msgid "Ordered"
+msgstr "Bestellt"
+
+#: models.py:78
+msgid "Arrived"
+msgstr "Angekommen"
+
+#: models.py:88
+msgid "hint"
+msgstr "Hinweis"
+
+#: models.py:98 models.py:122
+msgid "student"
+msgstr "Student"
+
+#: models.py:103 models.py:148
+msgid "order timeframe"
+msgstr "Bestellzeitraum"
+
+#: models.py:110
+msgid "order"
+msgstr "Bestellung"
+
+#: models.py:111
+msgid "orders"
+msgstr "Bestellungen"
+
+#: models.py:123
+msgid "students"
+msgstr "Studenten"
+
+#: models.py:128
+msgid "start date"
+msgstr "Startdatum"
+
+#: models.py:131
+msgid "end date"
+msgstr "Enddatum"
+
+#: models.py:136
+msgid "spendings"
+msgstr "Ausgaben"
+
+#: models.py:141 models.py:161
+msgid "semester"
+msgstr "Semester"
+
+#: models.py:149
+msgid "order timeframes"
+msgstr "Bestellzeiträume"
+
+#: models.py:156
+msgid "Winter term"
+msgstr "Wintersemester"
+
+#: models.py:157
+msgid "Summer term"
+msgstr "Sommersemester"
+
+#: models.py:162
+msgid "semesters"
+msgstr "Semester"
+
+#: models.py:167
+msgid "season"
+msgstr "Saison"
+
+#: models.py:177
 msgid "budget"
 msgstr "Budget"
 
-#: models.py:174
+#: models.py:181
 #, python-format
 msgid "Winter term 20%(year)d/%(next_year)d"
 msgstr "Wintersemester 20%(year)d/%(next_year)d"
 
-#: models.py:178
+#: models.py:185
 #, python-format
 msgid "Summer term 20%(year)d"
 msgstr "Sommersemester 20%(year)d"
 
-#: models.py:187
+#: models.py:194
 msgid "module id"
 msgstr "Modul ID"
 
-#: models.py:191
+#: models.py:198
 msgid "name"
 msgstr "Name"
 
-#: models.py:196
+#: models.py:203
 msgid "last offered"
 msgstr "Zuletzt angeboten"
 
-#: models.py:200
+#: models.py:207
 msgid "literature"
 msgstr "Literatur"
 
-#: models.py:207
+#: models.py:214
 msgid "TUCaN module"
 msgstr "TUCaN Modul"
 
-#: models.py:208
+#: models.py:215
 msgid "TUCaN modules"
 msgstr "TUCaN Module"
 

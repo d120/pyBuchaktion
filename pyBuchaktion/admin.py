@@ -40,8 +40,8 @@ class OrderAdmin(admin.ModelAdmin):
                 "", # ULB-Nummer
                 order.book.author,
                 order.book.title,
-                "", # Verlag
-                "", # Erscheinungsjahr
+                order.book.publisher,
+                order.book.year,
                 order.book.isbn_13
             ]
             writer.writerow(array)

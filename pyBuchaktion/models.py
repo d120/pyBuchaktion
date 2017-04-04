@@ -42,6 +42,13 @@ class Book(models.Model):
         null=True,
         verbose_name=_("price"),
     )
+    publisher = models.CharField(
+        max_length=64,
+        verbose_name=_("publisher"),
+    )
+    year = models.IntegerField(
+        verbose_name=_("year"),
+    )
     def __str__(self):
         return '%s (%s) [ISBN: %s]' % (self.title, self.author, self.isbn_13)
     def statename(self):
