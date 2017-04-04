@@ -195,6 +195,14 @@ class Student(models.Model):
         of computer science.
     """
 
+    # The library id for this student
+    library_id = models.DecimalField(
+        max_digits=12,
+        decimal_places=0,
+        verbose_name=_("library id"),
+        default=0,
+    )
+
     # empty until CAS login is figured out
 
     # Get the default string representation as "#<id>"
