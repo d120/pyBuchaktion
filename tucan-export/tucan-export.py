@@ -31,7 +31,10 @@ TUCAN_MODULE_COURSE_IDNAME_PATTERN = re.compile(r'^\s*(\w{2,2}-\w{2,2}-\w{4,4}-\
 TUCAN_MODULE_COURSE_NAME_NORMALIZE_PATTERN = re.compile(r'^(?:\s|\\t)*(.*?)(?:\s|\\t)*$')
 TUCAN_MODULE_LITERATURE_CONTENT_PATTERN = re.compile(r'^\s*<p><b>(.*?)</b>(.*)</p>\s*$')
 # Magic Numbers.
+ISBN_RELIABILITY_BASE_VALUE = 50
+ISBN_RELIABILITY_MAX_VALUE = 100
 ISBN_RELIABILITY_BOOKSTRING_LENGTH = 50
+ISBN_RELIABILITY_BOOKSTRING_LENGTH_MULTIPLIER = 0.5
 
 
 
@@ -84,7 +87,7 @@ class IsbnMagic:
     def retrieveAndSetIsbn(self, book):
         book_string = book.book_string
         if len(book_string) > ISBN_RELIABILITY_BOOKSTRING_LENGTH:
-            book.isbn_reliability = min(int(50 + len(book_string) * 0.1), 100)
+            book.isbn_reliability = min(int(ISBN_RELIABILITY_BASE_VALUE + len(book_string) * ISBN_RELIABILITY_BOOKSTRING_LENGTH_MULTIPLIER), ISBN_RELIABILITY_MAX_VALUE)
         path = GOOGLE_BOOKS_BASE_PATH + urlencode({
             'q': book_string
         })
@@ -156,7 +159,7 @@ class Tucan:
 
 
     def retrieveModules(self):
-        module_urls = tucan.retrieveModuleUrls()[:10]
+        module_urls = tucan.retrieveModuleUrls()
 
         module_cids = []
         modules = []
