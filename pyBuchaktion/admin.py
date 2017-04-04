@@ -38,7 +38,14 @@ class OrderAdmin(admin.ModelAdmin):
         out_stream = io.StringIO()
         writer = csv.writer(out_stream, delimiter='|', quotechar="\"", quoting=csv.QUOTE_MINIMAL)
         for order in queryset:
-            array = ["ULB-NUMMER", order.book.author, order.book.title, "VERLAG", "JAHR", order.book.isbn_13]
+            array = [
+                "", # ULB-Nummer
+                order.book.author,
+                order.book.title,
+                "", # Verlag
+                "", # Erscheinungsjahr
+                order.book.isbn_13
+            ]
             writer.writerow(array)
 
         response = HttpResponse(out_stream.getvalue(), content_type="text/csv")
