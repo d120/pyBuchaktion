@@ -28,8 +28,14 @@ class OrderAdmin(admin.ModelAdmin):
     def book_title(self, order):
         return order.book.title
 
+    book_title.short_description = _("title")
+
     def timeframe(self, order):
-        return order.order_timeframe.end_date
+        start = _("{:%Y-%m-%d}").format(order.order_timeframe.start_date)
+        end = _("{:%Y-%m-%d}").format(order.order_timeframe.end_date)
+        return _("%(start)s to %(end)s") % {'start': start, 'end': end}
+
+    timeframe.short_description = _("order timeframe")
 
     def export(self, request, queryset):
 

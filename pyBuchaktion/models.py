@@ -141,7 +141,9 @@ class OrderTimeframe(models.Model):
         verbose_name=_("semester"),
     )
     def __str__(self):
-        return "%s - %s (%s)" % (self.start_date, self.end_date, self.semester)
+        start = _("{:%Y-%m-%d}").format(self.start_date)
+        end = _("{:%Y-%m-%d}").format(self.end_date)
+        return _("%(start)s to %(end)s (%(semester)s)") % {'start': start, 'end': end, 'semester': self.semester}
     def natural_key(self):
         return { "from": self.start_date, "to": self.end_date }
     class Meta:
