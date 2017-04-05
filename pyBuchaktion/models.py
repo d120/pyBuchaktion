@@ -195,6 +195,14 @@ class Student(models.Model):
         of computer science.
     """
 
+    # The library id for this student
+    library_id = models.CharField(
+        max_length=12,
+        unique=True,
+        verbose_name=_("library id"),
+        null=True,
+    )
+
     # empty until CAS login is figured out
 
     # Get the default string representation as "#<id>"
