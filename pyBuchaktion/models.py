@@ -196,11 +196,10 @@ class Student(models.Model):
     """
 
     # The library id for this student
-    library_id = models.DecimalField(
-        max_digits=12,
-        decimal_places=0,
+    library_id = models.CharField(
+        max_length=12,
+        unique=True,
         verbose_name=_("library id"),
-        default=0,
     )
 
     # empty until CAS login is figured out
