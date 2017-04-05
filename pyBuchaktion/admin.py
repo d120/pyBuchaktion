@@ -100,7 +100,7 @@ class OrderAdmin(admin.ModelAdmin):
         writer = csv.writer(out_stream, delimiter='|', quotechar="\"", quoting=csv.QUOTE_MINIMAL)
         for order in queryset:
             array = [
-                "", # ULB-Nummer
+                order.student.library_id,
                 order.book.author,
                 order.book.title,
                 order.book.publisher,
@@ -121,7 +121,18 @@ class StudentAdmin(admin.ModelAdmin):
     """
         The admin for students.
     """
-    pass
+
+    # The columns that are displayed
+    list_display = (
+        'id',
+        'library_id',
+    )
+
+    # The columns that are displayed as links
+    list_display_links = (
+        'id',
+        'library_id',
+    )
 
 @admin.register(models.OrderTimeframe)
 class OrderTimeframeAdmin(admin.ModelAdmin):
