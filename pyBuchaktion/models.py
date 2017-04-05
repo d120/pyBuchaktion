@@ -200,6 +200,7 @@ class Student(models.Model):
         max_length=12,
         unique=True,
         verbose_name=_("library id"),
+        null=True,
     )
 
     # empty until CAS login is figured out
