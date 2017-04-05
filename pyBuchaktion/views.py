@@ -11,14 +11,23 @@ from .forms import BookSearchForm, ModuleSearchForm
 from .models import Book, TucanModule, Order
 
 
-class VarPagedMultipleObjectMixin(MultipleObjectMixin):
+class VarPagedListView(ListView):
+
+    """
+        A list view specialization for making the paginate_by value
+        possible to set by the user.
+    """
+
+    # The default pagination setting
     paginate_by_default = 10
+    # The options for pagination
     paginate_by_options = [10, 25, 50, 100]
 
+    # Get the paginate by value
     def get_paginate_by(self, queryset):
         opts = self.request.GET
         if 'limit' in opts:
-            limit = int(self.request.GET['limit'])
+            limit = int(opts['limit'])
             if (limit in self.paginate_by_options):
                 self.paginate_by = limit
         else:
@@ -26,19 +35,27 @@ class VarPagedMultipleObjectMixin(MultipleObjectMixin):
 
         return self.paginate_by
 
-
-class VarPagedListView(ListView, VarPagedMultipleObjectMixin):
-
+    # Overwrite the context to add information on pagination
+    # as well as the GET parameters
     def get_context_data(self, **kwargs):
-        context = super(VarPagedListView, self).get_context_data(**kwargs)
+        context = super(ListView, self).get_context_data(**kwargs)
         context['get_params'] = self.request.GET
         context['limit'] = self.paginate_by
         context['limit_options'] = self.paginate_by_options
         context['limit_default'] = self.paginate_by_default
         return context
 
-
 class FormContextMixin(ContextMixin):
+
+    """
+        A mixin to add the form provided to the context
+    """
+
+    # The form for this mixin
+    form = None
+
+    def get_form(self):
+        return self.form
 
     def get_context_data(self, **kwargs):
         context = super(FormContextMixin, self).get_context_data(**kwargs)
@@ -46,12 +63,35 @@ class FormContextMixin(ContextMixin):
         return context
 
 
-class BookList(VarPagedMultipleObjectMixin):
+class AllBookListView(VarPagedListView):
+
+    """
+        The list view for all books that are available.
+    """
+
+    queryset = Book.objects.all()
+    context_object_name = 'books'
+    template_name = 'pyBuchaktion/books/all_list.html'
+    showtag = True
+
+    def get_context_data(self, **kwargs):
+        context = super(AllBookListView, self).get_context_data(**kwargs)
+        context['showtag'] = self.showtag
+        return context
+
+class BookListView(AllBookListView, FormContextMixin):
+
+    """
+        The list view for all the accepted books.
+    """
+
     queryset = Book.objects.filter(state=Book.ACCEPTED)
+    template_name = 'pyBuchaktion/books/active_list.html'
+    showtag = False
 
     def get_queryset(self):
         self.form = BookSearchForm(self.request.GET)
-        queryset = super(BookList, self).get_queryset()
+        queryset = super(AllBookListView, self).get_queryset()
 
         if self.form.is_valid():
             data = self.form.cleaned_data
@@ -72,38 +112,19 @@ class BookList(VarPagedMultipleObjectMixin):
 
         return queryset
 
+class BookView(DetailView):
 
-class AllBooksList(BookList):
-    queryset = Book.objects.all()
+    """ The detail view for a single book """
 
-
-class BookListView(BookList, VarPagedListView, FormContextMixin):
-    template_name = 'pyBuchaktion/books/active_list.html'
-    context_object_name = 'books'
-
-
-class AllBookListView(AllBooksList, BookListView):
-    template_name = 'pyBuchaktion/books/all_list.html'
-
-    def get_context_data(self, **kwargs):
-        context = super(AllBookListView, self).get_context_data(**kwargs)
-        context['showtag'] = True
-        return context
-
-
-class BookDetail(SingleObjectMixin):
     model = Book
+    template_name = 'pyBuchaktion/book.html'
+    context_object_name = 'book'
     pk_url_kwarg = 'book_id'
     book_order = False
 
     def post(self, request, *args, **kwargs):
         self.book_order = post_order_book(request, kwargs['book_id'])
         return self.get(request, *args, **kwargs)
-
-
-class BookView(DetailView, BookDetail):
-    template_name = 'pyBuchaktion/book.html'
-    context_object_name = 'book'
 
     def get_context_data(self, **kwargs):
         context = super(DetailView, self).get_context_data(**kwargs)
@@ -114,9 +135,12 @@ class BookView(DetailView, BookDetail):
                 student=context['student'])
         return context
 
+class ModuleListView(VarPagedListView, FormContextMixin):
 
-class ModuleList(MultipleObjectMixin):
-    model = TucanModule
+    """ The list view for all TUCaN modules """
+
+    template_name = 'pyBuchaktion/modules.html'
+    context_object_name = 'modules'
 
     def get_queryset(self):
         self.form = ModuleSearchForm(self.request.GET)
@@ -132,47 +156,29 @@ class ModuleList(MultipleObjectMixin):
 
         return queryset
 
-
-class ModulesView(VarPagedListView, ModuleList, FormContextMixin):
-    template_name = 'pyBuchaktion/modules.html'
-    context_object_name = 'modules'
-
-
-class ModuleDetail(SingleObjectMixin):
+class ModuleDetailView(DetailView):
+    template_name = 'pyBuchaktion/module.html'
+    context_object_name = 'module'
     model = TucanModule
     pk_url_kwarg = 'module_id'
 
-
-class ModuleView(DetailView, ModuleDetail):
-    template_name = 'pyBuchaktion/module.html'
-    context_object_name = 'module'
-
-
-class OrderList(MultipleObjectMixin):
+class OrderListView(VarPagedListView):
 
     def get_queryset(self):
         return Order.objects.filter(student=get_logged_in_student(self.request))
 
-
-class OrderDetail(SingleObjectMixin):
-    pk_url_kwarg = 'order_id'
-
-    def get_queryset(self):
-        return Order.objects.filter(student=get_logged_in_student(self.request))
-
-
-class BaseOrderView(DetailView, OrderDetail):
+class OrderDetailView(DetailView):
     context_object_name = 'order'
-
-
-class OrderView(BaseOrderView):
+    pk_url_kwarg = 'order_id'
     template_name = 'pyBuchaktion/order.html'
+
+    def get_queryset(self):
+        return Order.objects.filter(student=get_logged_in_student(self.request))
 
     def post(self, request, *args, **kwargs):
         return HttpResponseRedirect(reverse("pyBuchaktion:order_abort", kwargs=kwargs))
 
-
-class OrderAbortView(BaseOrderView):
+class OrderAbortView(OrderDetailView):
     template_name = 'pyBuchaktion/order_abort.html'
 
     def post(self, request, *args, **kwargs):
@@ -184,121 +190,14 @@ class OrderAbortView(BaseOrderView):
                 if (self.order_abort):
                     return HttpResponseRedirect(reverse("pyBuchaktion:account"))
             elif (action == "Cancel"):
-                return HttpResponseRedirect(reverse("pyBuchaktion:order", kwargs['order_id']))
+                return HttpResponseRedirect(reverse("pyBuchaktion:order", kwargs=kwargs))
         except:
-            pass
+            a = it
 
         return self.get(request, *args, **kwargs)
-
 
 class AccountView(TemplateView):
     template_name = 'pyBuchaktion/account.html'
 
     def get_context_data(self, **kwargs):
         return {'student': get_logged_in_student(self.request)}
-
-
-class ObjectSerializer(Serializer):
-
-    def end_object(self, obj):
-        self._current['id'] = obj._get_pk_val()
-        self.objects.append(self._current)
-
-
-class ApiListView(View):
-    fields = None
-    queryset = {}
-    wrap_name = None
-
-    def wrap(self, data):
-        if (self.wrap_name is not None):
-            return {self.wrap_name: data}
-        return data
-
-    def get_object_list(self):
-        return self.get_queryset()
-
-    def get(self, request, *args, **kwargs):
-        serializer = ObjectSerializer()
-        data = serializer.serialize(
-            self.get_object_list(),
-            use_natural_foreign_keys=True,
-            fields=self.fields,
-        )
-        json_encoder = DjangoJSONEncoder(indent=2)
-        json = json_encoder.encode(self.wrap(data))
-        return HttpResponse(json, content_type='application/json')
-
-
-class ApiDetailView(View):
-    object = {}
-    wrap_name = None
-
-    def wrap(self, data):
-        if (self.wrap_name is not None):
-            return {self.wrap_name: data}
-        return data
-
-    def get_object(self, queryset=None):
-        return self.object
-
-    def get(self, request, *args, **kwargs):
-        json_encoder = DjangoJSONEncoder(indent=2)
-        json = json_encoder.encode(
-            self.wrap(_model_to_dict(self.get_object())))
-        return HttpResponse(json, content_type='application/json')
-
-
-class PagedApiListView(ApiListView, MultipleObjectMixin):
-    is_paginated = False
-    paginator = None
-    page = None
-    object_list = {}
-
-    def wrap(self, data):
-        wrapped = super(PagedApiListView, self).wrap(data)
-        if (self.is_paginated):
-            wrapped["total"] = self.paginator.count
-        return wrapped
-
-    def get_object_list(self):
-        queryset = self.get_queryset()
-        paginate_by = self.get_paginate_by(queryset)
-        data = self.paginate_queryset(queryset, paginate_by)
-        self.paginator = data[0]
-        self.page = data[1]
-        self.object_list = data[2]
-        self.is_paginated = data[3]
-        return self.object_list
-
-
-class VarPagedApiListView(PagedApiListView, VarPagedMultipleObjectMixin):
-    pass
-
-
-class BooksApiListView(BookList, VarPagedApiListView):
-    fields = ('isbn_13', 'title', 'author')
-    wrap_name = "books"
-
-
-class BookApiDetailView(BookDetail, ApiDetailView):
-    wrap_name = 'book'
-
-
-class ModuleApiDetailView(ModuleDetail, ApiDetailView):
-    wrap_name = 'module'
-
-
-class OrderApiDetailView(OrderDetail, ApiDetailView):
-    wrap_name = 'order'
-
-
-class OrderApiListView(OrderList, ApiListView):
-    wrap_name = 'orders'
-
-
-class AccountApiDetailView(ApiDetailView):
-    wrap_name = 'account'
-
-    def get_object(self, queryset=None):
-        return get_logged_in_student(self.request)
