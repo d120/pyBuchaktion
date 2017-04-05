@@ -1,4 +1,11 @@
+"""
+    This module configures the administration views for this app.
+    There is a class for each model that defines display columns
+    and filters for the list view.
+"""
+
 from django.contrib import admin
+from django.db.models import Count
 from django.utils.translation import ugettext_lazy as _
 #from import_export import resources
 #from import_export.admin import ImportExportActionModelAdmin
@@ -10,8 +17,28 @@ from . import models
 
 @admin.register(models.Book)
 class BookAdmin(admin.ModelAdmin):
-    list_display = ('title', 'author', 'isbn_13')
-    list_filter = ('state',)
+
+    list_display = (
+        'title',
+        'author',
+        'isbn_13',
+        'number_of_orders',
+    )
+
+    list_filter = (
+        'state',
+    )
+
+    def get_queryset(self, request):
+        qs = super(BookAdmin, self).get_queryset(request)
+        qs = qs.annotate(Count('order'))
+        return qs
+
+    def number_of_orders(self, book):
+        return book.order__count
+
+    number_of_orders.admin_order_field = 'order__count'
+    number_of_orders.short_description = _("orders")
 
 #class OrderResource(resources.ModelResource):
 
