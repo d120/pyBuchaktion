@@ -12,8 +12,10 @@
 """
 
 from django.db import models
+from django.db.models.signals import pre_save
 from django.core.urlresolvers import reverse
 from django.utils.translation import ugettext_lazy as _
+from django.dispatch import receiver
 
 class Book(models.Model):
 
@@ -150,6 +152,7 @@ class Order(models.Model):
     # A note that will be displayed to the user after a status change
     hint = models.TextField(
         verbose_name=_("hint"),
+        blank=True,
     )
 
     # The book that is ordered
@@ -201,6 +204,8 @@ class Student(models.Model):
         unique=True,
         verbose_name=_("library id"),
         null=True,
+        blank=True,
+        default="",
     )
 
     # empty until CAS login is figured out
@@ -217,6 +222,17 @@ class Student(models.Model):
     class Meta:
         verbose_name = _("student")
         verbose_name_plural = _("students")
+
+@receiver(pre_save, sender=Student)
+def save_student(sender, **kwargs):
+    """
+        Set all empty string values to NULL, so that the libraryID can
+        be optional and unique at the same time, while not blocking
+        saving in the admin when the field is left empty.
+    """
+    if not kwargs['instance'].library_id:
+        kwargs['instance'].library_id = None
+
 
 class OrderTimeframe(models.Model):
 
