@@ -77,7 +77,9 @@ class OrderAdmin(admin.ModelAdmin):
     )
 
     # The actions that can be triggered on orders
-    actions = ["export"]
+    actions = [
+        "export",
+    ]
 
     # The title of the book to be ordered
     def book_title(self, order):
