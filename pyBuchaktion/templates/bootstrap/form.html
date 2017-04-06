@@ -1,0 +1,5 @@
+{% load bootstrap_tags %}
+{% form_errors form.non_field_errors %}
+{% for field in form %}
+	{% form_labeled_field field %}
+{% endfor %}

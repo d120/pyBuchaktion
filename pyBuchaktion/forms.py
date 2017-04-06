@@ -1,6 +1,7 @@
 from django import forms
 from django.utils.translation import ugettext_lazy as _
 from django.http.request import QueryDict
+from .models import Student
 
 class OrderForm(forms.Form):
     pass
@@ -23,3 +24,10 @@ class ModuleSearchForm(forms.Form):
 
     def is_valid(self):
         return super(ModuleSearchForm, self).is_valid()
+
+
+class AccountEditForm(forms.ModelForm):
+    class Meta:
+        model = Student
+        fields = ['library_id']
+        help_texts = {'library_id': _("The library id number assigned by the ULB")}

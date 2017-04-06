@@ -3,11 +3,12 @@ from django.views.generic.base import ContextMixin
 from django.views.generic.list import MultipleObjectMixin
 from django.views.generic.detail import SingleObjectMixin
 from django.core.serializers.json import DjangoJSONEncoder
+from django.shortcuts import render
 from django.core.urlresolvers import reverse
 from django.core.serializers.python import Serializer
 from django.http import HttpResponseRedirect, HttpResponse
 from .data import get_logged_in_student, post_order_book, post_abort_order, _model_to_dict
-from .forms import BookSearchForm, ModuleSearchForm
+from .forms import BookSearchForm, ModuleSearchForm, AccountEditForm
 from .models import Book, TucanModule, Order
 
 
@@ -59,7 +60,7 @@ class FormContextMixin(ContextMixin):
 
     def get_context_data(self, **kwargs):
         context = super(FormContextMixin, self).get_context_data(**kwargs)
-        context['form'] = self.form
+        context['form'] = self.get_form()
         return context
 
 
@@ -176,13 +177,15 @@ class OrderDetailView(DetailView):
         return Order.objects.filter(student=get_logged_in_student(self.request))
 
     def post(self, request, *args, **kwargs):
-        return HttpResponseRedirect(reverse("pyBuchaktion:order_abort", kwargs=kwargs))
+        if 'action' in request.POST and request.POST['action'] == "Abort":
+            return HttpResponseRedirect(reverse("pyBuchaktion:order_abort", kwargs=kwargs))
+        return HttpResponseRedirect(reverse("pyBuchaktion:order", kwargs=kwargs))
 
 class OrderAbortView(OrderDetailView):
     template_name = 'pyBuchaktion/order_abort.html'
 
     def post(self, request, *args, **kwargs):
-        try:
+        if 'action' in request.POST:
             action = request.POST['action']
             if (action == "Abort"):
                 self.order_abort = post_abort_order(
@@ -191,13 +194,26 @@ class OrderAbortView(OrderDetailView):
                     return HttpResponseRedirect(reverse("pyBuchaktion:account"))
             elif (action == "Cancel"):
                 return HttpResponseRedirect(reverse("pyBuchaktion:order", kwargs=kwargs))
-        except:
-            a = it
+        else:
+            return HttpResponseRedirect(reverse("pyBuchaktion:order", kwargs=kwargs))
 
-        return self.get(request, *args, **kwargs)
-
-class AccountView(TemplateView):
+class AccountView(FormContextMixin, TemplateView):
     template_name = 'pyBuchaktion/account.html'
 
+    def get_form(self):
+        return AccountEditForm(instance=get_logged_in_student(self.request))
+
     def get_context_data(self, **kwargs):
-        return {'student': get_logged_in_student(self.request)}
+        context = super(AccountView, self).get_context_data(**kwargs)
+        context['student'] = get_logged_in_student(self.request)
+        return context
+
+    def post(self, request, *args, **kwargs):
+        student = get_logged_in_student(self.request)
+        if student:
+            form = AccountEditForm(request.POST, instance=student)
+            if (form.is_valid()):
+                form.save()
+            else:
+                return render(request, self.template_name, {'student': student, 'form': form})
+        return HttpResponseRedirect(reverse("pyBuchaktion:account", kwargs=kwargs))

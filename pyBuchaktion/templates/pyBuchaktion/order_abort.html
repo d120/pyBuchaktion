@@ -1,32 +1,19 @@
-{% extends "page.html" %} {% load cms_tags view_tools i18n %}
+{% extends "pyBuchaktion/order.html" %} {% load cms_tags view_tools i18n %}
 
-{% block content %}
-    <div class="panel panel-danger">
-        <div class="panel-heading">
-            <h3 class="panel-title">{% trans "Order #" %}{{ order.id }}</h3>
-        </div>
-        <div class="panel-body">
+{% block panel-body %}
             {% trans "You are about to abort the order for the book noted below. Do you really want to do that?" %}
+{% endblock panel-body %}
+
+{% block panel-footer %}
             <form method="post">
                 {% csrf_token %}
-                <button class="btn btn-danger" name="action" type="submit" value="Abort">
-                    {% trans "Yes, Abort the order" %}
-                </button>
-                <button class="btn btn-info" name="action" type="submit" value="Cancel">
-                    {% trans "No, keep the order" %}
-                </button>
+                <div class="btn-group" style="margin-left: auto; margin-right: 0" role="group" aria-label="actions">
+                    <button class="btn btn-danger" name="action" type="submit" value="Abort">
+                        {% trans "Yes, Abort the order" %}
+                    </button>
+                    <button class="btn btn-info" name="action" type="submit" value="Cancel">
+                        {% trans "No, keep the order" %}
+                    </button>
+                </div>
             </form>
-        </div>        
-    </div>
-    <div class="panel panel-default">
-        <div class="panel-heading">
-            <h3 class="panel-title">{% trans "Book" %}: {{ order.book.title }}</h3>
-        </div>
-        <div class="list-group">
-            <a class="list-group-item" href="{% url "pyBuchaktion:book" book_id=order.book.id %}">
-                <b>{% trans "Author" %}</b>: <i>{{ order.book.author }}</i><br/>
-                <b>ISBN-13</b>: <i>{{ order.book.isbn_13 }}</i>
-            </a>
-        </div>
-    </div>
-{% endblock content %}
+{% endblock panel-footer %}
