@@ -3,7 +3,7 @@ from django.views.generic.edit import UpdateView, CreateView, BaseCreateView, De
 from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect
 
-from .forms import BookSearchForm, ModuleSearchForm, AccountEditForm, BookOrderForm
+from .forms import BookSearchForm, ModuleSearchForm, AccountEditForm, BookOrderForm, BookProposeForm
 from .models import Book, TucanModule, Order, Student, OrderTimeframe
 from .mixins import SearchFormContextMixin, StudentContextMixin, StudentLoginRequiredMixin, NeverCacheMixin
 
@@ -177,3 +177,22 @@ class AccountView(StudentLoginRequiredMixin, NeverCacheMixin, UpdateView):
 
     def get_object(self, queryset=None):
         return self.request.student
+
+
+class BookProposeView(StudentLoginRequiredMixin, CreateView):
+    template_name_suffix = '_propose'
+
+    form_class = BookProposeForm
+
+    def get_initial(self):
+        return {'state': Book.PROPOSED, 'price': 0}
+
+    def form_valid(self, form):
+        order = Order(
+            book=form.instance,
+            student=self.request.student,
+            status=Order.PENDING,
+            order_timeframe=OrderTimeframe.current()
+        )
+        order.save()
+        return super(BookProposeView, self).form_valid(form)

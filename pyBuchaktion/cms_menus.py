@@ -14,9 +14,14 @@ class PyBuchaktionMenu(Menu):
         n4 = NavigationNode(_('Modules'), reverse('pyBuchaktion:modules'), 5004)
         nodes = [n2, n3, n4]
 
-        nodes += [NavigationNode(_("Account"), reverse('pyBuchaktion:account'), 5006),]
         #nodes += [NavigationNode(_("Logout"), reverse('pyTUID:logout'), 5020, 5006),]
         #nodes += [NavigationNode(_("Login"), reverse('pyTUID:login'), 5020),]
+
+        if hasattr(request, 'student') and request.student:
+            nodes += [NavigationNode(_("Account"), reverse('pyBuchaktion:account'), 5006),]
+            nodes += [NavigationNode(_("Propose"), reverse('pyBuchaktion:book_propose'), 5008, 5001)]
+        else:
+            nodes += [NavigationNode(_("Login"), reverse('pyBuchaktion:account'), 5006),]
 
         match = request.resolver_match
         if match.url_name in ['book', 'book_order']:

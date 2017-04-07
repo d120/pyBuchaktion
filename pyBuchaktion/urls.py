@@ -6,6 +6,7 @@ urlpatterns = [
     url(r'^book/', include([
         url(r'^$', BookListView.as_view(), name = 'books'),
         url(r'^all/$', AllBookListView.as_view(), name = 'books_all'),
+        url(r'^propose/$', BookProposeView.as_view(), name = 'book_propose'),
         url(r'^(?P<pk>\d*)/', include([
             url(r'^$',BookView.as_view(), name = 'book'),
             url(r'^order/$', BookOrderView.as_view(), name = 'book_order'),
