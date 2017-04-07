@@ -13,6 +13,7 @@
             {% endif %}
         {% endblock panel-body %}
         </div>
+        {% if order.status == "PD" %}
         <div class="panel-footer">
         {% block panel-footer %}
             <form method="post">
@@ -23,6 +24,7 @@
             </form>
         {% endblock panel-footer %}
         </div>
+        {% endif %}
     </div>
     <div class="panel panel-default">
         <div class="panel-heading">

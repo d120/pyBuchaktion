@@ -20,7 +20,7 @@ class PyBuchaktionMenu(Menu):
 
         match = request.resolver_match
         if match.url_name == 'book':
-            book_id = match.kwargs['book_id'][0]
+            book_id = match.kwargs['book_id']
             book = Book.objects.get(pk=book_id)
             if book:
                 nBook = [NavigationNode(_(book.title), reverse(
@@ -28,28 +28,22 @@ class PyBuchaktionMenu(Menu):
                 ), 3, 1),]
                 nodes += nBook
         elif match.url_name == 'module':
-            module_id = match.kwargs['module_id'][0]
+            module_id = match.kwargs['module_id']
             module = TucanModule.objects.get(pk=module_id)
             if module:
                 nModule = [NavigationNode(_(module.name), reverse(
                     'pyBuchaktion:module', kwargs={ 'module_id': module_id }
                 ), 5, 4),]
                 nodes += nModule
-        elif match.url_name == 'order':
-            order_id = match.kwargs['order_id'][0]
-            module = Order.objects.get(pk=order_id)
-            if module:
-                nModule = [NavigationNode(_("Order #%s") % order_id, reverse(
+        elif match.url_name in ('order', 'order_abort'):
+            order_id = match.kwargs['order_id']
+            order = Order.objects.get(pk=order_id)
+            if order:
+                nOrder = [NavigationNode(_("Order #%s") % order_id, reverse(
                     'pyBuchaktion:order', kwargs={ 'order_id': order_id }
                 ), 7, 6),]
-                nodes += nModule
+                nodes += nOrder
 
         return nodes;
 
-class BookViewModifier(Modifier):
-
-    def modify(self, request, nodes, namespace, root_id, post_cut, breadcrumb):            
-        return nodes
-
 menu_pool.register_menu(PyBuchaktionMenu)
-#menu_pool.register_modifier(BookViewModifier)

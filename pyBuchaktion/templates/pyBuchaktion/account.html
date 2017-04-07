@@ -12,10 +12,6 @@
                 <form method="POST">
                     {% csrf_token %}
                     {% form form %}
-                    <!--<div class="form-group">
-                        <label for="library_id">{% trans "library id" %}</label>
-                        <input type="text" class="form-control" name="library_id" id="library_id" value="{% if student.library_id %}{{student.library_id}}{% endif %}">
-                    </div>-->
                     <div class="form-group">
                         <button type="submit" class="btn btn-default">{% trans "Update" %}</button>
                     </div>

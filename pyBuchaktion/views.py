@@ -173,7 +173,14 @@ class OrderDetailView(DetailView):
 
     def post(self, request, *args, **kwargs):
         if 'action' in request.POST and request.POST['action'] == "Abort":
-            return HttpResponseRedirect(reverse("pyBuchaktion:order_abort", kwargs=kwargs))
+            _id = kwargs.get('order_id')
+            if _id:
+                try:
+                    order = self.get_queryset().get(pk=_id)
+                    if order.status == Order.PENDING:
+                        return HttpResponseRedirect(reverse("pyBuchaktion:order_abort", kwargs=kwargs))
+                except Order.DoesNotExist as e:
+                    pass
         return HttpResponseRedirect(reverse("pyBuchaktion:order", kwargs=kwargs))
 
 class OrderAbortView(OrderDetailView):
