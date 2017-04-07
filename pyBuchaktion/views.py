@@ -64,23 +64,7 @@ class FormContextMixin(ContextMixin):
         return context
 
 
-class AllBookListView(VarPagedListView):
-
-    """
-        The list view for all books that are available.
-    """
-
-    queryset = Book.objects.all()
-    context_object_name = 'books'
-    template_name = 'pyBuchaktion/books/all_list.html'
-    showtag = True
-
-    def get_context_data(self, **kwargs):
-        context = super(AllBookListView, self).get_context_data(**kwargs)
-        context['showtag'] = self.showtag
-        return context
-
-class BookListView(AllBookListView, FormContextMixin):
+class BookListView(FormContextMixin, VarPagedListView):
 
     """
         The list view for all the accepted books.
@@ -88,11 +72,11 @@ class BookListView(AllBookListView, FormContextMixin):
 
     queryset = Book.objects.filter(state=Book.ACCEPTED)
     template_name = 'pyBuchaktion/books/active_list.html'
-    showtag = False
+    context_object_name = 'books'
 
     def get_queryset(self):
         self.form = BookSearchForm(self.request.GET)
-        queryset = super(AllBookListView, self).get_queryset()
+        queryset = super(BookListView, self).get_queryset()
 
         if self.form.is_valid():
             data = self.form.cleaned_data
@@ -103,15 +87,26 @@ class BookListView(AllBookListView, FormContextMixin):
             title_search = data['title']
             queryset = queryset.filter(title__contains=title_search)
 
-            isbn_search = data['isbn']
+            isbn_search = data['isbn_13']
             if (isbn_search != ""):
                 queryset = queryset.filter(isbn_13=isbn_search)
 
-            #module_search = data['module']
-            # if (module_search != ""):
-            #    queryset = queryset.filter(tucanmodule__name__contains=module_search)
-
         return queryset
+
+class AllBookListView(BookListView):
+
+    """
+        The list view for all books that are available.
+    """
+
+    queryset = Book.objects.all()
+    template_name = 'pyBuchaktion/books/all_list.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(AllBookListView, self).get_context_data(**kwargs)
+        context['showtag'] = True
+        return context
+
 
 class BookView(DetailView):
 

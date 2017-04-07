@@ -71,12 +71,19 @@ def dict_join(value, param):
 def as_dict(value, param):
     return {param: value}
 
+@register.filter
+def form_as_dict(value):
+    dct = QueryDict(mutable=True);
+    for field in value:
+        dct[field.name] = field.value()
+    return dct
+
 # This only works for QueryDicts!
 @register.filter
 def urlencode(value):
     return "?" + value.urlencode()
 
-@register.inclusion_tag('pyBuchaktion/list_limits.html')
+@register.inclusion_tag('pyBuchaktion/tags/list_limits.html')
 def list_limits(params, current, options, default):
     return {
         "params": params,
