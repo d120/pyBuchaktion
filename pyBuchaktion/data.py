@@ -5,8 +5,13 @@ from django.utils.translation import ugettext_lazy as _
 from .models import Student, Book, Order, OrderTimeframe
 
 def get_logged_in_student(request):
-    #return None
-	return Student.objects.get(pk=1)
+    """
+    Get the student that is currently logged in.
+    """
+    try:
+        return Student.objects.get(pk=1)
+    except Student.DoesNotExist as e:
+        return None
 
 def post_order_book(request, book_id):
     # is user logged in
@@ -39,8 +44,7 @@ def post_order_book(request, book_id):
         hint = "-",
         book = book,
         student = student,
-        # FIXME: dynamic timeframe choice
-        order_timeframe = OrderTimeframe.objects.get(pk=1),
+        order_timeframe = current_timeframe()
     )
     return True
 
