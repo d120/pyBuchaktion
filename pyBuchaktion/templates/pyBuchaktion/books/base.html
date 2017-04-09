@@ -28,7 +28,7 @@
         </div>
         <div class="list-group">
         {% for book in books %}
-            <a href="{% url "pyBuchaktion:book" book_id=book.id %}" class="list-group-item">
+            <a href="{% url "pyBuchaktion:book" pk=book.id %}" class="list-group-item">
                 <h4 class="list-group-item-heading">{{ book.title }}
             {% if book.state != 'AC' %}
                     <span class="label label-{{ book.state|get_state_class }} pull-right">

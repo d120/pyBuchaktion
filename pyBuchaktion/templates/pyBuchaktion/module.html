@@ -17,7 +17,7 @@
             </div>
             <div class="list-group">
         {% for book in module.literature.all %}
-                <a class="list-group-item" href="{% url "pyBuchaktion:book" book_id=book.id %}">
+                <a class="list-group-item" href="{% url "pyBuchaktion:book" pk=book.id %}">
                     {{ book }}
                 </a>
         {% endfor %}

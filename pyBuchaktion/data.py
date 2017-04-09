@@ -40,8 +40,7 @@ def post_order_book(request, book_id):
 
     # else create the order entry
     order = Order.objects.create(
-        status = 'PD',
-        hint = "-",
+        status = Order.PENDING,
         book = book,
         student = student,
         order_timeframe = current_timeframe()

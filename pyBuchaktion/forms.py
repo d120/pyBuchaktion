@@ -1,10 +1,12 @@
 from django import forms
 from django.utils.translation import ugettext_lazy as _
 from django.http.request import QueryDict
-from .models import Student
+from .models import Student, Order
 
-class OrderForm(forms.Form):
-    pass
+class BookOrderForm(forms.ModelForm):
+    class Meta:
+        model = Order
+        fields = []
 
 class BookSearchForm(forms.Form):
     title = forms.CharField(label=_("Title"), max_length=100, required=False)

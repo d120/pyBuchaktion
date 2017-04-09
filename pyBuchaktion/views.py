@@ -2,14 +2,15 @@ from django.views.generic import ListView, DetailView, TemplateView, View
 from django.views.generic.base import ContextMixin
 from django.views.generic.list import MultipleObjectMixin
 from django.views.generic.detail import SingleObjectMixin
+from django.views.generic.edit import UpdateView, CreateView
 from django.core.serializers.json import DjangoJSONEncoder
 from django.shortcuts import render
 from django.core.urlresolvers import reverse
 from django.core.serializers.python import Serializer
 from django.http import HttpResponseRedirect, HttpResponse
-from .data import get_logged_in_student, post_order_book, post_abort_order, _model_to_dict
-from .forms import BookSearchForm, ModuleSearchForm, AccountEditForm
-from .models import Book, TucanModule, Order
+from .data import get_logged_in_student, post_order_book, post_abort_order, _model_to_dict, current_timeframe
+from .forms import BookSearchForm, ModuleSearchForm, AccountEditForm, BookOrderForm
+from .models import Book, TucanModule, Order, Student
 
 
 class VarPagedListView(ListView):
@@ -63,6 +64,14 @@ class FormContextMixin(ContextMixin):
         context['form'] = self.get_form()
         return context
 
+class StudentContextMixin(ContextMixin):
+    """
+    A mixin the provides the currently logged in student to the context.
+    """
+    def get_context_data(self, **kwargs):
+        context = super(StudentContextMixin, self).get_context_data(**kwargs)
+        context['student'] = get_logged_in_student(self.request)
+        return context
 
 class BookListView(FormContextMixin, VarPagedListView):
 
@@ -108,28 +117,32 @@ class AllBookListView(BookListView):
         return context
 
 
-class BookView(DetailView):
-
-    """ The detail view for a single book """
-
+class BookView(StudentContextMixin, DetailView):
+    """
+    The detail view for a single book.
+    """
     model = Book
-    template_name = 'pyBuchaktion/book.html'
-    context_object_name = 'book'
-    pk_url_kwarg = 'book_id'
-    book_order = False
-
-    def post(self, request, *args, **kwargs):
-        self.book_order = post_order_book(request, kwargs['book_id'])
-        return self.get(request, *args, **kwargs)
 
     def get_context_data(self, **kwargs):
-        context = super(DetailView, self).get_context_data(**kwargs)
-        context['book_order'] = self.book_order
-        context['student'] = get_logged_in_student(self.request)
-        if (context['student'] is not None):
-            context['orders'] = context['book'].order_set.filter(
-                student=context['student'])
+        context = super(BookView, self).get_context_data(**kwargs)
+        if context['student'] and context['book']:
+            context['orders'] = context['book'].order_set.filter(student=context['student'])
         return context
+
+class BookOrderView(CreateView, BookView):
+    model = Book
+    form_class = BookOrderForm
+    template_name_suffix = '_order_form'
+
+    def get_success_url(self):
+        return reverse("pyBuchaktion:book", kwargs=self.kwargs)
+
+    def form_valid(self, form):
+        form.instance.book = Book.objects.get(pk=self.kwargs['pk'])
+        form.instance.status = Order.PENDING
+        form.instance.student = get_logged_in_student(self.request)
+        form.instance.order_timeframe = current_timeframe()
+        return super(BookOrderView, self).form_valid(form)
 
 class ModuleListView(VarPagedListView, FormContextMixin):
 
@@ -156,7 +169,6 @@ class ModuleDetailView(DetailView):
     template_name = 'pyBuchaktion/module.html'
     context_object_name = 'module'
     model = TucanModule
-    pk_url_kwarg = 'module_id'
 
 class OrderListView(VarPagedListView):
 
@@ -164,16 +176,14 @@ class OrderListView(VarPagedListView):
         return Order.objects.filter(student=get_logged_in_student(self.request))
 
 class OrderDetailView(DetailView):
-    context_object_name = 'order'
-    pk_url_kwarg = 'order_id'
-    template_name = 'pyBuchaktion/order.html'
 
     def get_queryset(self):
-        return Order.objects.filter(student=get_logged_in_student(self.request))
+        student = get_logged_in_student(self.request)
+        return Order.objects.filter(student=student)
 
     def post(self, request, *args, **kwargs):
         if 'action' in request.POST and request.POST['action'] == "Abort":
-            _id = kwargs.get('order_id')
+            _id = kwargs.get('pk')
             if _id:
                 try:
                     order = self.get_queryset().get(pk=_id)
@@ -191,7 +201,7 @@ class OrderAbortView(OrderDetailView):
             action = request.POST['action']
             if (action == "Abort"):
                 self.order_abort = post_abort_order(
-                    request, kwargs['order_id'])
+                    request, kwargs['pk'])
                 if (self.order_abort):
                     return HttpResponseRedirect(reverse("pyBuchaktion:account"))
             elif (action == "Cancel"):
@@ -199,23 +209,14 @@ class OrderAbortView(OrderDetailView):
         else:
             return HttpResponseRedirect(reverse("pyBuchaktion:order", kwargs=kwargs))
 
-class AccountView(FormContextMixin, TemplateView):
+class AccountView(UpdateView):
     template_name = 'pyBuchaktion/account.html'
 
-    def get_form(self):
-        return AccountEditForm(instance=get_logged_in_student(self.request))
+    def get_form_class(self):
+        return AccountEditForm
 
-    def get_context_data(self, **kwargs):
-        context = super(AccountView, self).get_context_data(**kwargs)
-        context['student'] = get_logged_in_student(self.request)
-        return context
+    def get_success_url(self):
+        return reverse("pyBuchaktion:account")
 
-    def post(self, request, *args, **kwargs):
-        student = get_logged_in_student(self.request)
-        if student:
-            form = AccountEditForm(request.POST, instance=student)
-            if (form.is_valid()):
-                form.save()
-            else:
-                return render(request, self.template_name, {'student': student, 'form': form})
-        return HttpResponseRedirect(reverse("pyBuchaktion:account", kwargs=kwargs))
+    def get_object(self, queryset=None):
+        return get_logged_in_student(self.request)

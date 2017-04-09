@@ -1,0 +1,34 @@
+{% extends "page.html" %} {% load cms_tags view_tools bootstrap_tags i18n %}
+
+{% block content %}
+        <div class="panel panel-{{ book.state|get_state_class }}">
+            <div class="panel-heading">
+                <h4 class="panel-title">
+                    {{ book.title }}
+                </h4>
+            </div>
+        {% if book.state != 'AC' %}
+            <div class="panel-body">
+                {{ book.state|get_state_text }}
+            </div>
+        {% endif %}
+            <table class="table table-bordered">
+                <tbody>
+                    <tr>
+                        <th>{% trans "Author" %}</th>
+                        <td>{{ book.author }}</td>
+                        <th>{% trans "ISBN-13" %}</th>
+                        <td>{{ book.isbn_13 }}</td>
+                    </tr>
+                    <tr>
+                        <th>{% trans "Publisher" %}</th>
+                        <td>{{ book.publisher }}</td>
+                        <th>{% trans "Publication year" %}</th>
+                        <td>{{ book.year }}</td>
+                    </tr>
+                </tbody>
+            </table>
+            {% block panel_footer %}{% endblock panel_footer %}
+        </div>
+
+{% block book_panels %}{% endblock book_panels %}{% endblock content %}

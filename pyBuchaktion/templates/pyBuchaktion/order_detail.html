@@ -31,7 +31,7 @@
             <h3 class="panel-title">{% trans "Book" %}: {{ order.book.title }}</h3>
         </div>
         <div class="list-group">
-            <a class="list-group-item" href="{% url "pyBuchaktion:book" book_id=order.book.id %}">
+            <a class="list-group-item" href="{% url "pyBuchaktion:book" pk=order.book.id %}">
                 <b>{% trans "Author" %}</b>: <i>{{ order.book.author }}</i><br/>
                 <b>ISBN-13</b>: <i>{{ order.book.isbn_13 }}</i>
             </a>

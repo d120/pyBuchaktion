@@ -1,0 +1,17 @@
+{% extends "pyBuchaktion/book_base.html" %} {% load cms_tags view_tools bootstrap_tags i18n %}
+
+{% block content %}
+    <form method="post">
+    {% csrf_token %}
+    <input type="hidden" name="book_id" value="{{ book.id }}">
+    {{ block.super }}
+    </form>
+{% endblock content %}
+
+{% block panel_footer %}
+            <div class="panel-footer">
+                <button class="btn btn-primary" type="submit" value="Submit">
+                    {% trans "Order this book" %}
+                </button>
+            </div>
+{% endblock panel_footer %}

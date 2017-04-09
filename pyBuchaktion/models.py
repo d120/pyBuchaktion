@@ -102,7 +102,7 @@ class Book(models.Model):
 
     # Get the absolute url for this book via the book view, used in the admin
     def get_absolute_url(self):
-        return reverse("pyBuchaktion:book", kwargs={'book_id': self.pk})
+        return reverse("pyBuchaktion:book", kwargs={'pk': self.pk})
 
     # Get the natural key for this book, used for JSON output
     def natural_key(self):
