@@ -180,14 +180,13 @@ class AccountView(StudentLoginRequiredMixin, NeverCacheMixin, UpdateView):
 
 
 class BookProposeView(StudentLoginRequiredMixin, CreateView):
+    model = Book
     template_name_suffix = '_propose'
-
     form_class = BookProposeForm
 
-    def get_initial(self):
-        return {'state': Book.PROPOSED, 'price': 0}
-
     def form_valid(self, form):
+        form.instance.state = Book.PROPOSED
+        result = super(BookProposeView, self).form_valid(form)
         order = Order(
             book=form.instance,
             student=self.request.student,
@@ -195,4 +194,4 @@ class BookProposeView(StudentLoginRequiredMixin, CreateView):
             order_timeframe=OrderTimeframe.current()
         )
         order.save()
-        return super(BookProposeView, self).form_valid(form)
+        return result
