@@ -7,13 +7,11 @@
 {% block panel-footer %}
             <form method="post">
                 {% csrf_token %}
-                <div class="btn-group" style="margin-left: auto; margin-right: 0" role="group" aria-label="actions">
-                    <button class="btn btn-danger" name="action" type="submit" value="Abort">
-                        {% trans "Yes, Abort the order" %}
-                    </button>
-                    <button class="btn btn-info" name="action" type="submit" value="Cancel">
+                <button class="btn btn-danger" name="action" type="submit" value="Abort">
+                    {% trans "Yes, Abort the order" %}
+                </button>
+                <a href="{% url "pyBuchaktion:order" pk=order.id %}" class="btn btn-info">
                         {% trans "No, keep the order" %}
-                    </button>
-                </div>
+                </a>
             </form>
 {% endblock panel-footer %}

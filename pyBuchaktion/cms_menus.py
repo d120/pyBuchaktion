@@ -15,7 +15,7 @@ class PyBuchaktionMenu(Menu):
         n4 = NavigationNode(_('Modules'), reverse('pyBuchaktion:modules'), 5004)
         nodes = [n2, n3, n4]
 
-        if (get_logged_in_student(request) != None):
+        if hasattr(request, 'student') and request.student:
             nodes += [NavigationNode(_("Account"), reverse('pyBuchaktion:account'), 5006),]
 
         match = request.resolver_match

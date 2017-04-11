@@ -11,11 +11,15 @@
     which may define literature recommendations as a list of books.
 """
 
+from datetime import datetime
+
 from django.db import models
 from django.db.models.signals import pre_save
 from django.core.urlresolvers import reverse
 from django.utils.translation import ugettext_lazy as _
 from django.dispatch import receiver
+
+from pyTUID.models import TUIDUser
 
 class Book(models.Model):
 
@@ -208,15 +212,29 @@ class Student(models.Model):
         default="",
     )
 
-    # empty until CAS login is figured out
+    tuid_user = models.ForeignKey(
+        'pyTUID.TUIDUser',
+        on_delete = models.CASCADE,
+        verbose_name = _("TUID User"),
+    )
 
     # Get the default string representation as "#<id>"
     def __str__(self):
-        return '#%d' % (self.id)
+        return self.tuid_user.name()
 
     # Get the natural (foreign reference) key used in JSON serialization
     def natural_key(self):
         return {"id": self.id}
+
+    @classmethod
+    def from_tuid(self, tuid_user):
+        try:
+            return self.objects.get(tuid_user=tuid_user)
+        except self.DoesNotExist as e:
+            pass
+        if True: # check for conditions
+            return self.objects.create(tuid_user=tuid_user)
+        return None
 
     # Set the singular and plural names for i18n
     class Meta:
@@ -278,6 +296,13 @@ class OrderTimeframe(models.Model):
     # Get the natural (foreign reference) key for serialization
     def natural_key(self):
         return { "from": self.start_date, "to": self.end_date }
+
+    @classmethod
+    def current(self):
+        try:
+            return self.objects.filter(end_date__gt=datetime.now()).earliest('end_date')
+        except self.DoesNotExist as e:
+            return None
 
     # Set the singular and plural names for i18n
     class Meta:

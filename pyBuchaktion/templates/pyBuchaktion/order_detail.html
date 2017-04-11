@@ -16,12 +16,9 @@
         {% if order.status == "PD" %}
         <div class="panel-footer">
         {% block panel-footer %}
-            <form method="post">
-                {% csrf_token %}
-                <button class="btn btn-danger" name="action" type="submit" value="Abort">
-                    {% trans "Abort order" %}
-                </button>
-            </form>
+            <a href="{% url "pyBuchaktion:order_abort" pk=order.id %}" class="btn btn-danger">
+                {% trans "Abort order" %}
+            </a>
         {% endblock panel-footer %}
         </div>
         {% endif %}

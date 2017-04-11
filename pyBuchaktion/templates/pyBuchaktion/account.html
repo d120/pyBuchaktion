@@ -18,6 +18,12 @@
                 </form>
             </form>
             </div>
+            <div class="panel-footer">
+                <a href="{% url "pyTUID:logout" %}" class="btn btn-danger">{% trans "Logout" %}</a>
+                <a href="{% url "pyTUID:logout" %}?cas_logout=True" class="btn btn-danger">
+                    {% trans "Logout &amp; CAS Logout" %}
+                </a>
+            </div>
         </div>
 
         <div class="panel panel-default">

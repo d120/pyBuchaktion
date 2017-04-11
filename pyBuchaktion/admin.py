@@ -124,16 +124,20 @@ class StudentAdmin(admin.ModelAdmin):
         The admin for students.
     """
 
+    ordering = (
+        'id',
+    )
+
     # The columns that are displayed
     list_display = (
         'id',
+        'tuid_user',
         'library_id',
     )
 
     # The columns that are displayed as links
     list_display_links = (
-        'id',
-        'library_id',
+        'tuid_user',
     )
 
 @admin.register(models.OrderTimeframe)

@@ -1,5 +1,3 @@
-from datetime import datetime
-
 from django.utils.translation import ugettext_lazy as _
 
 from .models import Student, Book, Order, OrderTimeframe
@@ -8,10 +6,8 @@ def get_logged_in_student(request):
     """
     Get the student that is currently logged in.
     """
-    try:
-        return Student.objects.get(pk=1)
-    except Student.DoesNotExist as e:
-        return None
+
+    return None
 
 def post_order_book(request, book_id):
     # is user logged in
@@ -59,19 +55,6 @@ def post_abort_order(request, order_id):
 
     order.delete()
     return True
-
-def current_timeframe():
-    """
-        Return the currently appropriate timeframe by first filtering all timeframes
-        for those that have an end_date after now, and then choosing the earliest one
-        of those.
-
-        When no timeframe is found, return None.
-    """
-    try:
-        return OrderTimeframe.objects.filter(end_date__gt=datetime.now()).earliest('end_date')
-    except OrderTimeframe.DoesNotExist as e:
-        return None
 
 def _model_to_dict(instance, fields=None, exclude=None):
     """

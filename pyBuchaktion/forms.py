@@ -1,12 +1,22 @@
 from django import forms
+from django.core.exceptions import ValidationError
 from django.utils.translation import ugettext_lazy as _
 from django.http.request import QueryDict
-from .models import Student, Order
+from .models import Student, Order, Book
 
 class BookOrderForm(forms.ModelForm):
     class Meta:
         model = Order
         fields = []
+
+    def clean(self):
+        # Can the book be ordered
+        if self.instance.book.state != Book.ACCEPTED:
+            raise ValidationError(_("This book is not available for ordering"), code='not_available')
+
+        # does the student have an order for this already
+        if self.instance.student.order_set.filter(book__pk=self.instance.book_id).count() > 0:
+            raise ValidationError(_("You already ordered this book"), code='already_ordered')
 
 class BookSearchForm(forms.Form):
     title = forms.CharField(label=_("Title"), max_length=100, required=False)
