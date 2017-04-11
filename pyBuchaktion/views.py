@@ -42,7 +42,7 @@ class VarPagedListView(ListView):
         return context
 
 
-class BookListView(SearchFormContextMixin, VarPagedListView):
+class BookListView(StudentContextMixin, SearchFormContextMixin, VarPagedListView):
 
     """
     The list view for all the accepted books.
@@ -114,7 +114,7 @@ class BookOrderView(StudentLoginRequiredMixin, CreateView):
         return context
 
 
-class ModuleListView(SearchFormContextMixin, VarPagedListView):
+class ModuleListView(StudentContextMixin, SearchFormContextMixin, VarPagedListView):
 
     """
     The list view for all TUCaN modules.
@@ -126,7 +126,7 @@ class ModuleListView(SearchFormContextMixin, VarPagedListView):
     form_class = ModuleSearchForm
 
 
-class ModuleDetailView(DetailView):
+class ModuleDetailView(StudentContextMixin, DetailView):
 
     """
     The view for one specific module.

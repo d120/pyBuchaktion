@@ -3,7 +3,6 @@ from menus.menu_pool import menu_pool
 from django.utils.translation import ugettext_lazy as _
 from django.core.urlresolvers import reverse
 from pyBuchaktion.models import Book, TucanModule, Order
-from .data import get_logged_in_student
 
 class PyBuchaktionMenu(Menu):
 

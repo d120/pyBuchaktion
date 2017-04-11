@@ -2,60 +2,6 @@ from django.utils.translation import ugettext_lazy as _
 
 from .models import Student, Book, Order, OrderTimeframe
 
-def get_logged_in_student(request):
-    """
-    Get the student that is currently logged in.
-    """
-
-    return None
-
-def post_order_book(request, book_id):
-    # is user logged in
-    student = get_logged_in_student(request)
-    if (student == None):
-        return _("You are not logged in!")
-
-    # does the book id exist
-    try:
-        book = Book.objects.get(pk=book_id)
-    except Book.DoesNotExist:
-        return _("This book does not exist")
-
-    # does the student have an order for this already
-    try:
-        book_order = student.order_set.get(book__pk=book_id)
-        return _("You already ordered this book")
-    except Order.DoesNotExist:
-        pass
-
-    # is the book avaliable for ordering (accepted) 
-    if (book.state != 'AC'):
-        return _("This book is not available for ordering")
-    
-    # FIXME: check order balance (and adjust)
-
-    # else create the order entry
-    order = Order.objects.create(
-        status = Order.PENDING,
-        book = book,
-        student = student,
-        order_timeframe = current_timeframe()
-    )
-    return True
-
-def post_abort_order(request, order_id):
-    student = get_logged_in_student(request)
-    if (student == None):
-        return _("Not logged in")
-
-    try:
-        order = student.order_set.get(pk=order_id)
-    except Order.DoesNotExist:
-        return _("Order not found")
-
-    order.delete()
-    return True
-
 def _model_to_dict(instance, fields=None, exclude=None):
     """
     Returns a dict containing the data in ``instance`` along with any foreign

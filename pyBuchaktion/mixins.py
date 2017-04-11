@@ -91,3 +91,23 @@ class StudentLoginRequiredMixin(TUIDLoginRequiredMixin, StudentContextMixin, Bas
 
     def get_invalid_url(self):
         return reverse("pyBuchaktion:books")
+
+
+class ForeignKeyImportResourceMixin(object):
+
+    def init_instance(self, row=None):
+        """
+        Initializes a new Django model.
+        """
+        instance = self._meta.model()
+        if row:
+            for key, value in row.items():
+                target = key.split("__", 1)
+                field_name = target[0]
+                if len(target) > 1:
+                    target_query = target[1]
+                    foreign_model = self._meta.model._meta.get_field(field_name).rel.to
+                    args = {target_query: row[key]}
+                    setattr(instance, field_name, foreign_model.objects.get(**args))
+
+        return instance

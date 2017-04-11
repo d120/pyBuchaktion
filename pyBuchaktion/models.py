@@ -220,7 +220,7 @@ class Student(models.Model):
 
     # Get the default string representation as "#<id>"
     def __str__(self):
-        return self.tuid_user.name()
+        return "{0} ({1})".format(self.tuid_user.name(), self.tuid_user.uid)
 
     # Get the natural (foreign reference) key used in JSON serialization
     def natural_key(self):

@@ -4,24 +4,44 @@
     and filters for the list view.
 """
 
-from django.contrib import admin
-from django.db.models import Count
-from django.utils.translation import ugettext_lazy as _
-#from import_export import resources
-#from import_export.admin import ImportExportActionModelAdmin
-from django.http import HttpResponse
 import io
 import csv
 
-from . import models
+from django.contrib.admin import ModelAdmin, register
+from django.db.models import Count
+from django.utils.translation import ugettext_lazy as _
+from django.http import HttpResponse
 
-@admin.register(models.Book)
-class BookAdmin(admin.ModelAdmin):
+from import_export.resources import ModelResource
+from import_export.admin import ImportExportMixin
+
+from .models import Book, Order, Student, OrderTimeframe, TucanModule, Semester
+from .mixins import ForeignKeyImportResourceMixin
+
+class BookResource(ModelResource):
+    class Meta:
+        model = Book
+        import_id_fields = (
+            'isbn_13',
+        )
+        fields = import_id_fields + (
+            'title',
+            'state',
+            'author',
+            'price',
+            'publisher',
+            'year',
+        )
+
+@register(Book)
+class BookAdmin(ImportExportMixin, ModelAdmin):
 
     """
         The book admin displays title, author and isbn of a book,
         as well as the number of order for this book.
     """
+
+    resource_class = BookResource
 
     # The columns that are displayed in the list view
     list_display = (
@@ -49,22 +69,32 @@ class BookAdmin(admin.ModelAdmin):
     number_of_orders.admin_order_field = 'order__count'
     number_of_orders.short_description = _("orders")
 
-#class OrderResource(resources.ModelResource):
-#
-#    class Meta:
-#        model = models.Order
 
-@admin.register(models.Order)
-#class OrderAdmin(ImportExportActionModelAdmin):
-class OrderAdmin(admin.ModelAdmin):
+class OrderResource(ForeignKeyImportResourceMixin, ModelResource):
+    class Meta:
+        model = Order
+        import_id_fields = (
+            'book__isbn_13',
+            'student__tuid_user__uid',
+            'order_timeframe__id',
+        )
+        fields = (
+            'status',
+        ) + import_id_fields
+
+@register(Order)
+class OrderAdmin(ImportExportMixin, ModelAdmin):
 
     """
         The admin for the orders, displaying the title of the ordered book,
         the student ordering the book and the timeframe.
     """
 
+    resource_class = OrderResource
+
     # The columns that are displayed
     list_display = (
+        'id',
         'book_title',
         'student',
         'timeframe',
@@ -117,8 +147,8 @@ class OrderAdmin(admin.ModelAdmin):
 
     export.short_description = _("Export orders to custom CSV")
 
-@admin.register(models.Student)
-class StudentAdmin(admin.ModelAdmin):
+@register(Student)
+class StudentAdmin(ModelAdmin):
 
     """
         The admin for students.
@@ -140,8 +170,8 @@ class StudentAdmin(admin.ModelAdmin):
         'tuid_user',
     )
 
-@admin.register(models.OrderTimeframe)
-class OrderTimeframeAdmin(admin.ModelAdmin):
+@register(OrderTimeframe)
+class OrderTimeframeAdmin(ModelAdmin):
 
     """
         The admin for order timeframes displays the start and end dates and
@@ -155,8 +185,8 @@ class OrderTimeframeAdmin(admin.ModelAdmin):
         'semester',
     )
 
-@admin.register(models.Semester)
-class SemesterAdmin(admin.ModelAdmin):
+@register(Semester)
+class SemesterAdmin(ModelAdmin):
 
     """
         The admin for a semester.
@@ -165,8 +195,8 @@ class SemesterAdmin(admin.ModelAdmin):
     #radio_fields = {"season": admin.VERTICAL}
     pass
 
-@admin.register(models.TucanModule)
-class ModuleAdmin(admin.ModelAdmin):
+@register(TucanModule)
+class ModuleAdmin(ModelAdmin):
 
     """
         The admin for a module displays the name and module id.
