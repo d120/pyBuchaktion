@@ -21,7 +21,8 @@ class BookOrderForm(forms.ModelForm):
 class BookSearchForm(forms.Form):
     title = forms.CharField(label=_("Title"), max_length=100, required=False)
     author = forms.CharField(label=_("Author"), max_length=100, required=False)
-    isbn_13 = forms.CharField(label="ISBN-13", max_length=13, required=False)
+    isbn_13 = forms.CharField(label=_("ISBN-13"), max_length=13, required=False)
+    publisher = forms.CharField(label=_("Publisher"), max_length=64, required=False)
 
 class ModuleSearchForm(forms.Form):
     name = forms.CharField(label=_("Name"), max_length=100, required=False)

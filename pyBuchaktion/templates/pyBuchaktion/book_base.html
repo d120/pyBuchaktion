@@ -1,29 +1,30 @@
 {% extends "page.html" %} {% load cms_tags view_tools bootstrap_tags i18n %}
 
 {% block content %}
-        <div class="panel panel-{{ book.state|get_state_class }}">
+        {% if book.state != 'AC' %}
+        <div class="alert alert-{{ book.state|get_state_class }}">
+                {{ book.state|get_state_text }}
+        </div>
+        {% endif %}
+
+        <div class="panel panel-default">
             <div class="panel-heading">
                 <h4 class="panel-title">
-                    {{ book.title }}
+                    <i>{{ book.title }}</i>
                 </h4>
             </div>
-        {% if book.state != 'AC' %}
-            <div class="panel-body">
-                {{ book.state|get_state_text }}
-            </div>
-        {% endif %}
             <table class="table table-bordered">
                 <tbody>
                     <tr>
                         <th>{% trans "Author" %}</th>
-                        <td>{{ book.author }}</td>
+                        <th>{% trans "Publisher" %}</th>
                         <th>{% trans "ISBN-13" %}</th>
-                        <td>{{ book.isbn_13 }}</td>
+                        <th>{% trans "Publication year" %}</th>
                     </tr>
                     <tr>
-                        <th>{% trans "Publisher" %}</th>
+                        <td>{{ book.author }}</td>
                         <td>{{ book.publisher }}</td>
-                        <th>{% trans "Publication year" %}</th>
+                        <td>{{ book.isbn_13 }}</td>
                         <td>{{ book.year }}</td>
                     </tr>
                 </tbody>

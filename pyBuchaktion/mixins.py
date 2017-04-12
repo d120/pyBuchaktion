@@ -2,6 +2,7 @@ from django.core.exceptions import ImproperlyConfigured
 from django.core.urlresolvers import reverse
 from django.views.generic import View
 from django.views.generic.base import ContextMixin
+from django.utils.cache import add_never_cache_headers
 from django.http import HttpResponseRedirect
 
 from pyTUID.mixins import TUIDLoginRequiredMixin
@@ -62,7 +63,7 @@ class StudentContextMixin(object):
 
     def get_context_data(self, **kwargs):
         context = super(StudentContextMixin, self).get_context_data(**kwargs)
-        if self.request.student:
+        if hasattr(self.request, "student") and self.request.student:
             context['student'] = self.request.student
 
         return context
@@ -111,3 +112,11 @@ class ForeignKeyImportResourceMixin(object):
                     setattr(instance, field_name, foreign_model.objects.get(**args))
 
         return instance
+
+
+class NeverCacheMixin(View):
+
+    def dispatch(self, request, *args, **kwargs):
+        response = super(NeverCacheMixin, self).dispatch(request, *args, **kwargs)
+        add_never_cache_headers(response)
+        return response

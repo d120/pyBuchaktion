@@ -1,0 +1,17 @@
+{% extends "page.html" %} {% load sekizai_tags %}
+
+{% block content %}
+    {% addtoblock "css" %}
+        <style type="text/css">
+            .form-inline.search-form > * {
+                margin: 5px;
+            }
+            .form-inline.search-form {
+                text-align: left;
+            }
+        </style>
+    {% endaddtoblock "css" %}
+
+    {% block search_content %}
+    {% endblock search_content %}
+{% endblock content %}

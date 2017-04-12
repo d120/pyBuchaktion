@@ -1,10 +1,11 @@
 from django.views.generic import ListView, DetailView
 from django.views.generic.edit import UpdateView, CreateView, BaseCreateView, DeleteView
 from django.core.urlresolvers import reverse
+from django.http import HttpResponseRedirect
 
 from .forms import BookSearchForm, ModuleSearchForm, AccountEditForm, BookOrderForm
 from .models import Book, TucanModule, Order, Student, OrderTimeframe
-from .mixins import SearchFormContextMixin, StudentContextMixin, StudentLoginRequiredMixin
+from .mixins import SearchFormContextMixin, StudentContextMixin, StudentLoginRequiredMixin, NeverCacheMixin
 
 
 class VarPagedListView(ListView):
@@ -69,7 +70,7 @@ class AllBookListView(BookListView):
         return context
 
 
-class BookView(StudentContextMixin, DetailView):
+class BookView(StudentContextMixin, NeverCacheMixin, DetailView):
     """
     The detail view for a single book.
     """
@@ -77,12 +78,13 @@ class BookView(StudentContextMixin, DetailView):
 
     def get_context_data(self, **kwargs):
         context = super(BookView, self).get_context_data(**kwargs)
-        if context['student'] and context['book']:
-            context['orders'] = context['book'].order_set.filter(student=context['student'])
+        if 'student' in context and 'book' in context:
+            if context['student'] and context['book']:
+                context['orders'] = context['book'].order_set.filter(student=context['student'])
         return context
 
 
-class BookOrderView(StudentLoginRequiredMixin, CreateView):
+class BookOrderView(StudentLoginRequiredMixin, NeverCacheMixin, CreateView):
     model = Book
     form_class = BookOrderForm
     template_name_suffix = '_order_form'
@@ -137,13 +139,13 @@ class ModuleDetailView(StudentContextMixin, DetailView):
     context_object_name = 'module'
 
 
-class OrderListView(StudentLoginRequiredMixin, VarPagedListView):
+class OrderListView(StudentLoginRequiredMixin, NeverCacheMixin, VarPagedListView):
 
     def get_queryset(self):
         return Order.objects.filter(student=self.request.student)
 
 
-class OrderDetailView(StudentLoginRequiredMixin, DetailView):
+class OrderDetailView(StudentLoginRequiredMixin, NeverCacheMixin, DetailView):
 
     def get_queryset(self):
         student = self.request.student
@@ -153,11 +155,18 @@ class OrderDetailView(StudentLoginRequiredMixin, DetailView):
 class OrderAbortView(DeleteView, OrderDetailView):
     template_name_suffix = '_abort'
 
+    def delete(self, request, *args, **kwargs):
+        order = self.get_object()
+        if order.status == Order.PENDING:
+            return super(OrderAbortView, self).delete(request, *args, **kwargs)
+        else:
+            return HttpResponseRedirect(reverse("pyBuchaktion:order", kwargs=kwargs))
+
     def get_success_url(self):
         return reverse("pyBuchaktion:account")
 
 
-class AccountView(StudentLoginRequiredMixin, UpdateView):
+class AccountView(StudentLoginRequiredMixin, NeverCacheMixin, UpdateView):
     template_name = 'pyBuchaktion/account.html'
 
     def get_form_class(self):
