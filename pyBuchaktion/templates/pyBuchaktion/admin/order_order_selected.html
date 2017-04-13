@@ -1,0 +1,19 @@
+{% extends "pyBuchaktion/admin/admin_action_page.html" %}
+{% load i18n l10n %}
+
+{% block content %}
+<form action="" method="post">{% csrf_token %}
+    <p>{% trans "The following orders will be marked as ordered. Are you sure?" %}</p>
+    <ul>{{ queryset|unordered_list }}</ul>
+    <p>{% trans "You may provide an additional hint here for any relevant information" %}</p>
+    <textarea name="hint" rows="4"></textarea><br/><br/>
+    <div style="overflow: hidden">
+        {% for obj in queryset %}
+        <input type="hidden" name="{{ action_checkbox_name }}" value="{{ obj.pk|unlocalize }}" />
+        {% endfor %}
+        <input type="hidden" name="action" value="order_selected" />
+        <input class="default" type="submit" name="_proceed" value="{% trans "Yes, I'm sure" %}"/>
+        <input style="float:right; margin-right: 10px;" type="submit" name="_cancel" value="{% trans "No, cancel this." %}"/>
+    </div>
+</form>
+{% endblock %}

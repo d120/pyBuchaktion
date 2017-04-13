@@ -1,0 +1,18 @@
+{% extends "pyBuchaktion/admin/admin_action_page.html" %}
+{% load i18n l10n view_tools %}
+
+{% block content %}
+<form action="" method="post">{% csrf_token %}
+    <p>{% trans "Copy the following list into the bulk-order mask at net-library!" %}</p>
+    <textarea name="hint" rows="{{ queryset|length|add:1 }}">{{ queryset|net_csv }}</textarea><br/><br/>
+    <div>
+        {% for obj in queryset %}
+        <input type="hidden" name="{{ action_checkbox_name }}" value="{{ obj.pk|unlocalize }}" />
+        {% endfor %}
+        <input type="hidden" name="action" value="order_selected" />
+        <div style="overflow: hidden">
+            <input class="default" type="submit" name="_ok" value="{% trans "OK" %}"/>
+        </div>
+    </div>
+</form>
+{% endblock %}

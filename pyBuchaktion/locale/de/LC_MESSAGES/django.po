@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: pyBuchaktion\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-04-13 13:23+0200\n"
-"PO-Revision-Date: 2017-04-13 13:23+0100\n"
+"POT-Creation-Date: 2017-04-13 13:38+0200\n"
+"PO-Revision-Date: 2017-04-13 13:38+0100\n"
 "Last-Translator: Daniel Schweighöfer <dschweighoefer@d120.de>\n"
 "Language-Team: UA Buchaktion <buchaktion@d120.de>\n"
 "Language: de\n"
@@ -18,7 +18,7 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Poedit 1.6.10\n"
 
-#: admin.py:71 models.py:194
+#: admin.py:69 models.py:194
 msgid "orders"
 msgstr "Bestellungen"
 
@@ -39,25 +39,37 @@ msgstr "%(start)s bis %(end)s"
 msgid "order timeframe"
 msgstr "Bestellzeitraum"
 
-#: admin.py:151
+#: admin.py:137
 msgid "Export orders to custom CSV"
 msgstr "Exportiere Bestellungen als CSV"
 
-#: admin.py:167
+#: admin.py:153
 msgid "Rejecting orders: Are you sure?"
 msgstr "Bestellungen ablehnen: Sind Sie sicher?"
 
-#: admin.py:173
+#: admin.py:159
 msgid "reject selected orders"
 msgstr "Ausgewählte Bestellungen ablehnen"
 
-#: admin.py:189
+#: admin.py:175
 msgid "Marking as arrived: Are you sure?"
 msgstr "Als angekommen markieren: Sind Sie sicher?"
 
-#: admin.py:195
+#: admin.py:181
 msgid "mark selected orders as arrived"
 msgstr "Ausgewählte Bestellungen als Angekommen markieren"
+
+#: admin.py:196
+msgid "Ordering: CSV-Export"
+msgstr "Bestellen: CSV-Export"
+
+#: admin.py:207
+msgid "Ordering: Are you sure?"
+msgstr "Bestellen: Sind Sie sicher?"
+
+#: admin.py:214
+msgid "order selected orders"
+msgstr "Ausgewählte Bestellungen bestellen"
 
 #: cms_apps.py:9
 msgid "pyBuchaktion"
@@ -342,20 +354,35 @@ msgstr ""
 "Die folgenden Bestellungen werden als angekommen markiert. Sind Sie sicher?"
 
 #: templates/pyBuchaktion/admin/order_mark_arrived_selected.html:8
+#: templates/pyBuchaktion/admin/order_order_selected.html:8
 msgid "You may provide an additional hint here for any relevant information"
-msgstr ""
-"Sie können hier einen Hinweis mit zusätzlich relevanten Informationen "
-"angeben."
+msgstr "Sie können hier einen Hinweis mit zusätzlichen Informationen angeben."
 
 #: templates/pyBuchaktion/admin/order_mark_arrived_selected.html:15
+#: templates/pyBuchaktion/admin/order_order_selected.html:15
 #: templates/pyBuchaktion/admin/order_reject_selected.html:15
 msgid "Yes, I'm sure"
 msgstr "Ja, ich bin sicher."
 
 #: templates/pyBuchaktion/admin/order_mark_arrived_selected.html:16
+#: templates/pyBuchaktion/admin/order_order_selected.html:16
 #: templates/pyBuchaktion/admin/order_reject_selected.html:16
 msgid "No, cancel this."
 msgstr "Nein, abbrechen."
+
+#: templates/pyBuchaktion/admin/order_order_selected.html:6
+msgid "The following orders will be marked as ordered. Are you sure?"
+msgstr ""
+"Die folgenden Bestellungen werden als bestellt markiert. Sind sie sicher?"
+
+#: templates/pyBuchaktion/admin/order_order_selected_csv.html:6
+msgid "Copy the following list into the bulk-order mask at net-library!"
+msgstr ""
+"Kopieren Sie die folgende Liste in die Bulk-Order Oberfläche der net-library"
+
+#: templates/pyBuchaktion/admin/order_order_selected_csv.html:14
+msgid "OK"
+msgstr "OK"
 
 #: templates/pyBuchaktion/admin/order_reject_selected.html:6
 msgid "The follwing orders will be rejected. Are you sure?"
@@ -450,7 +477,7 @@ msgstr "Nein, Bestellung behalten"
 
 #: templates/pyBuchaktion/order_detail.html:6
 msgid "Order #"
-msgstr "Bestellung #"
+msgstr "Bestellung #%s"
 
 #: templates/pyBuchaktion/order_detail.html:20
 msgid "Abort order"
@@ -460,11 +487,11 @@ msgstr "Bestellung abbrechen"
 msgid "Book"
 msgstr "Buch"
 
-#: templatetags/view_tools.py:22
+#: templatetags/view_tools.py:23
 msgid "This book has been rejected, and may not be ordered"
 msgstr "Dieses Buch wurde abgelehnt, und kann nicht bestellt werden"
 
-#: templatetags/view_tools.py:23
+#: templatetags/view_tools.py:24
 msgid ""
 "This book has been proposed, but has yet to be confirmed by our team. Until "
 "then it may not be ordered."
@@ -472,7 +499,7 @@ msgstr ""
 "Dieses Buch wurde vorgeschlagen, muss aber erst vom Team der Buchaktion "
 "freigeschaltet werden, und kann solange nicht bestellt werden!"
 
-#: templatetags/view_tools.py:25
+#: templatetags/view_tools.py:26
 msgid ""
 "This book has been marked obsolete, a new version is available. It may not "
 "be ordered"
@@ -480,7 +507,7 @@ msgstr ""
 "Dieses Buch ist als veraltet gekennzeichnet, eine neuere Version ist "
 "verfügbar. Es kann nicht bestellt werden."
 
-#: templatetags/view_tools.py:44
+#: templatetags/view_tools.py:45
 msgid ""
 "This book is marked for, but has not yet been ordered from our merchant. "
 "Until then, the order can be aborted at any time. We'll inform you when we "
@@ -490,7 +517,7 @@ msgstr ""
 "Bis dahin kann die Bestellung jederzeit storniert werden. Wir informieren "
 "dich wenn es endgültig bestellt oder abgelehnt wird."
 
-#: templatetags/view_tools.py:47
+#: templatetags/view_tools.py:48
 msgid ""
 "This book has been ordered from our merchant. We'll inform you when it "
 "arrived."
@@ -498,11 +525,11 @@ msgstr ""
 "Dieses Buch wurde bei unserem Händler bestellt, wir werden dich informieren "
 "wenn es angekommen ist"
 
-#: templatetags/view_tools.py:48
+#: templatetags/view_tools.py:49
 msgid "This order has been rejected."
 msgstr "Dieses Buch wurde abgelehnt."
 
-#: templatetags/view_tools.py:49
+#: templatetags/view_tools.py:50
 msgid "The order was fulfilled, the book is now available."
 msgstr "Die Bestellung war erfolgreich, das Buch ist angekommen."
 

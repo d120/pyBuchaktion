@@ -4,9 +4,6 @@
     and filters for the list view.
 """
 
-import io
-import csv
-
 from django.contrib.admin import ModelAdmin, register, helpers
 from django.db.models import Count
 from django.utils.translation import ugettext_lazy as _
@@ -18,6 +15,7 @@ from import_export.admin import ImportExportMixin
 
 from .models import Book, Order, Student, OrderTimeframe, TucanModule, Semester
 from .mixins import ForeignKeyImportResourceMixin
+from .data import net_library_csv
 
 class BookResource(ModelResource):
     class Meta:
@@ -104,14 +102,16 @@ class OrderAdmin(ImportExportMixin, ModelAdmin):
     # The keys that the list can be filtered by
     list_filter = (
         'status',
+        'book__state',
         'order_timeframe',
     )
 
     # The actions that can be triggered on orders
     actions = [
         "export",
-        "reject_selected",
+        "order_selected",
         "mark_arrived_selected",
+        "reject_selected",
     ]
 
     # The title of the book to be ordered
@@ -130,21 +130,7 @@ class OrderAdmin(ImportExportMixin, ModelAdmin):
 
     # The admin action for exporting to custom CSV
     def export(self, request, queryset):
-
-        out_stream = io.StringIO()
-        writer = csv.writer(out_stream, delimiter='|', quotechar="\"", quoting=csv.QUOTE_MINIMAL)
-        for order in queryset:
-            array = [
-                order.student.library_id,
-                order.book.author,
-                order.book.title,
-                order.book.publisher,
-                order.book.year,
-                order.book.isbn_13
-            ]
-            writer.writerow(array)
-
-        response = HttpResponse(out_stream.getvalue(), content_type="text/csv")
+        response = HttpResponse(net_library_csv(queryset), content_type="text/csv")
         response['Content-Disposition'] = 'attachment; filename="export.csv"'
         return response
 
@@ -154,7 +140,7 @@ class OrderAdmin(ImportExportMixin, ModelAdmin):
     def reject_selected(self, request, queryset):
         if request.POST.get('_proceed'):
             for order in queryset:
-                order.status = models.Order.REJECTED
+                order.status = Order.REJECTED
                 hint = request.POST.get('hint')
                 if hint:
                     order.hint = hint
@@ -176,7 +162,7 @@ class OrderAdmin(ImportExportMixin, ModelAdmin):
     def mark_arrived_selected(self, request, queryset):
         if request.POST.get('_proceed'):
             for order in queryset:
-                order.status = models.Order.ARRIVED
+                order.status = Order.ARRIVED
                 hint = request.POST.get('hint')
                 if hint:
                     order.hint = hint
@@ -194,6 +180,38 @@ class OrderAdmin(ImportExportMixin, ModelAdmin):
 
     mark_arrived_selected.short_description = _("mark selected orders as arrived")
 
+    # The admin action for ordering the selected books
+    def order_selected(self, request, queryset):
+        if request.POST.get('_proceed'):
+            for order in queryset:
+                order.status = Order.ORDERED
+                hint = request.POST.get('hint')
+                if hint:
+                    order.hint = hint
+                else:
+                    order.hint = ""
+                order.save()
+            context = dict(
+                self.admin_site.each_context(request),
+                title = _("Ordering: CSV-Export"),
+                queryset = queryset,
+                opts = self.opts,
+                action_checkbox_name = helpers.ACTION_CHECKBOX_NAME,
+            )
+            return TemplateResponse(request, 'pyBuchaktion/admin/order_order_selected_csv.html', context)
+        elif request.POST.get('_ok'):
+            pass # return to list view
+        elif not request.POST.get('_cancel'):
+            context = dict(
+                self.admin_site.each_context(request),
+                title = _("Ordering: Are you sure?"),
+                queryset = queryset,
+                opts = self.opts,
+                action_checkbox_name = helpers.ACTION_CHECKBOX_NAME,
+            )
+            return TemplateResponse(request, 'pyBuchaktion/admin/order_order_selected.html', context)
+
+    order_selected.short_description = _("order selected orders")
 
 @register(Student)
 class StudentAdmin(ModelAdmin):

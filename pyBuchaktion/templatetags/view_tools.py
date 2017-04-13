@@ -1,7 +1,9 @@
-from pyBuchaktion.models import Book
 from django import template
 from django.http import QueryDict
 from django.utils.translation import ugettext_lazy as _
+
+from pyBuchaktion.models import Book
+from pyBuchaktion.data import net_library_csv
 
 register = template.Library()
 
@@ -15,7 +17,6 @@ BOOK_STATE_CLASSES = {
 @register.filter
 def get_state_class(state):
     return BOOK_STATE_CLASSES.get(state)
-
 
 BOOK_STATE_TEXTS = {
     'AC': "",
@@ -91,3 +92,7 @@ def list_limits(params, current, options, default):
         "default": default,
         "current": current,
     }
+
+@register.filter
+def net_csv(queryset):
+    return net_library_csv(queryset)
