@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: pyBuchaktion\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-04-11 15:52+0200\n"
+"POT-Creation-Date: 2017-04-12 07:51+0200\n"
 "PO-Revision-Date: 2017-04-11 15:55+0100\n"
 "Last-Translator: Daniel Schweighöfer <dschweighoefer@d120.de>\n"
 "Language-Team: UA Buchaktion <buchaktion@d120.de>\n"
@@ -18,30 +18,38 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Poedit 1.6.10\n"
 
-#: admin.py:70 models.py:194
+#: admin.py:71 models.py:194
 msgid "orders"
 msgstr "Bestellungen"
 
-#: admin.py:118 models.py:46
+#: admin.py:120 models.py:46
 msgid "title"
 msgstr "Titel"
 
-#: admin.py:122 admin.py:123 models.py:288 models.py:289
+#: admin.py:124 admin.py:125 models.py:288 models.py:289
 msgid "{:%Y-%m-%d}"
 msgstr "{:%d.%m.%Y}"
 
-#: admin.py:124
+#: admin.py:126
 #, python-format
 msgid "%(start)s to %(end)s"
 msgstr "%(start)s bis %(end)s"
 
-#: admin.py:126 models.py:180 models.py:309
+#: admin.py:128 models.py:180 models.py:309
 msgid "order timeframe"
 msgstr "Bestellzeitraum"
 
-#: admin.py:148
+#: admin.py:150
 msgid "Export orders to custom CSV"
 msgstr "Exportiere Bestellungen als CSV"
+
+#: admin.py:166
+msgid "Rejecting orders: Are you sure?"
+msgstr "Bestellungen ablehnen: Sind Sie sicher?"
+
+#: admin.py:172
+msgid "reject selected orders"
+msgstr "Ausgewählte Bestellungen ablehnen"
 
 #: cms_apps.py:9
 msgid "pyBuchaktion"
@@ -307,6 +315,26 @@ msgstr "Du bist nicht angemeldet"
 msgid "Home"
 msgstr ""
 
+#: templates/pyBuchaktion/admin/order_reject_selected.html:6
+msgid "The follwing orders will be rejected. Are you sure?"
+msgstr "Die folgenden Bestellungen werden abgelehnt. Sind Sie sicher?"
+
+#: templates/pyBuchaktion/admin/order_reject_selected.html:8
+msgid ""
+"You may provide an additional hint here, to explain why the order has been "
+"rejected"
+msgstr ""
+"Sie können hier einen zusätzlichen Hinweis zur Begründung der Ablehnung "
+"angeben."
+
+#: templates/pyBuchaktion/admin/order_reject_selected.html:15
+msgid "Yes, I'm sure"
+msgstr "Ja, ich bin sicher."
+
+#: templates/pyBuchaktion/admin/order_reject_selected.html:16
+msgid "No, cancel this."
+msgstr "Nein, abbrechen."
+
 #: templates/pyBuchaktion/book_base.html:20
 msgid "ISBN-13"
 msgstr "ISBN-13"
@@ -457,6 +485,9 @@ msgstr "Die Bestellung war erfolgreich, das Buch ist angekommen."
 msgid "No %(verbose_name)s found matching the query"
 msgstr "Kein(e) %(verbose_name)s zu dieser Suche gefunden"
 
+#~ msgid "Posted order successfully"
+#~ msgstr "Bestellung erfolgreich angelegt"
+
 #~ msgid "You are not logged in!"
 #~ msgstr "Du bist nicht angemeldet!"
 
@@ -469,11 +500,11 @@ msgstr "Kein(e) %(verbose_name)s zu dieser Suche gefunden"
 #~ msgid "Order not found"
 #~ msgstr "Bestellung nicht gefunden"
 
-#~ msgid "Posted order successfully"
-#~ msgstr "Bestellung erfolgreich angelegt"
-
 #~ msgid "Order failed"
 #~ msgstr "Bestellt"
+
+#~ msgid "Are you sure?"
+#~ msgstr "Sind Sie sicher?"
 
 #~ msgid "Price"
 #~ msgstr "Preis"

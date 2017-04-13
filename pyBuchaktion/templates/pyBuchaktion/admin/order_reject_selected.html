@@ -1,0 +1,19 @@
+{% extends "admin/base_site.html" %}
+{% load i18n l10n %}
+
+{% block content %}
+<form action="" method="post">{% csrf_token %}
+    <p>{% trans "The follwing orders will be rejected. Are you sure?" %}</p>
+    <ul>{{ queryset|unordered_list }}</ul>
+    <p>{% trans "You may provide an additional hint here, to explain why the order has been rejected" %}</p>
+    <textarea name="hint" rows="4"></textarea><br/><br/>
+    <div>
+        {% for obj in queryset %}
+        <input type="hidden" name="{{ action_checkbox_name }}" value="{{ obj.pk|unlocalize }}" />
+        {% endfor %}
+        <input type="hidden" name="action" value="reject_selected" />
+        <input class="default" type="submit" name="_proceed" value="{% trans "Yes, I'm sure" %}"/>
+        <input type="submit" name="_cancel" value="{% trans "No, cancel this." %}"/>
+    </div>
+</form>
+{% endblock %}

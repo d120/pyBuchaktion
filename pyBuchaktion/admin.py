@@ -7,10 +7,11 @@
 import io
 import csv
 
-from django.contrib.admin import ModelAdmin, register
+from django.contrib.admin import ModelAdmin, register, helpers
 from django.db.models import Count
 from django.utils.translation import ugettext_lazy as _
 from django.http import HttpResponse
+from django.template.response import TemplateResponse
 
 from import_export.resources import ModelResource
 from import_export.admin import ImportExportMixin
@@ -109,6 +110,7 @@ class OrderAdmin(ImportExportMixin, ModelAdmin):
     # The actions that can be triggered on orders
     actions = [
         "export",
+        "reject_selected",
     ]
 
     # The title of the book to be ordered
@@ -146,6 +148,28 @@ class OrderAdmin(ImportExportMixin, ModelAdmin):
         return response
 
     export.short_description = _("Export orders to custom CSV")
+
+    # The admin action for rejecting all selected orders at once.
+    def reject_selected(self, request, queryset):
+        if request.POST.get('_proceed'):
+            for order in queryset:
+                order.status = models.Order.REJECTED
+                hint = request.POST.get('hint')
+                if hint:
+                    order.hint = hint
+                else:
+                    order.hint = ""
+                order.save()
+        elif not request.POST.get('_cancel'):
+            context = dict(
+                self.admin_site.each_context(request),
+                title = _("Rejecting orders: Are you sure?"),
+                queryset = queryset,
+                action_checkbox_name = helpers.ACTION_CHECKBOX_NAME,
+            )
+            return TemplateResponse(request, 'pyBuchaktion/admin/order_reject_selected.html', context)
+
+    reject_selected.short_description = _("reject selected orders")
 
 @register(Student)
 class StudentAdmin(ModelAdmin):
