@@ -111,6 +111,7 @@ class OrderAdmin(ImportExportMixin, ModelAdmin):
     actions = [
         "export",
         "reject_selected",
+        "mark_arrived_selected",
     ]
 
     # The title of the book to be ordered
@@ -170,6 +171,29 @@ class OrderAdmin(ImportExportMixin, ModelAdmin):
             return TemplateResponse(request, 'pyBuchaktion/admin/order_reject_selected.html', context)
 
     reject_selected.short_description = _("reject selected orders")
+
+    # The admin action for marking all selected orders as arrived.
+    def mark_arrived_selected(self, request, queryset):
+        if request.POST.get('_proceed'):
+            for order in queryset:
+                order.status = models.Order.ARRIVED
+                hint = request.POST.get('hint')
+                if hint:
+                    order.hint = hint
+                else:
+                    order.hint = ""
+                order.save()
+        elif not request.POST.get('_cancel'):
+            context = dict(
+                self.admin_site.each_context(request),
+                title = _("Marking as arrived: Are you sure?"),
+                queryset = queryset,
+                action_checkbox_name = helpers.ACTION_CHECKBOX_NAME,
+            )
+            return TemplateResponse(request, 'pyBuchaktion/admin/order_mark_arrived_selected.html', context)
+
+    mark_arrived_selected.short_description = _("mark selected orders as arrived")
+
 
 @register(Student)
 class StudentAdmin(ModelAdmin):
