@@ -85,13 +85,35 @@ def urlencode(value):
     return "?" + value.urlencode()
 
 @register.inclusion_tag('pyBuchaktion/tags/list_limits.html')
-def list_limits(params, current, options, default):
-    return {
-        "params": params,
-        "options": options,
-        "default": default,
-        "current": current,
-    }
+def list_limits(data, params):
+    lst = []
+    dct = params.copy()
+    page = int(dct.get('page', 1))
+    index = (page - 1) * int(data['current'])
+
+    for opt in data['options']:
+        urldict = dct.copy()
+        if opt == data['default']:
+            if 'limit' in urldict:
+                urldict.pop('limit')
+        else:
+            urldict['limit'] = opt
+
+        newpage = (index // int(opt)) + 1
+        if newpage > 1:
+            urldict['page'] = newpage
+        elif 'page' in urldict:
+            urldict.pop('page')
+
+        lst += [{
+            'num': opt,
+            'url': '?' + urldict.urlencode(),
+        }]
+    result = data.copy()
+    result.update({
+        'options': lst,
+    })
+    return result
 
 @register.filter
 def net_csv(queryset):

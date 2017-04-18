@@ -22,11 +22,11 @@
             <h4 class="panel-title">
             {% trans "Books" %}
             <span class="pull-right">
-                {% list_limits get_params limit limit_options limit_default %}
+                {% list_limits limit_data get_params %}
             </span>
             </h4>
         </div>
-        <div class="list-group">
+        <!--<div class="list-group">
         {% for book in books %}
             <a href="{% url "pyBuchaktion:book" pk=book.id %}" class="list-group-item">
                 <h4 class="list-group-item-heading">{{ book.title }}
@@ -40,7 +40,42 @@
                 <b>ISBN-13:</b> <i>{{ book.isbn_13 }}</i>
             </a>
         {% endfor %}
-        </div>
+        </div>-->
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <!--<th>{% trans "Title" %}</th>-->
+                    <th>{% trans "Author" %}</th>
+                    <th>{% trans "ISBN-13" %}</th>
+                    <th>{% trans "Publisher" %}</th>
+                    <th>{% trans "Year" %}</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for book in books %}
+            <tr>
+                <th colspan="4">{{ book.title }}</th>
+                <td>
+                    {% if book.state != 'AC' %}
+                    <span class="label label-{{ book.state|get_state_class }} pull-right">
+                        {{ book.statename }}
+                    </span>
+                    {% endif %}
+                </td>
+            </tr>
+            <tr>
+                <td>{{ book.author }}</td>
+                <td>{{ book.isbn_13 }}</td>
+                <td>{{ book.publisher }}</td>
+                <td>{{ book.year }}</td>
+                <td style="text-align: right">
+                    <a class="btn btn-default" href="{% url "pyBuchaktion:book" pk=book.id %}">{% trans "View" %}</a>
+                </td>
+            </tr>
+            {% endfor %}
+            </tbody>
+        </table>
     </div>
     {% else %}
         {% block noresults %}{% endblock noresults %}

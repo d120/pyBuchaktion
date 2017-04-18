@@ -37,9 +37,11 @@ class VarPagedListView(ListView):
     def get_context_data(self, **kwargs):
         context = super(ListView, self).get_context_data(**kwargs)
         context['get_params'] = self.request.GET
-        context['limit'] = self.paginate_by
-        context['limit_options'] = self.paginate_by_options
-        context['limit_default'] = self.paginate_by_default
+        context['limit_data'] = {
+            'options': self.paginate_by_options,
+            'default': self.paginate_by_default,
+            'current': self.paginate_by,
+        }
         return context
 
 
