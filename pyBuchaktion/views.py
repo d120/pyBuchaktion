@@ -2,6 +2,7 @@ from django.views.generic import ListView, DetailView
 from django.views.generic.edit import UpdateView, CreateView, BaseCreateView, DeleteView
 from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect
+from django.db.models import F, Count, ExpressionWrapper
 
 from .forms import BookSearchForm, ModuleSearchForm, AccountEditForm, BookOrderForm
 from .models import Book, TucanModule, Order, Student, OrderTimeframe
@@ -56,6 +57,13 @@ class BookListView(StudentContextMixin, SearchFormContextMixin, VarPagedListView
     template_name = 'pyBuchaktion/books/active_list.html'
     context_object_name = 'books'
 
+    def get_queryset(self):
+        queryset = super(BookListView, self).get_queryset()
+        if self.request.student:
+            orders = self.request.student.order_set.all()
+            # queryset = queryset.annotate(QUERY)
+        return queryset
+
 
 class AllBookListView(BookListView):
 
@@ -103,7 +111,7 @@ class BookOrderView(StudentLoginRequiredMixin, NeverCacheMixin, CreateView):
             book = Book.objects.get(pk=self.kwargs['pk']),
             status = Order.PENDING,
             student = self.request.student,
-            order_timeframe = OrderTimeframe.current(),
+            order_timeframe = OrderTimeframe.objects.current(),
         )})
         return kwargs
 

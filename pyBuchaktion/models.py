@@ -117,6 +117,24 @@ class Book(models.Model):
         verbose_name = _("book")
         verbose_name_plural = _("books")
 
+
+class OrderManager(models.Manager):
+
+    def student_semester_orders(self, student, semester, date=datetime.now()):
+        return student.order_set \
+            .filter(order_timeframe__semester=semester) \
+            .filter(order_timeframe__start_date__lte=date)
+
+    def student_semester_order_count(self, student, semester, date=datetime.now()):
+        return self.student_semester_orders(student, semester, date).count()
+
+    def student_book_orders(self, student, book):
+        return student.order_set.filter(book=book)
+
+    def student_book_order_count(self, student, book):
+        return self.student_book_orders(student, book).count()
+
+
 class Order(models.Model):
 
     """
@@ -127,6 +145,8 @@ class Order(models.Model):
         with a timeframe that defines when a book was ordered and when the current
         orders will be forwarded to the merchant.
     """
+
+    objects = OrderManager()
 
     # Pending: The user posted a revocable order to us
     PENDING='PD'
@@ -241,6 +261,7 @@ class Student(models.Model):
         verbose_name = _("student")
         verbose_name_plural = _("students")
 
+
 @receiver(pre_save, sender=Student)
 def save_student(sender, **kwargs):
     """
@@ -252,12 +273,31 @@ def save_student(sender, **kwargs):
         kwargs['instance'].library_id = None
 
 
+class OrderTimeframeManager(models.Manager):
+
+    def semester_budget(self, semester, date=datetime.now()):
+        return semester.ordertimeframe_set \
+            .filter(start_date__lte=date) \
+            .aggregate(Sum('allowed_orders'))['allowed_orders__sum']
+
+    def current(self, date=datetime.now()):
+        try:
+            return self \
+                .filter(start_date__lte=date) \
+                .filter(end_date__gte=date) \
+                .earliest('end_date')
+        except OrderTimeframe.DoesNotExist as e:
+            return None
+
+
 class OrderTimeframe(models.Model):
 
     """
         A Timeframe for a set of orders. A time frame has a start and an
         end date and is associated with a semester for budget calculations.
     """
+
+    objects = OrderTimeframeManager()
 
     # The start date of this timeframe
     start_date = models.DateField(
@@ -267,6 +307,12 @@ class OrderTimeframe(models.Model):
     # The end date for this timeframe
     end_date = models.DateField(
         verbose_name=_("end date"),
+    )
+
+    # The orders which this field adds
+    allowed_orders = models.IntegerField(
+        default = 0,
+        verbose_name=_("allowed orders"),
     )
 
     # The amout of money that has already been spent in this timeframe
@@ -296,13 +342,6 @@ class OrderTimeframe(models.Model):
     # Get the natural (foreign reference) key for serialization
     def natural_key(self):
         return { "from": self.start_date, "to": self.end_date }
-
-    @classmethod
-    def current(self):
-        try:
-            return self.objects.filter(end_date__gt=datetime.now()).earliest('end_date')
-        except self.DoesNotExist as e:
-            return None
 
     # Set the singular and plural names for i18n
     class Meta:

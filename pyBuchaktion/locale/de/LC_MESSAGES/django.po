@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: pyBuchaktion\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-04-13 13:38+0200\n"
-"PO-Revision-Date: 2017-04-13 13:38+0100\n"
+"POT-Creation-Date: 2017-04-19 14:57+0200\n"
+"PO-Revision-Date: 2017-04-19 14:59+0100\n"
 "Last-Translator: Daniel Schweighöfer <dschweighoefer@d120.de>\n"
 "Language-Team: UA Buchaktion <buchaktion@d120.de>\n"
 "Language: de\n"
@@ -18,7 +18,7 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Poedit 1.6.10\n"
 
-#: admin.py:69 models.py:194
+#: admin.py:69 admin.py:247 models.py:214
 msgid "orders"
 msgstr "Bestellungen"
 
@@ -26,7 +26,7 @@ msgstr "Bestellungen"
 msgid "title"
 msgstr "Titel"
 
-#: admin.py:125 admin.py:126 models.py:288 models.py:289
+#: admin.py:125 admin.py:126 models.py:334 models.py:335
 msgid "{:%Y-%m-%d}"
 msgstr "{:%d.%m.%Y}"
 
@@ -35,7 +35,7 @@ msgstr "{:%d.%m.%Y}"
 msgid "%(start)s to %(end)s"
 msgstr "%(start)s bis %(end)s"
 
-#: admin.py:129 models.py:180 models.py:309
+#: admin.py:129 models.py:200 models.py:348
 msgid "order timeframe"
 msgstr "Bestellzeitraum"
 
@@ -75,7 +75,7 @@ msgstr "Ausgewählte Bestellungen bestellen"
 msgid "pyBuchaktion"
 msgstr ""
 
-#: cms_menus.py:12 templates/pyBuchaktion/books/base.html:23
+#: cms_menus.py:12 templates/pyBuchaktion/books/base.html:37
 msgid "Books"
 msgstr "Bücher"
 
@@ -100,37 +100,48 @@ msgstr "Buch bestellen"
 msgid "Order #%s"
 msgstr "Bestellung #%s"
 
-#: forms.py:15
+#: forms.py:23
 msgid "This book is not available for ordering"
 msgstr "Dieses Buch kann nicht bestellt werden"
 
-#: forms.py:19
+#: forms.py:27
 msgid "You already ordered this book"
 msgstr "Du hast dieses Buch bereits bestellt"
 
-#: forms.py:22
+#: forms.py:31
+msgid "Book ordering is not active for the current date"
+msgstr "Buchbestellungen sind für das aktuelle Datum nicht aktiviert."
+
+#: forms.py:39
+msgid "You may not order any more books in this timeframe."
+msgstr "Sie können in diesem Zeitrahmen keine Bücher mehr bestellen."
+
+#: forms.py:43 templates/pyBuchaktion/books/base.html:61
 msgid "Title"
 msgstr "Titel"
 
-#: forms.py:23 templates/pyBuchaktion/book_base.html:19
-#: templates/pyBuchaktion/books/base.html:39
+#: forms.py:44 templates/pyBuchaktion/book_base.html:19
+#: templates/pyBuchaktion/books/base.html:53
+#: templates/pyBuchaktion/books/base.html:63
 #: templates/pyBuchaktion/order_detail.html:32
 msgid "Author"
 msgstr "Autor"
 
-#: forms.py:24 templates/pyBuchaktion/book_base.html:21
+#: forms.py:45 templates/pyBuchaktion/book_base.html:21
+#: templates/pyBuchaktion/books/base.html:64
 msgid "ISBN-13"
 msgstr "ISBN-13"
 
-#: forms.py:25 templates/pyBuchaktion/book_base.html:20
+#: forms.py:46 templates/pyBuchaktion/book_base.html:20
+#: templates/pyBuchaktion/books/base.html:65
 msgid "Publisher"
 msgstr "Verlag"
 
-#: forms.py:28
+#: forms.py:49
 msgid "Name"
 msgstr "Name"
 
-#: forms.py:39
+#: forms.py:60
 msgid "The library id number assigned by the ULB"
 msgstr "Die von der ULB zugewiesene Büchereinummer"
 
@@ -138,7 +149,7 @@ msgstr "Die von der ULB zugewiesene Büchereinummer"
 msgid "Accepted"
 msgstr "Akzeptiert"
 
-#: models.py:61 models.py:144
+#: models.py:61 models.py:164
 msgid "Rejected"
 msgstr "Abgelehnt"
 
@@ -150,7 +161,7 @@ msgstr "Vorgeschlagen"
 msgid "Obsolete"
 msgstr "Veraltet"
 
-#: models.py:71 models.py:153
+#: models.py:71 models.py:173
 msgid "status"
 msgstr "Status"
 
@@ -166,11 +177,11 @@ msgstr "Preis"
 msgid "publisher"
 msgstr "Verlag"
 
-#: models.py:96 models.py:343
+#: models.py:96 models.py:382
 msgid "year"
 msgstr "Jahr"
 
-#: models.py:117 models.py:166
+#: models.py:117 models.py:186
 msgid "book"
 msgstr "Buch"
 
@@ -178,118 +189,122 @@ msgstr "Buch"
 msgid "books"
 msgstr "Bücher"
 
-#: models.py:142
+#: models.py:162
 msgid "Pending"
 msgstr "Offen"
 
-#: models.py:143
+#: models.py:163 templates/pyBuchaktion/books/base.html:81
 msgid "Ordered"
 msgstr "Bestellt"
 
-#: models.py:145
+#: models.py:165
 msgid "Arrived"
 msgstr "Angekommen"
 
-#: models.py:158
+#: models.py:178
 msgid "hint"
 msgstr "Hinweis"
 
-#: models.py:173 models.py:241
+#: models.py:193 models.py:261
 msgid "student"
 msgstr "Student"
 
-#: models.py:193
+#: models.py:213
 msgid "order"
 msgstr "Bestellung"
 
-#: models.py:209
+#: models.py:229
 msgid "library id"
 msgstr "Büchereinummer"
 
-#: models.py:218
+#: models.py:238
 msgid "TUID User"
 msgstr "TUID Benutzer"
 
-#: models.py:242
+#: models.py:262
 msgid "students"
 msgstr "Studenten"
 
-#: models.py:264
+#: models.py:304
 msgid "start date"
 msgstr "Startdatum"
 
-#: models.py:269
+#: models.py:309
 msgid "end date"
 msgstr "Enddatum"
 
-#: models.py:276
+#: models.py:315
+msgid "allowed orders"
+msgstr "Erlaubte Bestellungen"
+
+#: models.py:322
 msgid "spendings"
 msgstr "Ausgaben"
 
-#: models.py:283 models.py:369
+#: models.py:329 models.py:408
 msgid "semester"
 msgstr "Semester"
 
-#: models.py:290
+#: models.py:336
 #, python-format
 msgid "%(start)s to %(end)s (%(semester)s)"
 msgstr "%(start)s bis %(end)s (%(semester)s)"
 
-#: models.py:310
+#: models.py:349
 msgid "order timeframes"
 msgstr "Bestellzeiträume"
 
-#: models.py:327
+#: models.py:366
 msgid "Winter term"
 msgstr "Wintersemester"
 
-#: models.py:328
+#: models.py:367
 msgid "Summer term"
 msgstr "Sommersemester"
 
-#: models.py:336
+#: models.py:375
 msgid "season"
 msgstr "Saison"
 
-#: models.py:350
+#: models.py:389
 msgid "budget"
 msgstr "Budget"
 
-#: models.py:356
+#: models.py:395
 #, python-format
 msgid "Winter term 20%(year)d/%(next_year)d"
 msgstr "Wintersemester 20%(year)d/%(next_year)d"
 
-#: models.py:360
+#: models.py:399
 #, python-format
 msgid "Summer term 20%(year)d"
 msgstr "Sommersemester 20%(year)d"
 
-#: models.py:370
+#: models.py:409
 msgid "semesters"
 msgstr "Semester"
 
-#: models.py:387
+#: models.py:426
 msgid "module id"
 msgstr "Modul ID"
 
-#: models.py:393
+#: models.py:432
 msgid "name"
 msgstr "Name"
 
-#: models.py:400
+#: models.py:439
 msgid "last offered"
 msgstr "Zuletzt angeboten"
 
-#: models.py:406
+#: models.py:445
 msgid "literature"
 msgstr "Literatur"
 
-#: models.py:419
+#: models.py:458
 msgid "TUCaN module"
 msgstr "TUCaN Modul"
 
-#: models.py:420
+#: models.py:459
 msgid "TUCaN modules"
 msgstr "TUCaN Module"
 
@@ -326,7 +341,6 @@ msgid "Logout &amp; CAS Logout"
 msgstr "Abmelden &amp; aus CAS abmelden"
 
 #: templates/pyBuchaktion/account.html:50
-#: templates/pyBuchaktion/book_detail.html:24
 msgid "Orders"
 msgstr "Bestellungen"
 
@@ -404,8 +418,13 @@ msgstr "Erscheinungsjahr"
 msgid "Recommended by"
 msgstr "Empfohlen von"
 
-#: templates/pyBuchaktion/book_detail.html:41
-#: templates/pyBuchaktion/book_order_form.html:15
+#: templates/pyBuchaktion/book_detail.html:24
+msgid "Order"
+msgstr "Bestellung"
+
+#: templates/pyBuchaktion/book_detail.html:40
+#: templates/pyBuchaktion/book_order_form.html:21
+#: templates/pyBuchaktion/books/base.html:85
 msgid "Order this book"
 msgstr "Dieses Buch bestellen"
 
@@ -436,16 +455,24 @@ msgstr "Willst du dieses Buch zur Bestellung vorschlagen?"
 msgid "Propose"
 msgstr "Vorschlagen"
 
-#: templates/pyBuchaktion/books/base.html:6
-#: templates/pyBuchaktion/books/base.html:13
+#: templates/pyBuchaktion/books/base.html:20
+#: templates/pyBuchaktion/books/base.html:27
 #: templates/pyBuchaktion/module_list.html:6
 #: templates/pyBuchaktion/module_list.html:13
 msgid "Search"
 msgstr "Suchen"
 
-#: templates/pyBuchaktion/books/base.html:15
+#: templates/pyBuchaktion/books/base.html:29
 msgid "Search for modules"
 msgstr "Suche nach Modulen"
+
+#: templates/pyBuchaktion/books/base.html:66
+msgid "Year"
+msgstr "Jahr"
+
+#: templates/pyBuchaktion/books/base.html:97
+msgid "Details"
+msgstr "Details"
 
 #: templates/pyBuchaktion/module.html:9
 msgid "Last offered"
@@ -533,7 +560,7 @@ msgstr "Dieses Buch wurde abgelehnt."
 msgid "The order was fulfilled, the book is now available."
 msgstr "Die Bestellung war erfolgreich, das Buch ist angekommen."
 
-#: views.py:114
+#: views.py:124
 #, python-format
 msgid "No %(verbose_name)s found matching the query"
 msgstr "Kein(e) %(verbose_name)s zu dieser Suche gefunden"

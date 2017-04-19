@@ -220,21 +220,32 @@ class StudentAdmin(ModelAdmin):
         The admin for students.
     """
 
-    ordering = (
-        'id',
-    )
-
     # The columns that are displayed
     list_display = (
         'id',
         'tuid_user',
         'library_id',
+        'number_of_orders',
     )
 
     # The columns that are displayed as links
     list_display_links = (
         'tuid_user',
     )
+
+    # Annotate the queryset with the number of orders.
+    def get_queryset(self, request):
+        qs = super(StudentAdmin, self).get_queryset(request)
+        qs = qs.annotate(Count('order'))
+        return qs
+
+    # The number of orders for this book
+    def number_of_orders(self, student):
+        return student.order__count
+
+    number_of_orders.admin_order_field = 'order__count'
+    number_of_orders.short_description = _("orders")
+
 
 @register(OrderTimeframe)
 class OrderTimeframeAdmin(ModelAdmin):
