@@ -12,6 +12,8 @@ from django.template.response import TemplateResponse
 
 from import_export.resources import ModelResource
 from import_export.admin import ImportExportMixin
+from import_export.widgets import ManyToManyWidget
+from import_export.fields import Field
 
 from .models import Book, Order, Student, OrderTimeframe, TucanModule, Semester
 from .mixins import ForeignKeyImportResourceMixin
@@ -272,12 +274,39 @@ class SemesterAdmin(ModelAdmin):
     #radio_fields = {"season": admin.VERTICAL}
     pass
 
+
+class ModuleResource(ForeignKeyImportResourceMixin, ModelResource):
+    author = Field(
+        column_name = 'books',
+        attribute = 'literature',
+        widget = ManyToManyWidget(
+            Book,
+            separator = '|',
+            field = 'isbn_13',
+        ),
+    )
+
+    class Meta:
+        model = TucanModule
+        import_id_fields = (
+            'module_id',
+            'last_offered__year',
+            'last_offered__season',
+        )
+        fields = import_id_fields + (
+            'name',
+            'books',
+        )
+
+
 @register(TucanModule)
-class ModuleAdmin(ModelAdmin):
+class ModuleAdmin(ImportExportMixin, ModelAdmin):
 
     """
         The admin for a module displays the name and module id.
     """
+
+    resource_class = ModuleResource
 
     list_display = (
         'name',
