@@ -51,7 +51,7 @@ class SearchFormContextMixin(ContextMixin):
 
 class StudentContextMixin(object):
     """
-    A mixin the provides the currently logged in student to the context.
+    A mixin that provides the currently logged in student to the context.
     """
     def dispatch(self, request, *args, **kwargs):
         if request.TUIDUser:

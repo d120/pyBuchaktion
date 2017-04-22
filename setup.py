@@ -52,7 +52,13 @@ setup(
     #url='https://www.example.com/',
     author='Buchaktionsteam D120',
     author_email='buchaktion@d120.de',
-    setup_requires=['django>=1.9.0'],
+    setup_requires=[
+        'django>=1.10.0',
+    ],
+    install_requires=[
+        'pyTUID',
+        'django>=1.10.0',
+    ],
     classifiers=[
         'Environment :: Web Environment',
         'Framework :: Django',

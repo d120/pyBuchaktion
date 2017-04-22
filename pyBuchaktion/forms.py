@@ -23,8 +23,8 @@ class BookOrderForm(forms.ModelForm):
             raise ValidationError(_("This book is not available for ordering"), code='not_available')
 
         # does the student have an order for this already
-        if Order.objects.student_book_order_count(student, book) > 0:
-            raise ValidationError(_("You already ordered this book"), code='already_ordered')
+        # if Order.objects.student_book_order_count(student, book) > 0:
+        #    raise ValidationError(_("You already ordered this book"), code='already_ordered')
 
         timeframe = OrderTimeframe.objects.current()
         if not timeframe:

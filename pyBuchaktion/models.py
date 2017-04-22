@@ -1,7 +1,7 @@
 """
     This module defines all models for the Buchaktion.
 
-    Starting from a book and student model, there is a order model
+    Starting from a book and student model, there is an order model
     which students can post for a specific book. An order is assigned
     to a timeframe at the end of which all pending orders will be
     either forwarded to the bookstore or rejected.

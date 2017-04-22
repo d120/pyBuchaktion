@@ -41,7 +41,7 @@ class BookAdmin(ImportExportMixin, ModelAdmin):
 
     """
         The book admin displays title, author and isbn of a book,
-        as well as the number of order for this book.
+        as well as the number of orders for this book.
     """
 
     resource_class = BookResource
@@ -61,7 +61,7 @@ class BookAdmin(ImportExportMixin, ModelAdmin):
 
     # Annotate the queryset with the number of orders.
     def get_queryset(self, request):
-        qs = super(BookAdmin, self).get_queryset(request)
+        qs = super().get_queryset(request)
         qs = qs.annotate(Count('order'))
         return qs
 
@@ -84,6 +84,7 @@ class OrderResource(ForeignKeyImportResourceMixin, ModelResource):
         fields = (
             'status',
         ) + import_id_fields
+
 
 @register(Order)
 class OrderAdmin(ImportExportMixin, ModelAdmin):
@@ -109,6 +110,10 @@ class OrderAdmin(ImportExportMixin, ModelAdmin):
         'book__state',
         'order_timeframe',
     )
+
+    search_fields = [
+        'book__title'
+    ]
 
     # The actions that can be triggered on orders
     actions = [
@@ -239,7 +244,8 @@ class StudentAdmin(ModelAdmin):
     list_display = (
         'id',
         'tuid_user',
-        'library_id',
+        'email',
+        'has_library_id',
         'number_of_orders',
     )
 
@@ -250,7 +256,7 @@ class StudentAdmin(ModelAdmin):
 
     # Annotate the queryset with the number of orders.
     def get_queryset(self, request):
-        qs = super(StudentAdmin, self).get_queryset(request)
+        qs = super().get_queryset(request)
         qs = qs.annotate(Count('order'))
         return qs
 
@@ -261,6 +267,15 @@ class StudentAdmin(ModelAdmin):
     number_of_orders.admin_order_field = 'order__count'
     number_of_orders.short_description = _("orders")
 
+    def email(self, student):
+        return student.tuid_user.email
+
+    email.short_description = _("email")
+
+    def has_library_id(self, student):
+        return True if student.library_id else False
+    has_library_id.boolean = True
+    has_library_id.short_description = _("library id")
 
 @register(OrderTimeframe)
 class OrderTimeframeAdmin(ModelAdmin):
@@ -276,6 +291,7 @@ class OrderTimeframeAdmin(ModelAdmin):
         'start_date',
         'semester',
     )
+
 
 @register(Semester)
 class SemesterAdmin(ModelAdmin):

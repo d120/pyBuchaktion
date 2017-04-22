@@ -4,7 +4,7 @@ from django.core.mail.message import EmailMessage
 
 
 class BuchaktionMessage(EmailMessage):
-    sender = 'buchaktion@d120.de'
+    sender = 'buchaktion@fachschaft.informatik.tu-darmstadt.de'
 
     def get_content(self):
         return _('This message does not have any content')
@@ -79,7 +79,7 @@ class OrderStatusMessage(BuchaktionMessage):
 class OrderAcceptedMessage(OrderStatusMessage):
 
     def get_status_message(self):
-        return _("Your order for the book below has been accepted forwarded to our book retailer. " + \
+        return _("Your order for the book below has been accepted and forwarded to our book retailer. " + \
             "We will inform you when it has arrived at the university library.")
 
     def get_subject(self):

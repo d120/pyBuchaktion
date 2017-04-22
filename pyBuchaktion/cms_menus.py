@@ -26,30 +26,16 @@ class PyBuchaktionMenu(Menu):
                 nodes += [
                     NavigationNode(
                         _(book.title),
-                        reverse(
-                            'pyBuchaktion:book',
-                            kwargs = {
-                                'pk': book_id
-                            },
-                        ), 5003, 5001,
-                        attr = {
-                            'breadcrumb_only': True
-                        }
+                        reverse('pyBuchaktion:book', kwargs = { 'pk': book_id }),
+                        5003, 5001, attr = { 'breadcrumb_only': True },
                     ),
                 ]
                 if match.url_name == 'book_order':
                     nodes += [
                         NavigationNode(
                             _("Order book"),
-                            reverse(
-                                'pyBuchaktion:book_order',
-                                kwargs = {
-                                    'pk': book_id
-                                },
-                            ), 5012, 5003,
-                            attr = {
-                                'breadcrumb_only': True
-                            }
+                            reverse('pyBuchaktion:book_order', kwargs = { 'pk': book_id }),
+                            5012, 5003, attr = { 'breadcrumb_only': True },
                         ),
                     ]
 
@@ -60,15 +46,8 @@ class PyBuchaktionMenu(Menu):
                 nodes += [
                     NavigationNode(
                         _(module.name),
-                        reverse(
-                            'pyBuchaktion:module',
-                            kwargs={
-                                'pk': module_id
-                            },
-                        ), 5005, 5004,
-                        attr = {
-                            'breadcrumb_only': True
-                        }
+                        reverse('pyBuchaktion:module', kwargs={ 'pk': module_id }),
+                        5005, 5004, attr = { 'breadcrumb_only': True },
                     ),
                 ]
         elif match.url_name in ('order', 'order_abort'):
@@ -78,15 +57,8 @@ class PyBuchaktionMenu(Menu):
                 nodes += [
                     NavigationNode(
                         _("Order #%s") % order_id,
-                        reverse(
-                            'pyBuchaktion:order',
-                            kwargs = {
-                                'pk': order_id
-                            },
-                        ), 5007, 5006,
-                        attr = {
-                            'breadcrumb_only': True
-                        }
+                        reverse('pyBuchaktion:order', kwargs = { 'pk': order_id }),
+                        5007, 5006, attr = { 'breadcrumb_only': True },
                     ),
                 ]
 
@@ -96,7 +68,7 @@ menu_pool.register_menu(PyBuchaktionMenu)
 
 class PyBuchaktionModifier(Modifier):
     """
-    Modifies the navigation, so that node with attribute breadcrumb_only are only
+    Modifies the navigation, so that nodes with attribute breadcrumb_only are only
     returned when in breadcrumb mode
     """
     def modify(self, request, nodes, namespace, root_id, post_cut, breadcrumb):

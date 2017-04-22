@@ -39,7 +39,7 @@
             </div>
             <div class="panel-footer">
                 <a href="{% url "pyTUID:logout" %}?next={% url "pyBuchaktion:books" %}" class="btn btn-danger">{% trans "Logout" %}</a>
-                <a href="{% url "pyTUID:logout" %}?next={% url "pyBuchaktion:books" %}&cas_logout=True" class="btn btn-danger">
+                <a href="{% url "pyTUID:logout" %}?next={% url "pyBuchaktion:books" %}&amp;cas_logout=True" class="btn btn-danger">
                     {% trans "Logout &amp; CAS Logout" %}
                 </a>
             </div>
@@ -49,20 +49,6 @@
             <div class="panel-heading">
                 <h3 class="panel-title">{% trans "Orders" %}</h3>
             </div>
-            <!--<div class="list-group">
-        {% for order in student.order_set.all %}
-                <a href="{% url "pyBuchaktion:order" pk=order.id %}" class="list-group-item">
-                    <h4 class="list-group-item-heading">#{{order.id}}: {{ order.book|truncatechars:70 }}
-                        <span class="label label-{{ order.status|get_status_class }} pull-right">
-                            {{ order.statusname }}
-                        </span>
-                    </h4>
-            {% if order.hint %}
-                    <b>{% trans "Hint" %}:</b> {{ order.hint }}
-            {% endif %}
-                </a>
-        {% endfor %}
-            </div>-->
             <table class="table order-table">
                 {% for order in student.order_set.all %}
                     <tr class="order">
