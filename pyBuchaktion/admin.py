@@ -9,6 +9,7 @@ from django.db.models import Count
 from django.utils.translation import ugettext_lazy as _
 from django.http import HttpResponse
 from django.template.response import TemplateResponse
+from django.core.mail.message import EmailMessage
 
 from import_export.resources import ModelResource
 from import_export.admin import ImportExportMixin
@@ -18,6 +19,7 @@ from import_export.fields import Field
 from .models import Book, Order, Student, OrderTimeframe, TucanModule, Semester
 from .mixins import ForeignKeyImportResourceMixin
 from .data import net_library_csv
+from .mail import OrderAcceptedMessage, OrderArrivedMessage, OrderRejectedMessage
 
 class BookResource(ModelResource):
     class Meta:
@@ -141,58 +143,67 @@ class OrderAdmin(ImportExportMixin, ModelAdmin):
     # The admin action for rejecting all selected orders at once.
     def reject_selected(self, request, queryset):
         if request.POST.get('_proceed'):
+            hint = request.POST.get('hint')
+            sendmails = '_sendmails' in request.POST
             for order in queryset:
                 order.status = Order.REJECTED
-                hint = request.POST.get('hint')
-                if hint:
-                    order.hint = hint
-                else:
-                    order.hint = ""
+                order.hint = hint
                 order.save()
+                if sendmails:
+                    email = OrderRejectedMessage(order)
+                    email.send()
         elif not request.POST.get('_cancel'):
             context = dict(
                 self.admin_site.each_context(request),
                 title = _("Rejecting orders: Are you sure?"),
+                intro = _("The follwing orders will be rejected. Are you sure?"),
+                action = 'reject_selected',
                 queryset = queryset,
+                opts = self.opts,
                 action_checkbox_name = helpers.ACTION_CHECKBOX_NAME,
             )
-            return TemplateResponse(request, 'pyBuchaktion/admin/order_reject_selected.html', context)
+            return TemplateResponse(request, 'pyBuchaktion/admin/order_modify_bulk.html', context)
 
     reject_selected.short_description = _("reject selected orders")
 
     # The admin action for marking all selected orders as arrived.
     def mark_arrived_selected(self, request, queryset):
         if request.POST.get('_proceed'):
+            sendmails = '_sendmails' in request.POST
+            hint = request.POST.get('hint', "")
             for order in queryset:
                 order.status = Order.ARRIVED
-                hint = request.POST.get('hint')
-                if hint:
-                    order.hint = hint
-                else:
-                    order.hint = ""
+                order.hint = hint
                 order.save()
+                if sendmails:
+                    email = OrderArrivedMessage(order)
+                    email.send()
         elif not request.POST.get('_cancel'):
             context = dict(
                 self.admin_site.each_context(request),
                 title = _("Marking as arrived: Are you sure?"),
+                intro = _("The follwing orders will be marked as having been delivered. Are you sure?"),
+                action = 'mark_arrived_selected',
                 queryset = queryset,
+                opts = self.opts,
                 action_checkbox_name = helpers.ACTION_CHECKBOX_NAME,
             )
-            return TemplateResponse(request, 'pyBuchaktion/admin/order_mark_arrived_selected.html', context)
+            return TemplateResponse(request, 'pyBuchaktion/admin/order_modify_bulk.html', context)
 
     mark_arrived_selected.short_description = _("mark selected orders as arrived")
 
     # The admin action for ordering the selected books
     def order_selected(self, request, queryset):
         if request.POST.get('_proceed'):
+            sendmails = '_sendmails' in request.POST
+            hint = request.POST.get('hint', "")
             for order in queryset:
                 order.status = Order.ORDERED
-                hint = request.POST.get('hint')
-                if hint:
-                    order.hint = hint
-                else:
-                    order.hint = ""
+                order.hint = hint
                 order.save()
+                if sendmails:
+                    email = OrderAcceptedMessage(order)
+                    email.send()
             context = dict(
                 self.admin_site.each_context(request),
                 title = _("Ordering: CSV-Export"),
@@ -207,11 +218,13 @@ class OrderAdmin(ImportExportMixin, ModelAdmin):
             context = dict(
                 self.admin_site.each_context(request),
                 title = _("Ordering: Are you sure?"),
+                intro = _("The following orders will be marked as ordered. Are you sure?"),
+                action = 'order_selected',
                 queryset = queryset,
                 opts = self.opts,
                 action_checkbox_name = helpers.ACTION_CHECKBOX_NAME,
             )
-            return TemplateResponse(request, 'pyBuchaktion/admin/order_order_selected.html', context)
+            return TemplateResponse(request, 'pyBuchaktion/admin/order_modify_bulk.html', context)
 
     order_selected.short_description = _("order selected orders")
 
