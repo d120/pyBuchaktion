@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: pyBuchaktion\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-04-22 12:57+0200\n"
-"PO-Revision-Date: 2017-04-22 12:57+0100\n"
+"POT-Creation-Date: 2017-04-22 22:18+0200\n"
+"PO-Revision-Date: 2017-04-22 22:18+0100\n"
 "Last-Translator: Daniel Schweighöfer <dschweighoefer@d120.de>\n"
 "Language-Team: UA Buchaktion <buchaktion@d120.de>\n"
 "Language: de\n"
@@ -18,73 +18,81 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Poedit 1.6.10\n"
 
-#: admin.py:73 admin.py:262 models.py:214
+#: admin.py:73 admin.py:268 models.py:212
 msgid "orders"
 msgstr "Bestellungen"
 
-#: admin.py:125 models.py:46
+#: admin.py:130 models.py:46
 msgid "title"
 msgstr "Titel"
 
-#: admin.py:129 admin.py:130 models.py:334 models.py:335
+#: admin.py:134 admin.py:135 models.py:332 models.py:333
 msgid "{:%Y-%m-%d}"
 msgstr "{:%d.%m.%Y}"
 
-#: admin.py:131
+#: admin.py:136
 #, python-format
 msgid "%(start)s to %(end)s"
 msgstr "%(start)s bis %(end)s"
 
-#: admin.py:133 models.py:200 models.py:348
+#: admin.py:138 models.py:198 models.py:346
 msgid "order timeframe"
 msgstr "Bestellzeitraum"
 
-#: admin.py:141
+#: admin.py:146
 msgid "Export orders to custom CSV"
 msgstr "Exportiere Bestellungen als CSV"
 
-#: admin.py:158
+#: admin.py:163
 msgid "Rejecting orders: Are you sure?"
 msgstr "Bestellungen ablehnen: Sind Sie sicher?"
 
-#: admin.py:159
+#: admin.py:164
 msgid "The follwing orders will be rejected. Are you sure?"
 msgstr "Die folgenden Bestellungen werden abgelehnt. Sind Sie sicher?"
 
-#: admin.py:167
+#: admin.py:172
 msgid "reject selected orders"
 msgstr "Ausgewählte Bestellungen ablehnen"
 
-#: admin.py:184
+#: admin.py:189
 msgid "Marking as arrived: Are you sure?"
 msgstr "Als angekommen markieren: Sind Sie sicher?"
 
-#: admin.py:185
+#: admin.py:190
 msgid ""
 "The follwing orders will be marked as having been delivered. Are you sure?"
 msgstr ""
 "Die folgenden Bestellungen werden als angekommen markiert. Sind Sie sicher?"
 
-#: admin.py:193
+#: admin.py:198
 msgid "mark selected orders as arrived"
 msgstr "Ausgewählte Bestellungen als Angekommen markieren"
 
-#: admin.py:209
+#: admin.py:214
 msgid "Ordering: CSV-Export"
 msgstr "Bestellen: CSV-Export"
 
-#: admin.py:220
+#: admin.py:225
 msgid "Ordering: Are you sure?"
 msgstr "Bestellen: Sind Sie sicher?"
 
-#: admin.py:221
+#: admin.py:226
 msgid "The following orders will be marked as ordered. Are you sure?"
 msgstr ""
 "Die folgenden Bestellungen werden als bestellt markiert. Sind sie sicher?"
 
-#: admin.py:229
+#: admin.py:234
 msgid "order selected orders"
 msgstr "Ausgewählte Bestellungen bestellen"
+
+#: admin.py:273
+msgid "email"
+msgstr "E-Mail"
+
+#: admin.py:278 models.py:227
+msgid "library id"
+msgstr "Büchereinummer"
 
 #: cms_apps.py:9
 msgid "pyBuchaktion"
@@ -106,11 +114,11 @@ msgstr "Module"
 msgid "Account"
 msgstr "Account"
 
-#: cms_menus.py:43
+#: cms_menus.py:36
 msgid "Order book"
 msgstr "Buch bestellen"
 
-#: cms_menus.py:80
+#: cms_menus.py:59
 #, python-format
 msgid "Order #%s"
 msgstr "Bestellung #%s"
@@ -118,10 +126,6 @@ msgstr "Bestellung #%s"
 #: forms.py:23
 msgid "This book is not available for ordering"
 msgstr "Dieses Buch kann nicht bestellt werden"
-
-#: forms.py:27
-msgid "You already ordered this book"
-msgstr "Du hast dieses Buch bereits bestellt"
 
 #: forms.py:31
 msgid "Book ordering is not active for the current date"
@@ -131,24 +135,23 @@ msgstr "Buchbestellungen sind für das aktuelle Datum nicht aktiviert."
 msgid "You may not order any more books in this timeframe."
 msgstr "Sie können in diesem Zeitrahmen keine Bücher mehr bestellen."
 
-#: forms.py:43 mail.py:61 templates/pyBuchaktion/books/base.html:61
+#: forms.py:43 mail.py:61 templates/pyBuchaktion/books/base.html:46
 msgid "Title"
 msgstr "Titel"
 
 #: forms.py:44 mail.py:62 templates/pyBuchaktion/book_base.html:19
-#: templates/pyBuchaktion/books/base.html:53
-#: templates/pyBuchaktion/books/base.html:63
+#: templates/pyBuchaktion/books/base.html:48
 #: templates/pyBuchaktion/order_detail.html:32
 msgid "Author"
 msgstr "Autor"
 
 #: forms.py:45 mail.py:64 templates/pyBuchaktion/book_base.html:21
-#: templates/pyBuchaktion/books/base.html:64
+#: templates/pyBuchaktion/books/base.html:49
 msgid "ISBN-13"
 msgstr "ISBN-13"
 
 #: forms.py:46 templates/pyBuchaktion/book_base.html:20
-#: templates/pyBuchaktion/books/base.html:65
+#: templates/pyBuchaktion/books/base.html:50
 msgid "Publisher"
 msgstr "Verlag"
 
@@ -177,14 +180,13 @@ msgstr "Das Buchaktions Team"
 msgid "Published"
 msgstr "Erschienen"
 
-#: mail.py:70 templates/pyBuchaktion/account.html:61
-#: templates/pyBuchaktion/order_detail.html:12
+#: mail.py:70 templates/pyBuchaktion/order_detail.html:12
 msgid "Hint"
 msgstr "Hinweis"
 
 #: mail.py:82
 msgid ""
-"Your order for the book below has been accepted forwarded to our book "
+"Your order for the book below has been accepted and forwarded to our book "
 "retailer. We will inform you when it has arrived at the university library."
 msgstr ""
 "Deine Bestellung für dieses Buch wurde akzeptiert und an unsere Buchhandlung "
@@ -223,7 +225,7 @@ msgstr "Bestellung angekommen"
 msgid "Accepted"
 msgstr "Akzeptiert"
 
-#: models.py:61 models.py:164
+#: models.py:61 models.py:162
 msgid "Rejected"
 msgstr "Abgelehnt"
 
@@ -235,150 +237,146 @@ msgstr "Vorgeschlagen"
 msgid "Obsolete"
 msgstr "Veraltet"
 
-#: models.py:71 models.py:173
+#: models.py:71 models.py:171
 msgid "status"
 msgstr "Status"
 
-#: models.py:79
+#: models.py:77
 msgid "author"
 msgstr "Autor"
 
-#: models.py:87
+#: models.py:85
 msgid "price"
 msgstr "Preis"
 
-#: models.py:92
+#: models.py:90
 msgid "publisher"
 msgstr "Verlag"
 
-#: models.py:96 models.py:382
+#: models.py:94 models.py:380
 msgid "year"
 msgstr "Jahr"
 
-#: models.py:117 models.py:186
+#: models.py:115 models.py:184
 msgid "book"
 msgstr "Buch"
 
-#: models.py:118
+#: models.py:116
 msgid "books"
 msgstr "Bücher"
 
-#: models.py:162
+#: models.py:160
 msgid "Pending"
 msgstr "Offen"
 
-#: models.py:163 templates/pyBuchaktion/books/base.html:81
+#: models.py:161 templates/pyBuchaktion/books/base.html:66
 msgid "Ordered"
 msgstr "Bestellt"
 
-#: models.py:165
+#: models.py:163
 msgid "Arrived"
 msgstr "Angekommen"
 
-#: models.py:178
+#: models.py:176
 msgid "hint"
 msgstr "Hinweis"
 
-#: models.py:193 models.py:261
+#: models.py:191 models.py:259
 msgid "student"
 msgstr "Student"
 
-#: models.py:213
+#: models.py:211
 msgid "order"
 msgstr "Bestellung"
 
-#: models.py:229
-msgid "library id"
-msgstr "Büchereinummer"
-
-#: models.py:238
+#: models.py:236
 msgid "TUID User"
 msgstr "TUID Benutzer"
 
-#: models.py:262
+#: models.py:260
 msgid "students"
 msgstr "Studenten"
 
-#: models.py:304
+#: models.py:302
 msgid "start date"
 msgstr "Startdatum"
 
-#: models.py:309
+#: models.py:307
 msgid "end date"
 msgstr "Enddatum"
 
-#: models.py:315
+#: models.py:313
 msgid "allowed orders"
 msgstr "Erlaubte Bestellungen"
 
-#: models.py:322
+#: models.py:320
 msgid "spendings"
 msgstr "Ausgaben"
 
-#: models.py:329 models.py:408
+#: models.py:327 models.py:406
 msgid "semester"
 msgstr "Semester"
 
-#: models.py:336
+#: models.py:334
 #, python-format
 msgid "%(start)s to %(end)s (%(semester)s)"
 msgstr "%(start)s bis %(end)s (%(semester)s)"
 
-#: models.py:349
+#: models.py:347
 msgid "order timeframes"
 msgstr "Bestellzeiträume"
 
-#: models.py:366
+#: models.py:364
 msgid "Winter term"
 msgstr "Wintersemester"
 
-#: models.py:367
+#: models.py:365
 msgid "Summer term"
 msgstr "Sommersemester"
 
-#: models.py:375
+#: models.py:373
 msgid "season"
 msgstr "Saison"
 
-#: models.py:389
+#: models.py:387
 msgid "budget"
 msgstr "Budget"
 
-#: models.py:395
+#: models.py:393
 #, python-format
 msgid "Winter term 20%(year)d/%(next_year)d"
 msgstr "Wintersemester 20%(year)d/%(next_year)d"
 
-#: models.py:399
+#: models.py:397
 #, python-format
 msgid "Summer term 20%(year)d"
 msgstr "Sommersemester 20%(year)d"
 
-#: models.py:409
+#: models.py:407
 msgid "semesters"
 msgstr "Semester"
 
-#: models.py:426
+#: models.py:424
 msgid "module id"
 msgstr "Modul ID"
 
-#: models.py:432
+#: models.py:430
 msgid "name"
 msgstr "Name"
 
-#: models.py:439
+#: models.py:437
 msgid "last offered"
 msgstr "Zuletzt angeboten"
 
-#: models.py:445
+#: models.py:443
 msgid "literature"
 msgstr "Literatur"
 
-#: models.py:458
+#: models.py:456
 msgid "TUCaN module"
 msgstr "TUCaN Modul"
 
-#: models.py:459
+#: models.py:457
 msgid "TUCaN modules"
 msgstr "TUCaN Module"
 
@@ -418,11 +416,11 @@ msgstr "Abmelden &amp; aus CAS abmelden"
 msgid "Orders"
 msgstr "Bestellungen"
 
-#: templates/pyBuchaktion/account.html:80
+#: templates/pyBuchaktion/account.html:66
 msgid "View"
 msgstr "Ansehen"
 
-#: templates/pyBuchaktion/account.html:96
+#: templates/pyBuchaktion/account.html:82
 msgid "You are not logged in"
 msgstr "Du bist nicht angemeldet"
 
@@ -477,7 +475,7 @@ msgstr "Bestellung"
 
 #: templates/pyBuchaktion/book_detail.html:40
 #: templates/pyBuchaktion/book_order_form.html:21
-#: templates/pyBuchaktion/books/base.html:85
+#: templates/pyBuchaktion/books/base.html:70
 msgid "Order this book"
 msgstr "Dieses Buch bestellen"
 
@@ -501,12 +499,8 @@ msgid "Full list"
 msgstr "Vollständige Liste"
 
 #: templates/pyBuchaktion/books/all_list.html:11
-msgid "Do you want to propose this book to us to be added for ordering?"
-msgstr "Willst du dieses Buch zur Bestellung vorschlagen?"
-
-#: templates/pyBuchaktion/books/all_list.html:28
-msgid "Propose"
-msgstr "Vorschlagen"
+msgid "If you want to propose this book to us, you can send an email to"
+msgstr "Wenn du dieses Buch vorschlagen möchtest, schreib uns eine E-Mail an"
 
 #: templates/pyBuchaktion/books/base.html:20
 #: templates/pyBuchaktion/books/base.html:27
@@ -519,11 +513,11 @@ msgstr "Suchen"
 msgid "Search for modules"
 msgstr "Suche nach Modulen"
 
-#: templates/pyBuchaktion/books/base.html:66
+#: templates/pyBuchaktion/books/base.html:51
 msgid "Year"
 msgstr "Jahr"
 
-#: templates/pyBuchaktion/books/base.html:97
+#: templates/pyBuchaktion/books/base.html:82
 msgid "Details"
 msgstr "Details"
 
@@ -617,6 +611,12 @@ msgstr "Die Bestellung war erfolgreich, das Buch ist angekommen."
 #, python-format
 msgid "No %(verbose_name)s found matching the query"
 msgstr "Kein(e) %(verbose_name)s zu dieser Suche gefunden"
+
+#~ msgid "You already ordered this book"
+#~ msgstr "Du hast dieses Buch bereits bestellt"
+
+#~ msgid "Propose"
+#~ msgstr "Vorschlagen"
 
 #, fuzzy
 #~| msgid "Hint"

@@ -71,8 +71,6 @@ class Book(models.Model):
         verbose_name=_("status"),
     )
 
-    # TODO: alternative book for obsolete?
-
     # The author(s) of this book
     author = models.CharField(
         max_length=64,

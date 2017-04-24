@@ -46,18 +46,22 @@ setup(
     packages=find_packages(),
     include_package_data=True,
     package_data={'': ['locale/*/LC_MESSAGES/*.po']},
-    license='AGPL-3.0',  # example license
+    license='AGPL-3.0',
     description='App for the Buchaktion',
     #long_description=README,
-    #url='https://www.example.com/',
+    url='https://d120.de/de/studierende/buchaktion/',
     author='Buchaktionsteam D120',
     author_email='buchaktion@d120.de',
     setup_requires=[
         'django>=1.10.0',
     ],
     install_requires=[
-        'pyTUID',
         'django>=1.10.0',
+        'django-import-export',
+        'pyTUID>=0.1',
+    ],
+    dependency_links=[
+      'git+ssh://git@github.com/d120/pyTUID.git#egg=pyTUID-0.1',
     ],
     classifiers=[
         'Environment :: Web Environment',
