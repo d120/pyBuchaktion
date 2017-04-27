@@ -118,7 +118,7 @@ class BookOrderView(StudentLoginRequiredMixin, NeverCacheMixin, CreateView):
     def get_context_data(self, **kwargs):
         context = super(BookOrderView, self).get_context_data(**kwargs)
         context.update({'student': self.request.student})
-        context.update({'current_timeframe': OrderTimeframe.objects.current().end_dateW})
+        context.update({'current_timeframe': OrderTimeframe.objects.current().end_date})
         try:
             context.update({'book' : self.model.objects.get(pk=self.kwargs['pk'])})
         except self.model.DoesNotExist:
