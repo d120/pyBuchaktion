@@ -18,6 +18,11 @@ Documentation
 ----
 You can find information, a manual and furthermore in the Wiki of this project. 
 
+Deployment
+----------
+
+To use pyBuchaktion, you will need to configure [pyTUID](https://github.com/d120/pyTUID). As pip currently does not provide a preferred dependency resolution workflow for privately hosted projects, you'll need to start pip with `--process-dependency-links`.
+
 License
 ----
 Files in pyBuchaktion are licensed under the Affero General Public License version 3, the text of which can be found in LICENSE, or any later version of the AGPL, unless otherwise noted.
