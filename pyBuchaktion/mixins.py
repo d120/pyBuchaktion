@@ -5,7 +5,7 @@ from django.views.generic.base import ContextMixin
 from django.utils.cache import add_never_cache_headers
 from django.http import HttpResponseRedirect
 
-from pyTUID.mixins import TUIDLoginRequiredMixin
+from pyTUID.mixins import TUIDLoginRequiredMixin, TUIDUserInGroupMixin
 
 from .models import Student
 
@@ -68,30 +68,11 @@ class StudentContextMixin(object):
 
         return context
 
-class BaseStudentLoginRequiredMixin(View):
 
-    invalid_url = None
+class StudentLoginRequiredMixin(TUIDUserInGroupMixin, StudentContextMixin):
 
-    def get_invalid_url(self):
-        return self.invalid_url
-
-    def dispatch(self, request, *args, **kwargs):
-        url = self.get_invalid_url()
-        if not url:
-            raise ImproperlyConfigured(
-                '{0} is missing the invalid_url attribute. Define '
-                '{0}.invalid_url.'.format(self.__class__.__name__)
-            )
-
-        if self.request.student:
-            return super(BaseStudentLoginRequiredMixin, self).dispatch(request, *args, **kwargs)
-        else:
-            return HttpResponseRedirect(url)
-
-class StudentLoginRequiredMixin(TUIDLoginRequiredMixin, StudentContextMixin, BaseStudentLoginRequiredMixin):
-
-    def get_invalid_url(self):
-        return reverse("pyBuchaktion:books")
+    group_required = "cn=_fb_20,ou=stud,o=tu"
+    permission_denied_message = "Diese Funktion steht nur Studenten des Fachbereich 20 zur verfügung!"
 
 
 class ForeignKeyImportResourceMixin(object):
