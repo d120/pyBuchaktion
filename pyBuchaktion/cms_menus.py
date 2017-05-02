@@ -1,10 +1,11 @@
-from menus.base import Menu, NavigationNode, Modifier
+from cms.menu_bases import CMSAttachMenu
+from menus.base import NavigationNode, Modifier
 from menus.menu_pool import menu_pool
 from django.utils.translation import ugettext_lazy as _
 from django.core.urlresolvers import reverse
 from pyBuchaktion.models import Book, TucanModule, Order
 
-class PyBuchaktionMenu(Menu):
+class PyBuchaktionMenu(CMSAttachMenu):
 
     def get_nodes(self, request):
 
