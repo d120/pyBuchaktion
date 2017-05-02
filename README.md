@@ -7,7 +7,7 @@ The purpose of the app is to build an interface for participants of the Buchakti
 Development
 ----
 Everyone with interest in helping us, should now that:
-* for testing use the D120 Django CMS. 
+* for testing use the D120 Django CMS.
  * Read [this](https://github.com/d120/pyBuchaktion/wiki/Testing-with-D120-Django-CMS) for further instructions.
 * we have decided to use the workflow recommended by GitHub. This means:
  * new feature = new branch
@@ -16,12 +16,16 @@ Everyone with interest in helping us, should now that:
 
 Documentation
 ----
-You can find information, a manual and furthermore in the Wiki of this project. 
+You can find information, a manual and furthermore in the Wiki of this project.
 
 Deployment
 ----------
 
-To use pyBuchaktion, you will need to configure [pyTUID](https://github.com/d120/pyTUID). As pip currently does not provide a preferred dependency resolution workflow for privately hosted projects, you'll need to start pip with `--process-dependency-links`.
+Add `'pyTUID', 'import_export', 'pyBuchaktion'` to your `INSTALLED_APPS` setting.
+
+Note that you will also need to configure [pyTUID](https://github.com/d120/pyTUID).
+
+As pip currently does not provide a preferred dependency resolution workflow for git hosted projects, you'll need to start pip with `--process-dependency-links`.
 
 License
 ----
