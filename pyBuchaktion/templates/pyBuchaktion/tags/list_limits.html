@@ -1,0 +1,9 @@
+{% load view_tools %}
+{% for limit in options %}
+    {% if not forloop.first %}&nbsp;|&nbsp;{% endif %}
+    {% if limit.num == current %}
+        <b>{{ current }}</b>
+    {% else %}
+        <a href="{{ limit.url }}">{{ limit.num }}</a>
+    {% endif %}
+{% endfor %}

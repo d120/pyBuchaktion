@@ -1,0 +1,43 @@
+{% extends "page.html" %} {% load cms_tags view_tools i18n %}
+
+{% block content %}
+    <div class="panel panel-{{ order.status|get_status_class }}">
+        <div class="panel-heading">
+            <h3 class="panel-title">{% trans "Order #" %}{{ order.id }}</h3>
+        </div>
+        <div class="panel-body">
+        {% block panel-body %}
+            {{ order.status|get_status_text }}
+            {% if order.hint %}
+            <br/><b>{% trans "Hint" %}:</b> {{ order.hint }}
+            {% endif %}
+            {% if order.status == "PD" %}
+            <p>
+                {% trans "This order is marked to be ordered from our book retailer on " %}
+                <b>{{ order.order_timeframe.end_date }}</b>
+            </p>
+            {% endif %}
+        {% endblock panel-body %}
+        </div>
+        {% if order.status == "PD" %}
+        <div class="panel-footer">
+        {% block panel-footer %}
+            <a href="{% url "pyBuchaktion:order_abort" pk=order.id %}" class="btn btn-danger">
+                {% trans "Abort order" %}
+            </a>
+        {% endblock panel-footer %}
+        </div>
+        {% endif %}
+    </div>
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title">{% trans "Book" %}: {{ order.book.title }}</h3>
+        </div>
+        <div class="list-group">
+            <a class="list-group-item" href="{% url "pyBuchaktion:book" pk=order.book.id %}">
+                <b>{% trans "Author" %}</b>: <i>{{ order.book.author }}</i><br/>
+                <b>ISBN-13</b>: <i>{{ order.book.isbn_13 }}</i>
+            </a>
+        </div>
+    </div>
+{% endblock content %}

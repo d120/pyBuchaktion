@@ -1,0 +1,17 @@
+{% extends "pyBuchaktion/order_detail.html" %} {% load cms_tags view_tools i18n %}
+
+{% block panel-body %}
+            {% trans "You are about to abort the order for the book noted below. Do you really want to do that?" %}
+{% endblock panel-body %}
+
+{% block panel-footer %}
+            <form method="post">
+                {% csrf_token %}
+                <button class="btn btn-danger" name="action" type="submit" value="Abort">
+                    {% trans "Yes, Abort the order" %}
+                </button>
+                <a href="{% url "pyBuchaktion:order" pk=order.id %}" class="btn btn-info">
+                        {% trans "No, keep the order" %}
+                </a>
+            </form>
+{% endblock panel-footer %}

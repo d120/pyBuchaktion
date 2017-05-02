@@ -1,0 +1,27 @@
+{% extends "pyBuchaktion/book_base.html" %} {% load cms_tags view_tools bootstrap_tags i18n %}
+
+{% block content %}
+    <form method="post">
+    {% csrf_token %}
+    <input type="hidden" name="book_id" value="{{ book.id }}">
+    <div class="alert alert-info">
+    {% trans "If you order now, the order will be posted to our merchant by" %} <b>{{ current_timeframe }}</b>
+    </div>
+    {% if form.non_field_errors %}
+    <div class="alert alert-danger">
+        {% for error in form.non_field_errors %}
+            <b>{{ error|escape }}</b> {% if not forloop.first %}<br/>{% endif %}
+        {% endfor %}
+    </div>
+    {% endif %}
+    {{ block.super }}
+    </form>
+{% endblock content %}
+
+{% block panel_footer %}
+            <div class="panel-footer">
+                <button class="btn btn-primary" type="submit" value="Submit">
+                    {% trans "Order this book" %}
+                </button>
+            </div>
+{% endblock panel_footer %}

@@ -1,0 +1,9 @@
+{% load bootstrap_tags %}
+<div class="form-group">
+    {{ label_tag }}
+    {% form_errors errors %}
+    {{ field }}
+    {% if help_text %}
+   <span id="helpBlock" class="help-block">{{ help_text }}</span>
+    {% endif %}
+</div>

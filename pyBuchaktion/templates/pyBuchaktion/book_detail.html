@@ -1,0 +1,44 @@
+{% extends "pyBuchaktion/book_base.html" %} {% load cms_tags view_tools bootstrap_tags i18n %}
+
+{% block book_panels %}
+
+    {% if book.tucanmodule_set.all %}
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4 class="panel-title">
+                    {% trans "Recommended by" %}:
+                </h4>
+            </div>
+            <div class="list-group">
+                {% for mod in book.tucanmodule_set.all %}
+                <a class="list-group-item" href="{% url "pyBuchaktion:module" pk=mod.id %}">{{ mod }}</a>
+                {% endfor %}
+            </div>
+        </div>
+    {% endif %}
+
+    {% if orders %}
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4 class="panel-title">
+                    {% trans "Order" %}
+                </h4>
+            </div>
+            <div class="list-group">
+                {% for order in orders %}
+                <a class="list-group-item" href="{% url "pyBuchaktion:order" pk=order.id %}">
+                    {{ order }}
+                    <span class="label label-{{ order.status|get_status_class }} pull-right">
+                        {{ order.statusname }}
+                    </span>
+                </a>
+                {% endfor %}
+            </div>
+        </div>
+    {% else %}
+        <a class="btn btn-primary" href="{% url "pyBuchaktion:book_order" pk=book.id %}">
+            {% trans "Order this book" %}
+        </a>
+    {% endif %}
+
+{% endblock book_panels %}
