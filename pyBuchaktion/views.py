@@ -59,7 +59,7 @@ class BookListView(StudentContextMixin, SearchFormContextMixin, VarPagedListView
 
     def get_queryset(self):
         queryset = super(BookListView, self).get_queryset()
-        if self.request.student:
+        if hasattr(self.request, 'student'):
             orders = self.request.student.order_set.all()
             # queryset = queryset.annotate(QUERY)
         return queryset
