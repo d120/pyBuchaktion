@@ -7,6 +7,8 @@ from pyBuchaktion.models import Book, TucanModule, Order
 
 class PyBuchaktionMenu(CMSAttachMenu):
 
+    name = _("Buchaktion Menu")
+
     def get_nodes(self, request):
 
         #n1 = NavigationNode(_('Buchaktion'), reverse('pyBuchaktion:index'), 1)
