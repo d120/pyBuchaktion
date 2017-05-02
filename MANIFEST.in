@@ -1,0 +1,4 @@
+include LICENSE
+include README.md
+recursive-include pyBuchaktion/templates *
+recursive-include pyBuchaktion/locale *
