@@ -42,7 +42,7 @@ class install_lib(_install_lib):
 
 setup(
     name='pyBuchaktion',
-    version='0.1',
+    version='0.2',
     packages=find_packages(),
     include_package_data=True,
     license='AGPL-3.0',
@@ -60,7 +60,7 @@ setup(
         'pyTUID>=0.1',
     ],
     dependency_links=[
-      'git+ssh://git@github.com/d120/pyTUID.git#egg=pyTUID-0.1',
+      'git+https://github.com/d120/pyTUID#egg=pyTUID-0.1',
     ],
     classifiers=[
         'Environment :: Web Environment',
