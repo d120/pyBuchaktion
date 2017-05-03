@@ -24,9 +24,9 @@ class compile_translations(Command):
         pass
 
     def run(self):
-        import os
         from django.core import management
 
+        os.environ['DJANGO_SETTINGS_MODULE'] = ''
         curdir = os.getcwd()
         os.chdir(os.path.realpath('build/lib/pyBuchaktion'))
         management.call_command('compilemessages')
@@ -42,7 +42,7 @@ class install_lib(_install_lib):
 
 setup(
     name='pyBuchaktion',
-    version='0.2',
+    version='0.3',
     packages=find_packages(),
     include_package_data=True,
     license='AGPL-3.0',
