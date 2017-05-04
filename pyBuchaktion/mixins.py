@@ -71,8 +71,8 @@ class StudentContextMixin(object):
 
 class StudentLoginRequiredMixin(TUIDUserInGroupMixin, StudentContextMixin):
 
-    group_required = "cn=_fb_20,ou=stud,o=tu"
-    permission_denied_message = "Diese Funktion steht nur Studenten des Fachbereich 20 zur verfügung!"
+    group_required = "cn=_fb_20,ou=STUD,o=TU"
+    permission_denied_message = "Diese Funktion steht nur Studenten des Fachbereich 20 zur Verfügung!"
 
 
 class ForeignKeyImportResourceMixin(object):
