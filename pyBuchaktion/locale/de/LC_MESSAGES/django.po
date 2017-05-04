@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: pyBuchaktion\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-04-26 14:43+0200\n"
-"PO-Revision-Date: 2017-04-26 14:50+0100\n"
+"POT-Creation-Date: 2017-05-04 21:09+0200\n"
+"PO-Revision-Date: 2017-05-04 21:12+0100\n"
 "Last-Translator: Daniel Schweighöfer <dschweighoefer@d120.de>\n"
 "Language-Team: UA Buchaktion <buchaktion@d120.de>\n"
 "Language: de\n"
@@ -45,11 +45,11 @@ msgstr "Exportiere Bestellungen als CSV"
 
 #: admin.py:163
 msgid "Rejecting orders: Are you sure?"
-msgstr "Bestellungen ablehnen: Sind Sie sicher?"
+msgstr "Bestellungen ablehnen: Bist du sicher?"
 
 #: admin.py:164
 msgid "The follwing orders will be rejected. Are you sure?"
-msgstr "Die folgenden Bestellungen werden abgelehnt. Sind Sie sicher?"
+msgstr "Die folgenden Bestellungen werden abgelehnt. Bist du sicher?"
 
 #: admin.py:172
 msgid "reject selected orders"
@@ -57,13 +57,13 @@ msgstr "Ausgewählte Bestellungen ablehnen"
 
 #: admin.py:189
 msgid "Marking as arrived: Are you sure?"
-msgstr "Als angekommen markieren: Sind Sie sicher?"
+msgstr "Als angekommen markieren: Bist du sicher?"
 
 #: admin.py:190
 msgid ""
 "The follwing orders will be marked as having been delivered. Are you sure?"
 msgstr ""
-"Die folgenden Bestellungen werden als angekommen markiert. Sind Sie sicher?"
+"Die folgenden Bestellungen werden als angekommen markiert. Bist du sicher?"
 
 #: admin.py:198
 msgid "mark selected orders as arrived"
@@ -75,12 +75,12 @@ msgstr "Bestellen: CSV-Export"
 
 #: admin.py:225
 msgid "Ordering: Are you sure?"
-msgstr "Bestellen: Sind Sie sicher?"
+msgstr "Bestellen: Bist du sicher?"
 
 #: admin.py:226
 msgid "The following orders will be marked as ordered. Are you sure?"
 msgstr ""
-"Die folgenden Bestellungen werden als bestellt markiert. Sind sie sicher?"
+"Die folgenden Bestellungen werden als bestellt markiert. Bist du sicher?"
 
 #: admin.py:234
 msgid "order selected orders"
@@ -98,27 +98,31 @@ msgstr "Büchereinummer"
 msgid "pyBuchaktion"
 msgstr ""
 
-#: cms_menus.py:12 templates/pyBuchaktion/books/base.html:37
+#: cms_menus.py:10
+msgid "Buchaktion Menu"
+msgstr "Buchaktionsmenü"
+
+#: cms_menus.py:15 templates/pyBuchaktion/books/base.html:37
 msgid "Books"
 msgstr "Bücher"
 
-#: cms_menus.py:13
+#: cms_menus.py:16
 msgid "All Books"
 msgstr "Alle Bücher"
 
-#: cms_menus.py:14 templates/pyBuchaktion/module_list.html:22
+#: cms_menus.py:17 templates/pyBuchaktion/module_list.html:22
 msgid "Modules"
 msgstr "Module"
 
-#: cms_menus.py:17 templates/pyBuchaktion/account.html:27
+#: cms_menus.py:20
 msgid "Account"
 msgstr "Account"
 
-#: cms_menus.py:36
+#: cms_menus.py:39
 msgid "Order book"
 msgstr "Buch bestellen"
 
-#: cms_menus.py:59
+#: cms_menus.py:62
 #, python-format
 msgid "Order #%s"
 msgstr "Bestellung #%s"
@@ -127,7 +131,7 @@ msgstr "Bestellung #%s"
 msgid "This book is not available for ordering"
 msgstr "Dieses Buch kann nicht bestellt werden"
 
-#: forms.py:31
+#: forms.py:31 templates/pyBuchaktion/book_order_form.html:18
 msgid "Book ordering is not active for the current date"
 msgstr "Buchbestellungen sind für das aktuelle Datum nicht aktiviert."
 
@@ -430,7 +434,7 @@ msgstr ""
 
 #: templates/pyBuchaktion/admin/order_modify_bulk.html:8
 msgid "You may provide an additional hint here for any relevant information."
-msgstr "Sie können hier einen Hinweis mit zusätzlichen Informationen angeben."
+msgstr "Du kannst hier einen Hinweis mit zusätzlichen Informationen angeben."
 
 #: templates/pyBuchaktion/admin/order_modify_bulk.html:10
 msgid ""
@@ -455,7 +459,7 @@ msgstr "Nein, abbrechen."
 #: templates/pyBuchaktion/admin/order_order_selected_csv.html:6
 msgid "Copy the following list into the bulk-order mask at net-library!"
 msgstr ""
-"Kopieren Sie die folgende Liste in die Bulk-Order Oberfläche der net-library"
+"Kopiere die folgende Liste in die Bulk-Order Oberfläche der net-library"
 
 #: templates/pyBuchaktion/admin/order_order_selected_csv.html:14
 msgid "OK"
@@ -474,12 +478,12 @@ msgid "Order"
 msgstr "Bestellung"
 
 #: templates/pyBuchaktion/book_detail.html:40
-#: templates/pyBuchaktion/book_order_form.html:24
+#: templates/pyBuchaktion/book_order_form.html:30
 #: templates/pyBuchaktion/books/base.html:70
 msgid "Order this book"
 msgstr "Dieses Buch bestellen"
 
-#: templates/pyBuchaktion/book_order_form.html:8
+#: templates/pyBuchaktion/book_order_form.html:16
 msgid "If you order now, the order will be posted to our merchant by"
 msgstr "Der voraussichtliche Termin für Bestellung bei unserem Händler ist der"
 
@@ -615,7 +619,7 @@ msgstr "Dieses Buch wurde abgelehnt."
 msgid "The order was fulfilled, the book is now available."
 msgstr "Die Bestellung war erfolgreich, das Buch ist angekommen."
 
-#: views.py:125
+#: views.py:116
 #, python-format
 msgid "No %(verbose_name)s found matching the query"
 msgstr "Kein(e) %(verbose_name)s zu dieser Suche gefunden"

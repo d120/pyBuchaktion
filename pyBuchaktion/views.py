@@ -57,13 +57,6 @@ class BookListView(StudentContextMixin, SearchFormContextMixin, VarPagedListView
     template_name = 'pyBuchaktion/books/active_list.html'
     context_object_name = 'books'
 
-    def get_queryset(self):
-        queryset = super(BookListView, self).get_queryset()
-        if hasattr(self.request, 'student'):
-            orders = self.request.student.order_set.all()
-            # queryset = queryset.annotate(QUERY)
-        return queryset
-
 
 class AllBookListView(BookListView):
 
@@ -73,11 +66,6 @@ class AllBookListView(BookListView):
 
     queryset = Book.objects.all()
     template_name = 'pyBuchaktion/books/all_list.html'
-
-    def get_context_data(self, **kwargs):
-        context = super(AllBookListView, self).get_context_data(**kwargs)
-        context['showtag'] = True
-        return context
 
 
 class BookView(StudentContextMixin, NeverCacheMixin, DetailView):
@@ -118,7 +106,9 @@ class BookOrderView(StudentLoginRequiredMixin, NeverCacheMixin, CreateView):
     def get_context_data(self, **kwargs):
         context = super(BookOrderView, self).get_context_data(**kwargs)
         context.update({'student': self.request.student})
-        context.update({'current_timeframe': OrderTimeframe.objects.current().end_date})
+        timeframe = OrderTimeframe.objects.current();
+        if timeframe:
+            context.update({'current_timeframe': timeframe.end_date})
         try:
             context.update({'book' : self.model.objects.get(pk=self.kwargs['pk'])})
         except self.model.DoesNotExist:
