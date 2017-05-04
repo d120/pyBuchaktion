@@ -43,7 +43,7 @@ class Book(models.Model):
 
     # The title of the book.
     title = models.CharField(
-        max_length=42,
+        max_length=140,
         verbose_name=_("title"),
     )
 
@@ -74,7 +74,7 @@ class Book(models.Model):
 
     # The author(s) of this book
     author = models.CharField(
-        max_length=64,
+        max_length=140,
         verbose_name=_("author"),
     )
 
