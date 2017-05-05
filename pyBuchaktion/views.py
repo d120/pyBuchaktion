@@ -2,7 +2,7 @@ from django.views.generic import ListView, DetailView
 from django.views.generic.edit import UpdateView, CreateView, BaseCreateView, DeleteView
 from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect
-from django.db.models import F, Count, ExpressionWrapper
+from django.db.models import F, Count, ExpressionWrapper, Prefetch
 
 from .forms import BookSearchForm, ModuleSearchForm, AccountEditForm, BookOrderForm
 from .models import Book, TucanModule, Order, Student, OrderTimeframe
@@ -56,6 +56,15 @@ class BookListView(StudentContextMixin, SearchFormContextMixin, VarPagedListView
     form_class = BookSearchForm
     template_name = 'pyBuchaktion/books/active_list.html'
     context_object_name = 'books'
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        if hasattr(self.request, 'student'):
+            order_query = Order.objects.filter(student=self.request.student)
+            queryset = queryset.prefetch_related(
+                Prefetch('order_set', queryset=order_query, to_attr='ordercount')
+            )
+        return queryset
 
 
 class AllBookListView(BookListView):

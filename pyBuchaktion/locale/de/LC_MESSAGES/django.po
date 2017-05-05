@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: pyBuchaktion\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-05-04 21:09+0200\n"
-"PO-Revision-Date: 2017-05-04 21:12+0100\n"
+"PO-Revision-Date: 2017-05-05 15:51+0100\n"
 "Last-Translator: Daniel Schweighöfer <dschweighoefer@d120.de>\n"
 "Language-Team: UA Buchaktion <buchaktion@d120.de>\n"
 "Language: de\n"
@@ -613,7 +613,7 @@ msgstr ""
 
 #: templatetags/view_tools.py:49
 msgid "This order has been rejected."
-msgstr "Dieses Buch wurde abgelehnt."
+msgstr "Diese Bestellung wurde abgelehnt."
 
 #: templatetags/view_tools.py:50
 msgid "The order was fulfilled, the book is now available."

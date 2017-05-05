@@ -61,7 +61,7 @@
                     <span class="label label-{{ book.state|get_state_class }}">
                         {{ book.statename }}
                     </span>
-                    {% elif book.orders.count > 0 %}
+                    {% elif book.ordercount|length > 0 %}
                     <span class="label label-success">
                         {% trans "Ordered" %}
                     </span>
