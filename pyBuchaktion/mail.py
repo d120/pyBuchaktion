@@ -4,7 +4,6 @@ from django.core.mail.message import EmailMessage
 
 
 class BuchaktionMessage(EmailMessage):
-    sender = 'buchaktion@fachschaft.informatik.tu-darmstadt.de'
 
     def get_content(self):
         return _('This message does not have any content')
@@ -23,7 +22,7 @@ class BuchaktionMessage(EmailMessage):
         return _("The Buchaktion Team")
 
     def get_sender(self):
-        return "buchaktion@d120.de"
+        return "buchaktion@fachschaft.informatik.tu-darmstadt.de"
 
     def get_subject(self):
         return "No Subject"
