@@ -22,7 +22,7 @@ class BuchaktionMessage(EmailMessage):
         return _("The Buchaktion Team")
 
     def get_reply_to(self):
-        return "buchaktion@fachschaft.informatik.tu-darmstadt.de"
+        return ["buchaktion@fachschaft.informatik.tu-darmstadt.de"]
 
     def get_subject(self):
         return "No Subject"
