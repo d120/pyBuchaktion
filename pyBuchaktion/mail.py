@@ -21,7 +21,7 @@ class BuchaktionMessage(EmailMessage):
     def get_sign(self):
         return _("The Buchaktion Team")
 
-    def get_sender(self):
+    def get_reply_to(self):
         return "buchaktion@fachschaft.informatik.tu-darmstadt.de"
 
     def get_subject(self):
@@ -45,7 +45,7 @@ class BuchaktionMessage(EmailMessage):
 
         self.subject = self.get_tag() + " " + " / ".join(f_subject)
         self.body = ("\n\n" + "-" * 30 + "\n\n").join(f_body)
-        self.from_email = self.get_sender()
+        self.reply_to = self.get_reply_to()
 
 
 class OrderStatusMessage(BuchaktionMessage):
