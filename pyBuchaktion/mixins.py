@@ -37,7 +37,7 @@ class SearchFormContextMixin(ContextMixin):
 
     def get_form_queryset(self, data, queryset):
         for key, value in data.items():
-            kwargs = {key + "__contains": value}
+            kwargs = {key + "__icontains": value}
             queryset = queryset.filter(**kwargs)
 
         return queryset

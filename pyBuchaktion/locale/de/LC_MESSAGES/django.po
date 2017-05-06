@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: pyBuchaktion\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-05-04 21:09+0200\n"
-"PO-Revision-Date: 2017-05-05 15:51+0100\n"
+"POT-Creation-Date: 2017-05-06 14:11+0200\n"
+"PO-Revision-Date: 2017-05-06 14:12+0100\n"
 "Last-Translator: Daniel Schweighöfer <dschweighoefer@d120.de>\n"
 "Language-Team: UA Buchaktion <buchaktion@d120.de>\n"
 "Language: de\n"
@@ -139,17 +139,17 @@ msgstr "Buchbestellungen sind für das aktuelle Datum nicht aktiviert."
 msgid "You may not order any more books in this timeframe."
 msgstr "Sie können in diesem Zeitrahmen keine Bücher mehr bestellen."
 
-#: forms.py:43 mail.py:61 templates/pyBuchaktion/books/base.html:46
+#: forms.py:43 mail.py:62 templates/pyBuchaktion/books/base.html:46
 msgid "Title"
 msgstr "Titel"
 
-#: forms.py:44 mail.py:62 templates/pyBuchaktion/book_base.html:19
+#: forms.py:44 mail.py:63 templates/pyBuchaktion/book_base.html:19
 #: templates/pyBuchaktion/books/base.html:48
 #: templates/pyBuchaktion/order_detail.html:38
 msgid "Author"
 msgstr "Autor"
 
-#: forms.py:45 mail.py:64 templates/pyBuchaktion/book_base.html:21
+#: forms.py:45 mail.py:65 templates/pyBuchaktion/book_base.html:21
 #: templates/pyBuchaktion/books/base.html:49
 msgid "ISBN-13"
 msgstr "ISBN-13"
@@ -167,28 +167,32 @@ msgstr "Name"
 msgid "The library id number assigned by the ULB"
 msgstr "Die von der ULB zugewiesene Büchereinummer"
 
-#: mail.py:10
+#: mail.py:11
 msgid "This message does not have any content"
 msgstr "Diese Nachricht enthält keinen Inhalt"
 
-#: mail.py:20
+#: mail.py:21
 #, python-brace-format
 msgid "Dear {0}"
 msgstr "Hallo {0}"
 
-#: mail.py:23
+#: mail.py:24
 msgid "The Buchaktion Team"
 msgstr "Das Buchaktions Team"
 
-#: mail.py:63
+#: mail.py:64
 msgid "Published"
 msgstr "Erschienen"
 
-#: mail.py:70 templates/pyBuchaktion/order_detail.html:12
+#: mail.py:71 templates/pyBuchaktion/order_detail.html:12
 msgid "Hint"
 msgstr "Hinweis"
 
-#: mail.py:82
+#: mail.py:75
+msgid "View Order"
+msgstr "Bestellung ansehen"
+
+#: mail.py:87
 msgid ""
 "Your order for the book below has been accepted and forwarded to our book "
 "retailer. We will inform you when it has arrived at the university library."
@@ -197,11 +201,11 @@ msgstr ""
 "weitergeleitet. Wir werden dich informieren, wenn es in der "
 "Universitätsbibliothek angekommen ist."
 
-#: mail.py:86
+#: mail.py:91
 msgid "Order accepted"
 msgstr "Bestellung angenommen"
 
-#: mail.py:92
+#: mail.py:97
 msgid ""
 "Your order for the book below has been rejected. Additional information may "
 "be provided in the hint below."
@@ -209,11 +213,11 @@ msgstr ""
 "Deine Bestellung für dieses Buch wurde abgelehnt. Zusätzliche Informationen "
 "können im Hinweis weiter unten stehen."
 
-#: mail.py:96
+#: mail.py:101
 msgid "Order rejected"
 msgstr "Bestellung abgelehnt"
 
-#: mail.py:102
+#: mail.py:107
 msgid ""
 "Your ordered book has arrived at the university library. Please pick it up "
 "within the next week."
@@ -221,7 +225,7 @@ msgstr ""
 "Dein bestelltes Buch ist in der Universitätsbibliothek angekommen. Bitte hol "
 "es innerhalb der nächsten Woche ab."
 
-#: mail.py:106
+#: mail.py:111
 msgid "Order arrived"
 msgstr "Bestellung angekommen"
 
@@ -619,7 +623,7 @@ msgstr "Diese Bestellung wurde abgelehnt."
 msgid "The order was fulfilled, the book is now available."
 msgstr "Die Bestellung war erfolgreich, das Buch ist angekommen."
 
-#: views.py:116
+#: views.py:124
 #, python-format
 msgid "No %(verbose_name)s found matching the query"
 msgstr "Kein(e) %(verbose_name)s zu dieser Suche gefunden"

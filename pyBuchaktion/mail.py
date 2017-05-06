@@ -1,6 +1,8 @@
 from django.utils import translation
 from django.utils.translation import ugettext as _
 from django.core.mail.message import EmailMessage
+from django.core.urlresolvers import reverse
+from django.contrib.sites.models import Site
 
 
 class BuchaktionMessage(EmailMessage):
@@ -67,6 +69,10 @@ class OrderStatusMessage(BuchaktionMessage):
         content += "\n".join([key + ': ' + value for key, value in fields])
         if self.order.hint:
             content += "\n" + _("Hint") + ": " + self.order.hint
+        content += "\n" + "<a href=\"https://{0}{1}\">{2}</a>".format(
+                    Site.objects.get_current().domain,
+                    reverse("pyBuchaktion:order", kwargs={'pk': self.order.pk}),
+                    _("View Order"))
 
         return content
 
