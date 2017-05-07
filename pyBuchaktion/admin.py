@@ -102,6 +102,7 @@ class OrderAdmin(ImportExportMixin, ModelAdmin):
         'book_title',
         'student',
         'timeframe',
+        'status',
     )
 
     # The keys that the list can be filtered by
