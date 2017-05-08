@@ -3,6 +3,7 @@
 # A cool tool accessing the not-so-cool TUCaN to retrieve the books that are
 # proposed by the lecturers.
 
+from datetime     import datetime
 from json         import JSONDecoder
 from robobrowser  import RoboBrowser
 from sys          import argv
@@ -48,15 +49,27 @@ class Book:
         self.book_string = book_string
         self.isbn_type = None
         self.isbn = None
-        self.isbn_reliability = 0
+        self.title = None
+        self.author = None
+        self.price = 0
+        self.publisher = None
+        self.year = None
 
 
     def __str__(self):
-        return "Magic book string: '%s'; ISBN Type: %s; ISBN: %s" % (self.book_string, self.isbn_type, self.isbn)
+        return "Magic book string: '%s'; ISBN Type: %s; ISBN: %s; Title: %s" % (self.book_string, self.isbn_type, self.isbn, self.title)
 
 
     def __repr__(self):
         return str(self)
+
+
+    def __eq__(self, other):
+        return self.isbn == other.isbn if self.isbn else False
+
+
+    def __hash__(self):
+        return hash(self.isbn) if self.isbn else 0
 # end: Book
 
 
@@ -67,6 +80,9 @@ class Module:
         self.name = name
         self.url = url
         self.books = books
+        # WARNING: This has to be changed every season!
+        self.last_offered_year = 17
+        self.last_offered_season = 'W'
 
 
     def __str__(self):
@@ -84,7 +100,7 @@ class IsbnMagic:
         self.http_client = http.client.HTTPSConnection('www.googleapis.com')
 
 
-    def retrieveAndSetIsbn(self, book):
+    def retrieveAndSetData(self, book):
         book_string = book.book_string
         if len(book_string) > ISBN_RELIABILITY_BOOKSTRING_LENGTH:
             book.isbn_reliability = min(int(ISBN_RELIABILITY_BASE_VALUE + len(book_string) * ISBN_RELIABILITY_BOOKSTRING_LENGTH_MULTIPLIER), ISBN_RELIABILITY_MAX_VALUE)
@@ -95,24 +111,19 @@ class IsbnMagic:
         response = self.http_client.getresponse()
         content = response.read().decode('UTF-8')
         data = JSONDecoder().decode(content)
-        if data:
-            data = data.get('items', None)
-        if data:
-            data = data[0] if data else None
-        if data:
-            data = data.get('volumeInfo', None)
-        if data:
-            data = data.get('industryIdentifiers', None)
-        if data:
-            data = data[0] if data else None
+        data = data.get('items', None) if data else None
+        data = data[0] if data else None if data else None
+        data = data.get('volumeInfo', None) if data else None
+        identifier = data.get('industryIdentifiers', None) if data else None
+        identifier = identifier[0] if identifier else None
 
-        isbn_type = None
-        isbn = None
         if data:
-            isbn_type = data.get('type', None)
-            isbn = data.get('identifier', None)
-        book.isbn_type = isbn_type
-        book.isbn = isbn
+            book.isbn_type = identifier.get('type', None) if identifier else None
+            book.isbn = identifier.get('identifier', None) if identifier else None
+            book.title = data.get('title', None)
+            book.author = ', '.join(data.get('authors', []))
+            book.publisher = data.get('publisher', None)
+            book.year = data.get('publishedDate', '0').split('-')[0]
 # end: IsbnMagic
 
 
@@ -134,7 +145,7 @@ class Tucan:
             if text.startswith('literatur'):
                 literature = info
                 break
-        books = []
+        books = set()
         if literature:
             # Only process if there is literature, of course.
 
@@ -145,7 +156,7 @@ class Tucan:
                 book = None
                 if char == '<':
                     if next_book:
-                        books.append(Book(TUCAN_MODULE_COURSE_NAME_NORMALIZE_PATTERN.sub(r'\1', next_book)))
+                        books.add(Book(TUCAN_MODULE_COURSE_NAME_NORMALIZE_PATTERN.sub(r'\1', next_book)))
                         next_book = None
                     pause = True
                 elif char == '>':
@@ -153,7 +164,7 @@ class Tucan:
                 elif not pause:
                     next_book = next_book + char if next_book else char
             if next_book:
-                books.append(Book(TUCAN_MODULE_COURSE_NAME_NORMALIZE_PATTERN.sub(r'\1', next_book)))
+                books.add(Book(TUCAN_MODULE_COURSE_NAME_NORMALIZE_PATTERN.sub(r'\1', next_book)))
 
         return Module(cid, name, module_url, books)
 
@@ -210,15 +221,20 @@ modules = tucan.retrieveModules()
 isbnMagic = IsbnMagic()
 for module in modules:
     for book in module.books:
-        isbnMagic.retrieveAndSetIsbn(book)
+        isbnMagic.retrieveAndSetData(book)
 
-output_file = argv[1]
-with open(output_file, 'w') as file:
+book_export_file = argv[1]
+with open(book_export_file, 'w') as file:
     writer = csv.writer(file, delimiter = ',', quotechar = '\\', quoting = csv.QUOTE_MINIMAL)
-    writer.writerow(['cid', 'name', 'url', 'book_string', 'isbn_type', 'isbn', 'isbn_reliability'])
+    writer.writerow(['isbn_13', 'title', 'state', 'author', 'price', 'publisher', 'year'])
     for module in modules:
-        cid = module.cid
-        name = module.name
-        url = module.url
         for book in module.books:
-            writer.writerow([cid, name, url, book.book_string, book.isbn_type, book.isbn, book.isbn_reliability])
+            if book.isbn_type == 'ISBN_13':
+                writer.writerow([book.isbn, book.title, 'PP', book.author, book.price, book.publisher, book.year]);
+
+module_export_file = argv[2]
+with open(module_export_file, 'w') as file:
+    writer = csv.writer(file, delimiter = ',', quotechar = '\\', quoting = csv.QUOTE_MINIMAL)
+    writer.writerow(['books', 'module_id', 'name', 'last_offered__year', 'last_offered__season'])
+    for module in modules:
+        writer.writerow(['|'.join(book.isbn for book in module.books if book.isbn_type == 'ISBN_13'), module.cid, module.name, module.last_offered_year, module.last_offered_season])
