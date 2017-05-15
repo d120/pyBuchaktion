@@ -42,7 +42,7 @@ class install_lib(_install_lib):
 
 setup(
     name='pyBuchaktion',
-    version='0.7',
+    version='0.8',
     packages=find_packages(),
     include_package_data=True,
     license='AGPL-3.0',
@@ -57,10 +57,10 @@ setup(
     install_requires=[
         'django>=1.10.0',
         'django-import-export',
-        'pyTUID>=1.1.0',
+        'pyTUID>=1.1.1',
     ],
     dependency_links=[
-      'git+https://github.com/d120/pyTUID#egg=pyTUID-1.1.0',
+      'git+https://github.com/d120/pyTUID#egg=pyTUID-1.1.1',
     ],
     classifiers=[
         'Environment :: Web Environment',
