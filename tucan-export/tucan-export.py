@@ -170,28 +170,48 @@ class Tucan:
 
 
     def retrieveModules(self):
-        module_urls = tucan.retrieveModuleUrls()
+        print('Retrieving modules...')
+
+        module_urls = tucan.retrieveModuleUrls()[:10]
 
         module_cids = []
         modules = []
+        i = 1
         for url in module_urls:
             try:
+                print("Loading module %d/%d..." % (i, len(module_urls)))
+
                 module = tucan.retrieveModule(url)
-                if not module.cid in module_cids:
+                if module.cid in module_cids:
+                    print("Skipping module %d/%d as it is a duplicate!" % (i, len(module_urls)))
+                else:
                     module_cids.append(module.cid)
                     modules.append(module)
+
+                print("Loaded module %d." % len(modules))
+
+                i += 1
             except:
                 logging.warning("Failed to process module at <%s>! Error:" % url, exc_info = True)
+
+        print("Retrieved %d modules." % len(modules))
+
         return modules
 
 
     def retrieveModuleUrls(self):
+        print('Retrieving module URLs...')
+
         browser = self._createBrowser();
 
         browser.follow_link(browser.select(TUCAN_CC_SELECTOR)[1])
         browser.follow_link(browser.select(TUCAN_DEPT_SELECTOR)[0])
 
-        return self._retrieveModuleUrls(browser)
+        module_urls = self._retrieveModuleUrls(browser)
+
+        print("Retrieved %d module URLs." % len(module_urls))
+
+        return module_urls
 
 
     def _retrieveModuleUrls(self, browser):
@@ -219,9 +239,20 @@ class Tucan:
 tucan = Tucan()
 modules = tucan.retrieveModules()
 isbnMagic = IsbnMagic()
+i = 1
+count = 1
 for module in modules:
+    j = 1
     for book in module.books:
+        print("Loading book %d/%d of module %d/%d..." % (j, len(module.books), i, len(modules)))
+
         isbnMagic.retrieveAndSetData(book)
+
+        j += 1
+        count += 1
+
+    i += 1
+print("Retrieved %d books." % count)
 
 book_export_file = argv[1]
 with open(book_export_file, 'w') as file:
