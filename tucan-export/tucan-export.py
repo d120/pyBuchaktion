@@ -172,7 +172,7 @@ class Tucan:
     def retrieveModules(self):
         print('Retrieving modules...')
 
-        module_urls = tucan.retrieveModuleUrls()[:10]
+        module_urls = tucan.retrieveModuleUrls()
 
         module_cids = []
         modules = []
