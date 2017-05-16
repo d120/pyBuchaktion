@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: pyBuchaktion\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-05-16 10:27+0200\n"
-"PO-Revision-Date: 2017-05-16 10:34+0100\n"
+"POT-Creation-Date: 2017-05-16 16:24+0200\n"
+"PO-Revision-Date: 2017-05-16 16:25+0100\n"
 "Last-Translator: Daniel Schweighöfer <dschweighoefer@d120.de>\n"
 "Language-Team: UA Buchaktion <buchaktion@d120.de>\n"
 "Language: de\n"
@@ -18,7 +18,7 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Poedit 1.6.10\n"
 
-#: admin.py:73 admin.py:273 models.py:218
+#: admin.py:73 admin.py:274 models.py:218
 msgid "orders"
 msgstr "Bestellungen"
 
@@ -86,26 +86,26 @@ msgstr ""
 msgid "order selected orders"
 msgstr "Ausgewählte Bestellungen bestellen"
 
-#: admin.py:278
+#: admin.py:279
 msgid "email"
 msgstr "E-Mail"
 
-#: admin.py:283 models.py:233
+#: admin.py:284 models.py:233
 msgid "library id"
 msgstr "Büchereinummer"
 
-#: admin.py:297
+#: admin.py:298
 msgid "Send notification email"
 msgstr "Hinweis-Nachricht senden"
 
-#: admin.py:298
+#: admin.py:299
 msgid ""
 "Write a custom notification here, which will be sent to all selected students"
 msgstr ""
 "Gebe eine beliebige Nachricht ein, die an alle ausgewählten Studenten "
 "gesendet werden soll"
 
-#: admin.py:306
+#: admin.py:307
 msgid "send mail to students"
 msgstr "Ausgewählten Studenten eine E-Mail senden"
 
@@ -154,17 +154,17 @@ msgstr "Buchbestellungen sind für das aktuelle Datum nicht aktiviert."
 msgid "You may not order any more books in this timeframe."
 msgstr "Sie können in diesem Zeitrahmen keine Bücher mehr bestellen."
 
-#: forms.py:43 mail.py:71 templates/pyBuchaktion/books/base.html:46
+#: forms.py:43 mail.py:77 templates/pyBuchaktion/books/base.html:46
 msgid "Title"
 msgstr "Titel"
 
-#: forms.py:44 mail.py:72 templates/pyBuchaktion/book_base.html:19
+#: forms.py:44 mail.py:78 templates/pyBuchaktion/book_base.html:19
 #: templates/pyBuchaktion/books/base.html:48
 #: templates/pyBuchaktion/order_detail.html:38
 msgid "Author"
 msgstr "Autor"
 
-#: forms.py:45 mail.py:74 templates/pyBuchaktion/book_base.html:21
+#: forms.py:45 mail.py:80 templates/pyBuchaktion/book_base.html:21
 #: templates/pyBuchaktion/books/base.html:49
 msgid "ISBN-13"
 msgstr "ISBN-13"
@@ -199,19 +199,19 @@ msgstr "Hallo {0}"
 msgid "The Buchaktion Team"
 msgstr "Das Buchaktions Team"
 
-#: mail.py:73
+#: mail.py:79
 msgid "Published"
 msgstr "Erschienen"
 
-#: mail.py:80 templates/pyBuchaktion/order_detail.html:12
+#: mail.py:86 templates/pyBuchaktion/order_detail.html:12
 msgid "Hint"
 msgstr "Hinweis"
 
-#: mail.py:84
+#: mail.py:90
 msgid "View Order"
 msgstr "Bestellung ansehen"
 
-#: mail.py:96
+#: mail.py:102
 msgid ""
 "Your order for the book below has been accepted and forwarded to our book "
 "retailer. We will inform you when it has arrived at the university library."
@@ -220,11 +220,11 @@ msgstr ""
 "weitergeleitet. Wir werden dich informieren, wenn es in der "
 "Universitätsbibliothek angekommen ist."
 
-#: mail.py:100
+#: mail.py:106
 msgid "Order accepted"
 msgstr "Bestellung angenommen"
 
-#: mail.py:106
+#: mail.py:112
 msgid ""
 "Your order for the book below has been rejected. Additional information may "
 "be provided in the hint below."
@@ -232,11 +232,11 @@ msgstr ""
 "Deine Bestellung für dieses Buch wurde abgelehnt. Zusätzliche Informationen "
 "können im Hinweis weiter unten stehen."
 
-#: mail.py:110
+#: mail.py:116
 msgid "Order rejected"
 msgstr "Bestellung abgelehnt"
 
-#: mail.py:116
+#: mail.py:122
 msgid ""
 "Your ordered book has arrived at the university library. Please pick it up "
 "within the next week."
@@ -244,9 +244,13 @@ msgstr ""
 "Dein bestelltes Buch ist in der Universitätsbibliothek angekommen. Bitte hol "
 "es innerhalb der nächsten Woche ab."
 
-#: mail.py:120
+#: mail.py:126
 msgid "Order arrived"
 msgstr "Bestellung angekommen"
+
+#: mixins.py:78
+msgid "This function is only available for students from faculty 20!"
+msgstr "Diese Funktion steht nur Studenten des Fachbereich 20 zur Verfügung!"
 
 #: models.py:61
 msgid "Accepted"
@@ -422,6 +426,10 @@ msgstr "TUCaN Modul"
 #: models.py:483
 msgid "TUCaN modules"
 msgstr "TUCaN Module"
+
+#: templates/403.html:5
+msgid "Forbidden"
+msgstr "Zugriff verweigert"
 
 #: templates/bootstrap/pagination.html:4
 msgid "Page Navigation"

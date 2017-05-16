@@ -3,11 +3,14 @@ from django.core.urlresolvers import reverse
 from django.views.generic import View
 from django.views.generic.base import ContextMixin
 from django.utils.cache import add_never_cache_headers
+from django.utils.translation import ugettext_lazy as _
 from django.http import HttpResponseRedirect
 
 from pyTUID.mixins import TUIDLoginRequiredMixin, TUIDUserInGroupMixin
 
 from .models import Student
+from .settings import BUCHAKTION_STUDENT_LDAP_GROUP
+
 
 class SearchFormContextMixin(ContextMixin):
 
@@ -71,8 +74,8 @@ class StudentContextMixin(object):
 
 class StudentLoginRequiredMixin(TUIDUserInGroupMixin, StudentContextMixin):
 
-    group_required = "cn=_fb_20,ou=STUD,o=TU"
-    permission_denied_message = "Diese Funktion steht nur Studenten des Fachbereich 20 zur Verfügung!"
+    group_required = BUCHAKTION_STUDENT_LDAP_GROUP
+    permission_denied_message = _("This function is only available for students from faculty 20!")
 
 
 class ForeignKeyImportResourceMixin(object):
