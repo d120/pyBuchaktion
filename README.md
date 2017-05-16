@@ -21,7 +21,7 @@ You can find information, a manual and furthermore in the Wiki of this project.
 Deployment
 ----------
 
-Add `'pyTUID', 'import_export', 'pyBuchaktion'` to your `INSTALLED_APPS` setting.
+Add `'pyTUID', 'import_export', 'pyBuchaktion', 'bootstrap3'` to your `INSTALLED_APPS` setting.
 
 Note that you will also need to configure [pyTUID](https://github.com/d120/pyTUID).
 
