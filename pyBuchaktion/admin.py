@@ -52,12 +52,17 @@ class BookAdmin(ImportExportMixin, ModelAdmin):
         'author',
         'isbn_13',
         'number_of_orders',
+        'state',
     )
 
     # The keys that the list can be filtered by
     list_filter = (
         'state',
     )
+
+    actions = [
+        'accept_selected',
+    ]
 
     # Annotate the queryset with the number of orders.
     def get_queryset(self, request):
@@ -71,6 +76,11 @@ class BookAdmin(ImportExportMixin, ModelAdmin):
 
     number_of_orders.admin_order_field = 'order__count'
     number_of_orders.short_description = _("orders")
+
+    def accept_selected(self, request, queryset):
+        queryset.values("id").update(state=Book.ACCEPTED)
+
+    accept_selected.short_description = _("Accept selected books")
 
 
 class OrderResource(ForeignKeyImportResourceMixin, ModelResource):
@@ -371,3 +381,8 @@ class ModuleAdmin(ImportExportMixin, ModelAdmin):
         'name',
         'module_id',
     )
+
+    search_fields = [
+        'name',
+        'module_id',
+    ]
