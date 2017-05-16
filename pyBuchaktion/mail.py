@@ -40,7 +40,13 @@ class BuchaktionMessage(EmailMessage):
         f_subject = []
         f_body = []
 
-        for lang in ('de', 'en'):
+        userlang = student.language
+        if userlang:
+            maillangs = (userlang,)
+        else:
+            maillangs = ('de', 'en')
+
+        for lang in maillangs:
             with translation.override(lang):
                 f_subject += [self.get_subject(),]
                 f_body += [self.get_body(),]
@@ -49,6 +55,15 @@ class BuchaktionMessage(EmailMessage):
         self.body = ("\n\n" + "-" * 30 + "\n\n").join(f_body)
         self.reply_to = self.get_reply_to()
 
+
+class CustomMessage(BuchaktionMessage):
+
+    def get_content(self):
+        return _(self.content)
+
+    def __init__(self, student, content):
+        self.content = content
+        super().__init__(student)
 
 class OrderStatusMessage(BuchaktionMessage):
 

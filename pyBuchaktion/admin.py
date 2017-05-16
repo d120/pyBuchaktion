@@ -19,7 +19,7 @@ from import_export.fields import Field
 from .models import Book, Order, Student, OrderTimeframe, TucanModule, Semester
 from .mixins import ForeignKeyImportResourceMixin
 from .data import net_library_csv
-from .mail import OrderAcceptedMessage, OrderArrivedMessage, OrderRejectedMessage
+from .mail import OrderAcceptedMessage, OrderArrivedMessage, OrderRejectedMessage, CustomMessage
 
 class BookResource(ModelResource):
     class Meta:
@@ -247,6 +247,7 @@ class StudentAdmin(ModelAdmin):
         'tuid_user',
         'email',
         'has_library_id',
+        'language',
         'number_of_orders',
     )
 
@@ -254,6 +255,10 @@ class StudentAdmin(ModelAdmin):
     list_display_links = (
         'tuid_user',
     )
+
+    actions = [
+        'sendmail',
+    ]
 
     # Annotate the queryset with the number of orders.
     def get_queryset(self, request):
@@ -277,6 +282,30 @@ class StudentAdmin(ModelAdmin):
         return True if student.library_id else False
     has_library_id.boolean = True
     has_library_id.short_description = _("library id")
+
+    # The admin action for ordering the selected books
+    def sendmail(self, request, queryset):
+        if request.POST.get('_proceed'):
+            text = request.POST.get('text', "")
+            if len(text) > 0:
+                for student in queryset:
+                    email = CustomMessage(student, text)
+                    email.send()
+
+        elif not request.POST.get('_cancel'):
+            context = dict(
+                self.admin_site.each_context(request),
+                title = _("Send notification email"),
+                intro = _("Write a custom notification here, which will be sent to all selected students"),
+                action = 'sendmail',
+                queryset = queryset,
+                opts = self.opts,
+                action_checkbox_name = helpers.ACTION_CHECKBOX_NAME,
+            )
+            return TemplateResponse(request, 'pyBuchaktion/admin/student_sendmail.html', context)
+
+    sendmail.short_description = _("send mail to students")
+
 
 @register(OrderTimeframe)
 class OrderTimeframeAdmin(ModelAdmin):

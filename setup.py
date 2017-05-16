@@ -58,6 +58,7 @@ setup(
         'django>=1.10.0',
         'django-import-export',
         'pyTUID>=1.1.1',
+        'django-bootstrap3',
     ],
     dependency_links=[
       'git+https://github.com/d120/pyTUID#egg=pyTUID-1.1.1',

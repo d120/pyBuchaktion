@@ -95,6 +95,11 @@ class Book(models.Model):
         verbose_name=_("year"),
     )
 
+    note = models.TextField(
+        verbose_name=_("hint"),
+        blank=True,
+    )
+
     # The default string output for a book as "<title> (<author>) [ISBN: <isbn>)"
     def __str__(self):
         return '%s (%s) [ISBN: %s]' % (self.title, self.author, self.isbn_13)
@@ -235,6 +240,26 @@ class Student(models.Model):
         'pyTUID.TUIDUser',
         on_delete = models.CASCADE,
         verbose_name = _("TUID User"),
+    )
+
+    LANG_UNDEFINED = ''
+    LANG_DE = 'de'
+    LANG_EN = 'en'
+
+    # The possible states for an order
+    LANG_CHOICES = (
+        (LANG_UNDEFINED, _('Not selected')),
+        (LANG_DE, _('German')),
+        (LANG_EN, _('English')),
+    )
+
+    # The status of an order
+    language = models.CharField(
+        max_length=2,
+        choices=LANG_CHOICES,
+        default=LANG_UNDEFINED,
+        verbose_name=_("preferred language"),
+        blank=True,
     )
 
     # Get the default string representation as "#<id>"

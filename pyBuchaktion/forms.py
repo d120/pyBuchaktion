@@ -56,5 +56,8 @@ class ModuleSearchForm(forms.Form):
 class AccountEditForm(forms.ModelForm):
     class Meta:
         model = Student
-        fields = ['library_id']
-        help_texts = {'library_id': _("The library id number assigned by the ULB")}
+        fields = ['library_id', 'language']
+        help_texts = {
+            'library_id': _("The library id number assigned by the ULB"),
+            'language': _("The preferred language for notification emails"),
+        }
