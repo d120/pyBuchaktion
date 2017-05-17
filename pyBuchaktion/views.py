@@ -137,6 +137,9 @@ class ModuleListView(StudentContextMixin, SearchFormContextMixin, VarPagedListVi
     context_object_name = 'modules'
     form_class = ModuleSearchForm
 
+    def get_queryset(self):
+        return TucanModule.objects.annotate(book_count=Count('literature')).filter(book_count__gt=0)
+
 
 class ModuleDetailView(StudentContextMixin, DetailView):
 
