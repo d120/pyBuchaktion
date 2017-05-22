@@ -242,6 +242,10 @@ class Student(models.Model):
         verbose_name = _("TUID User"),
     )
 
+    email = models.EmailField(
+        verbose_name=_('email')
+    )
+
     LANG_UNDEFINED = ''
     LANG_DE = 'de'
     LANG_EN = 'en'

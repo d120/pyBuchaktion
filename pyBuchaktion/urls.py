@@ -15,7 +15,10 @@ urlpatterns = [
         url(r'^$', ModuleListView.as_view(), name='modules'),
         url(r'^(?P<pk>\d*)/$', ModuleDetailView.as_view(), name = 'module'),
     ])),
-    url(r'^account/$', AccountView.as_view(), name = 'account'),
+    url(r'^account/', include([
+        url(r'^$', AccountView.as_view(), name = 'account'),
+        url(r'^create/$', AccountCreateView.as_view(), name = 'account_create'),
+    ])),
     url(r'^order/', include([
         url(r'^(?P<pk>\d*)/', include([
             url(r'^$', OrderDetailView.as_view(), name = 'order'),

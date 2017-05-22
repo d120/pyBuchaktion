@@ -11,6 +11,74 @@ from pyTUID.mixins import TUIDLoginRequiredMixin, TUIDUserInGroupMixin
 from .models import Student
 from .settings import BUCHAKTION_STUDENT_LDAP_GROUP
 
+def get_student_from_tuid(tuid_user):
+    if not tuid_user:
+        return None
+    return Student.objects.filter(tuid_user=tuid_user).first()
+
+
+class TUIDUserContextMixin(ContextMixin):
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context.update({'tuid_user': self.request.TUIDUser})
+        return context
+
+
+class BuchaktionGroupLoginRequiredMixin(TUIDUserContextMixin, TUIDUserInGroupMixin):
+
+    group_required = BUCHAKTION_STUDENT_LDAP_GROUP
+    permission_denied_message = _("This function is only available for students from faculty 20!")
+
+
+class StudentContextMixin(ContextMixin):
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data()
+        if (hasattr(self, 'student')):
+            context.update({'student': self.student})
+        return context
+
+
+class StudentRequestMixin(StudentContextMixin, View):
+
+    def dispatch(self, request, *args, **kwargs):
+        self.student = get_student_from_tuid(self.request.TUIDUser)
+        return super().dispatch(request, *args, **kwargs)
+
+
+class StudentRequiredMixin(StudentContextMixin, View):
+
+    def get_unregistered_redirect(self):
+        return reverse('pyBuchaktion:account_create')
+
+    def dispatch(self, request, *args, **kwargs):
+        student = get_student_from_tuid(self.request.TUIDUser)
+        if student:
+            self.student = student
+            return super().dispatch(request, *args, **kwargs)
+        return HttpResponseRedirect(self.get_unregistered_redirect())
+
+
+class StudentLoginRequiredMixin(BuchaktionGroupLoginRequiredMixin, StudentRequiredMixin):
+    pass
+
+
+class UnregisteredUserRequiredMixin(View):
+
+    def get_registered_redirect(self):
+        return reverse('pyBuchaktion:account')
+
+    def dispatch(self, request, *args, **kwargs):
+        student = get_student_from_tuid(request.TUIDUser)
+        if student:
+            return HttpResponseRedirect(self.get_registered_redirect())
+        return super().dispatch(request, *args, **kwargs)
+
+
+class UnregisteredStudentLoginRequiredMixin(BuchaktionGroupLoginRequiredMixin, UnregisteredUserRequiredMixin):
+    pass
+
 
 class SearchFormContextMixin(ContextMixin):
 
@@ -50,32 +118,6 @@ class SearchFormContextMixin(ContextMixin):
         if self.request.form.is_valid():
             queryset = self.get_form_queryset(self.request.form.cleaned_data, queryset)
         return queryset
-
-
-class StudentContextMixin(object):
-    """
-    A mixin that provides the currently logged in student to the context.
-    """
-    def dispatch(self, request, *args, **kwargs):
-        if request.TUIDUser:
-            student = Student.from_tuid(request.TUIDUser)
-            if student:
-                self.request.student = student
-
-        return super(StudentContextMixin, self).dispatch(request, *args, **kwargs)
-
-    def get_context_data(self, **kwargs):
-        context = super(StudentContextMixin, self).get_context_data(**kwargs)
-        if hasattr(self.request, "student") and self.request.student:
-            context['student'] = self.request.student
-
-        return context
-
-
-class StudentLoginRequiredMixin(TUIDUserInGroupMixin, StudentContextMixin):
-
-    group_required = BUCHAKTION_STUDENT_LDAP_GROUP
-    permission_denied_message = _("This function is only available for students from faculty 20!")
 
 
 class ForeignKeyImportResourceMixin(object):
