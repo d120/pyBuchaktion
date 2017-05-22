@@ -45,6 +45,7 @@
             </div>
         </div>
 
+        {% if student.order_set.count > 0 %}
         <div class="panel panel-default">
             <div class="panel-heading">
                 <h3 class="panel-title">{% trans "Orders" %}</h3>
@@ -77,6 +78,7 @@
                 {% endfor %}
             </table>
         </div>
+        {% endif %}
     {% else %}
         <div class="alert alert-danger">
         {% trans "You are not logged in" %}
