@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from django import template
 from django.http import QueryDict
 from django.utils.translation import ugettext_lazy as _
@@ -118,3 +120,7 @@ def list_limits(data, params):
 @register.filter
 def net_csv(queryset):
     return net_library_csv(queryset)
+
+@register.simple_tag
+def date():
+    return datetime.now()

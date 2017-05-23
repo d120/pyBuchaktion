@@ -308,7 +308,9 @@ class OrderTimeframeManager(models.Manager):
             .filter(start_date__lte=date) \
             .aggregate(Sum('allowed_orders'))['allowed_orders__sum']
 
-    def current(self, date=datetime.now()):
+    def current(self, date=None):
+        if not date:
+            date = datetime.now()
         try:
             return self \
                 .filter(start_date__lte=date) \
