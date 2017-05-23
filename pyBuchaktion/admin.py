@@ -283,11 +283,6 @@ class StudentAdmin(ModelAdmin):
     number_of_orders.admin_order_field = 'order__count'
     number_of_orders.short_description = _("orders")
 
-    def email(self, student):
-        return student.tuid_user.email
-
-    email.short_description = _("email")
-
     def has_library_id(self, student):
         return True if student.library_id else False
     has_library_id.boolean = True
