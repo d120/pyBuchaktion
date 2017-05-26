@@ -270,6 +270,10 @@ class StudentAdmin(ModelAdmin):
         'sendmail',
     ]
 
+    readonly_fields = (
+        'tuid_user',
+    )
+
     # Annotate the queryset with the number of orders.
     def get_queryset(self, request):
         qs = super().get_queryset(request)

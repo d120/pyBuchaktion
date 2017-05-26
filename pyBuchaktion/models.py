@@ -236,7 +236,7 @@ class Student(models.Model):
         default="",
     )
 
-    tuid_user = models.ForeignKey(
+    tuid_user = models.OneToOneField(
         'pyTUID.TUIDUser',
         on_delete = models.CASCADE,
         verbose_name = _("TUID User"),
@@ -273,16 +273,6 @@ class Student(models.Model):
     # Get the natural (foreign reference) key used in JSON serialization
     def natural_key(self):
         return {"id": self.id}
-
-    @classmethod
-    def from_tuid(self, tuid_user):
-        try:
-            return self.objects.get(tuid_user=tuid_user)
-        except self.DoesNotExist as e:
-            pass
-        if True: # check for conditions
-            return self.objects.create(tuid_user=tuid_user)
-        return None
 
     # Set the singular and plural names for i18n
     class Meta:
