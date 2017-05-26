@@ -4,15 +4,31 @@
     <form method="post">
     {% csrf_token %}
     <input type="hidden" name="book_id" value="{{ book.id }}">
+    {% if form.non_field_errors %}
+    <div class="alert alert-danger">
+        {% for error in form.non_field_errors %}
+            <b>{{ error|escape }}</b> {% if not forloop.first %}<br/>{% endif %}
+        {% endfor %}
+    </div>
+    {% else %}
+    <div class="alert alert-info">
+        {% if current_timeframe %}
+            {% trans "If you order now, the order will be posted to our merchant by" %} <b>{{ current_timeframe }}</b>
+        {% else %}
+            <b>{% trans "Book ordering is not active for the current date" %}</b>
+        {% endif %}
+    </div>
+    {% endif %}
     {{ block.super }}
     </form>
 {% endblock content %}
 
 {% block panel_footer %}
+        {% if current_timeframe %}
             <div class="panel-footer">
-                {% form form %}
                 <button class="btn btn-primary" type="submit" value="Submit">
                     {% trans "Order this book" %}
                 </button>
             </div>
+        {% endif %}
 {% endblock panel_footer %}

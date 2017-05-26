@@ -24,9 +24,9 @@ class compile_translations(Command):
         pass
 
     def run(self):
-        import os
         from django.core import management
 
+        os.environ['DJANGO_SETTINGS_MODULE'] = ''
         curdir = os.getcwd()
         os.chdir(os.path.realpath('build/lib/pyBuchaktion'))
         management.call_command('compilemessages')
@@ -42,17 +42,27 @@ class install_lib(_install_lib):
 
 setup(
     name='pyBuchaktion',
-    version='0.1',
+    version='0.10',
     packages=find_packages(),
     include_package_data=True,
-    package_data={'': ['locale/*/LC_MESSAGES/*.po']},
-    license='AGPL-3.0',  # example license
+    license='AGPL-3.0',
     description='App for the Buchaktion',
     #long_description=README,
-    #url='https://www.example.com/',
+    url='https://d120.de/de/studierende/buchaktion/',
     author='Buchaktionsteam D120',
     author_email='buchaktion@d120.de',
-    setup_requires=['django>=1.9.0'],
+    setup_requires=[
+        'django>=1.10.0',
+    ],
+    install_requires=[
+        'django>=1.10.0',
+        'django-import-export',
+        'pyTUID>=1.1.1',
+        'django-bootstrap3',
+    ],
+    dependency_links=[
+      'git+https://github.com/d120/pyTUID#egg=pyTUID-1.1.1',
+    ],
     classifiers=[
         'Environment :: Web Environment',
         'Framework :: Django',

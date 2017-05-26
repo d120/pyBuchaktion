@@ -17,14 +17,13 @@
         </div>
     {% endif %}
 
-    {% if student and book.state == 'AC' or orders %}
+    {% if orders %}
         <div class="panel panel-default">
             <div class="panel-heading">
                 <h4 class="panel-title">
-                    {% trans "Orders" %}
+                    {% trans "Order" %}
                 </h4>
             </div>
-            {% if orders %}
             <div class="list-group">
                 {% for order in orders %}
                 <a class="list-group-item" href="{% url "pyBuchaktion:order" pk=order.id %}">
@@ -35,13 +34,11 @@
                 </a>
                 {% endfor %}
             </div>
-            {% else %}
-            <div class="panel-body">
-                <a class="btn btn-primary" href="{% url "pyBuchaktion:book_order" pk=book.id %}">
-                    {% trans "Order this book" %}
-                </a>
-            </div>
-            {% endif %}
         </div>
+    {% else %}
+        <a class="btn btn-primary" href="{% url "pyBuchaktion:book_order" pk=book.id %}">
+            {% trans "Order this book" %}
+        </a>
     {% endif %}
+
 {% endblock book_panels %}

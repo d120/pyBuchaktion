@@ -3,11 +3,82 @@ from django.core.urlresolvers import reverse
 from django.views.generic import View
 from django.views.generic.base import ContextMixin
 from django.utils.cache import add_never_cache_headers
+from django.utils.translation import ugettext_lazy as _
 from django.http import HttpResponseRedirect
 
-from pyTUID.mixins import TUIDLoginRequiredMixin
+from pyTUID.mixins import TUIDLoginRequiredMixin, TUIDUserInGroupMixin
 
 from .models import Student
+from .settings import BUCHAKTION_STUDENT_LDAP_GROUP
+
+def get_student_from_tuid(tuid_user):
+    if not tuid_user:
+        return None
+    return Student.objects.filter(tuid_user=tuid_user).first()
+
+
+class TUIDUserContextMixin(ContextMixin):
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context.update({'tuid_user': self.request.TUIDUser})
+        return context
+
+
+class BuchaktionGroupLoginRequiredMixin(TUIDUserContextMixin, TUIDUserInGroupMixin):
+
+    group_required = BUCHAKTION_STUDENT_LDAP_GROUP
+    permission_denied_message = _("This function is only available for students from faculty 20!")
+
+
+class StudentContextMixin(ContextMixin):
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data()
+        if (hasattr(self, 'student')):
+            context.update({'student': self.student})
+        return context
+
+
+class StudentRequestMixin(StudentContextMixin, View):
+
+    def dispatch(self, request, *args, **kwargs):
+        self.student = get_student_from_tuid(self.request.TUIDUser)
+        return super().dispatch(request, *args, **kwargs)
+
+
+class StudentRequiredMixin(StudentContextMixin, View):
+
+    def get_unregistered_redirect(self):
+        return reverse('pyBuchaktion:account_create')
+
+    def dispatch(self, request, *args, **kwargs):
+        student = get_student_from_tuid(self.request.TUIDUser)
+        if student:
+            self.student = student
+            return super().dispatch(request, *args, **kwargs)
+        return HttpResponseRedirect(self.get_unregistered_redirect())
+
+
+class StudentLoginRequiredMixin(BuchaktionGroupLoginRequiredMixin, StudentRequiredMixin):
+    pass
+
+
+class UnregisteredUserRequiredMixin(View):
+
+    def get_registered_redirect(self):
+        return reverse('pyBuchaktion:account')
+
+    def dispatch(self, request, *args, **kwargs):
+        student = get_student_from_tuid(request.TUIDUser)
+        if student:
+            return HttpResponseRedirect(self.get_registered_redirect())
+        return super().dispatch(request, *args, **kwargs)
+
+
+class UnregisteredStudentLoginRequiredMixin(BuchaktionGroupLoginRequiredMixin, UnregisteredUserRequiredMixin):
+    pass
+
 
 class SearchFormContextMixin(ContextMixin):
 
@@ -37,9 +108,9 @@ class SearchFormContextMixin(ContextMixin):
 
     def get_form_queryset(self, data, queryset):
         for key, value in data.items():
-            kwargs = {key + "__contains": value}
-            queryset = queryset.filter(**kwargs)
-
+            for val in value.split():
+                kwargs = {key + "__icontains": val}
+                queryset = queryset.filter(**kwargs)
         return queryset
 
     def get_queryset(self):
@@ -47,51 +118,6 @@ class SearchFormContextMixin(ContextMixin):
         if self.request.form.is_valid():
             queryset = self.get_form_queryset(self.request.form.cleaned_data, queryset)
         return queryset
-
-
-class StudentContextMixin(object):
-    """
-    A mixin the provides the currently logged in student to the context.
-    """
-    def dispatch(self, request, *args, **kwargs):
-        if request.TUIDUser:
-            student = Student.from_tuid(request.TUIDUser)
-            if student:
-                self.request.student = student
-
-        return super(StudentContextMixin, self).dispatch(request, *args, **kwargs)
-
-    def get_context_data(self, **kwargs):
-        context = super(StudentContextMixin, self).get_context_data(**kwargs)
-        if hasattr(self.request, "student") and self.request.student:
-            context['student'] = self.request.student
-
-        return context
-
-class BaseStudentLoginRequiredMixin(View):
-
-    invalid_url = None
-
-    def get_invalid_url(self):
-        return self.invalid_url
-
-    def dispatch(self, request, *args, **kwargs):
-        url = self.get_invalid_url()
-        if not url:
-            raise ImproperlyConfigured(
-                '{0} is missing the invalid_url attribute. Define '
-                '{0}.invalid_url.'.format(self.__class__.__name__)
-            )
-
-        if self.request.student:
-            return super(BaseStudentLoginRequiredMixin, self).dispatch(request, *args, **kwargs)
-        else:
-            return HttpResponseRedirect(url)
-
-class StudentLoginRequiredMixin(TUIDLoginRequiredMixin, StudentContextMixin, BaseStudentLoginRequiredMixin):
-
-    def get_invalid_url(self):
-        return reverse("pyBuchaktion:books")
 
 
 class ForeignKeyImportResourceMixin(object):

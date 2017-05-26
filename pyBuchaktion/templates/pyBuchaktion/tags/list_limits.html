@@ -1,13 +1,9 @@
 {% load view_tools %}
 {% for limit in options %}
     {% if not forloop.first %}&nbsp;|&nbsp;{% endif %}
-    {% if limit == current %}
+    {% if limit.num == current %}
         <b>{{ current }}</b>
-    {% elif limit == default %}
-        <a href="{{ params|dict_unset:"limit"|urlencode }}">{{ limit }}</a>
     {% else %}
-        {% with limit|as_dict:"limit" as dct %}
-            <a href="{{ params|dict_join:dct|dict_unset:"page"|urlencode }}">{{ limit }}</a>
-        {% endwith %}
+        <a href="{{ limit.url }}">{{ limit.num }}</a>
     {% endif %}
 {% endfor %}

@@ -1,6 +1,20 @@
-{% extends "pyBuchaktion/search_base.html" %} {% load view_tools bootstrap_tags i18n %}
+{% extends "pyBuchaktion/search_base.html" %} {% load view_tools bootstrap_tags i18n sekizai_tags %}
 
 {% block search_content %}
+
+    {% addtoblock "css" %}
+        <style type="text/css">
+            table.table > tbody > tr:nth-child(4n+1),
+            table.table > tbody > tr:nth-child(4n+2) {
+                background-color: #eee;
+            }
+
+            table.table > tbody > tr:nth-child(2n+2) > td {
+                border-top: 0 !important;
+                padding-top: 0;
+            }
+        </style>{% endaddtoblock "css" %}
+
     <div class="panel panel-default">
         <div class="panel-heading">
             <h4 class="panel-title">{% trans "Search" %}</h4>
@@ -22,25 +36,55 @@
             <h4 class="panel-title">
             {% trans "Books" %}
             <span class="pull-right">
-                {% list_limits get_params limit limit_options limit_default %}
+                {% list_limits limit_data get_params %}
             </span>
             </h4>
         </div>
-        <div class="list-group">
-        {% for book in books %}
-            <a href="{% url "pyBuchaktion:book" pk=book.id %}" class="list-group-item">
-                <h4 class="list-group-item-heading">{{ book.title }}
-            {% if book.state != 'AC' %}
-                    <span class="label label-{{ book.state|get_state_class }} pull-right">
+        <table class="table">
+            <thead>
+                <tr>
+                    <!--<th>{% trans "Title" %}</th>-->
+                    <th>&nbsp;</th>
+                    <th>{% trans "Author" %}</th>
+                    <th>{% trans "ISBN-13" %}</th>
+                    <th>{% trans "Publisher" %}</th>
+                    <th>{% trans "Year" %}</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for book in books %}
+            <tr>
+                <th colspan="4">{{ book.title }}</th>
+                <td colspan="2" style="text-align: right">
+                    {% if book.state != 'AC' %}
+                    <span class="label label-{{ book.state|get_state_class }}">
                         {{ book.statename }}
                     </span>
-            {% endif %}
-                </h4>
-                <b>{% trans "Author" %}:</b> <i>{{ book.author }}</i> <br/>
-                <b>ISBN-13:</b> <i>{{ book.isbn_13 }}</i>
-            </a>
-        {% endfor %}
-        </div>
+                    {% elif book.ordercount|length > 0 %}
+                    <span class="label label-success">
+                        {% trans "Ordered" %}
+                    </span>
+                    {% else %}
+                    <a href="{% url "pyBuchaktion:book_order" pk=book.id %}">
+                        {% trans "Order this book" %}
+                    </a>
+                    {% endif %}
+                </td>
+            </tr>
+            <tr>
+                <td>&nbsp;</td>
+                <td>{{ book.author }}</td>
+                <td>{{ book.isbn_13 }}</td>
+                <td>{{ book.publisher }}</td>
+                <td>{{ book.year }}</td>
+                <td style="text-align: right">
+                    <a class="btn btn-default" href="{% url "pyBuchaktion:book" pk=book.id %}">{% trans "Details" %}</a>
+                </td>
+            </tr>
+            {% endfor %}
+            </tbody>
+        </table>
     </div>
     {% else %}
         {% block noresults %}{% endblock noresults %}

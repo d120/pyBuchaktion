@@ -1,0 +1,21 @@
+{% extends "page.html" %} {% load cms_tags view_tools i18n bootstrap_tags sekizai_tags bootstrap3 %}
+
+{% block content %}
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4 class="panel-title">
+                    {% trans "Registration for the Buchaktion" %}
+                </h4>
+            </div>
+            <div class="panel-body">
+                {% trans "Currently logged in as" %}: <b>{{ tuid_user }}</b>
+                <form method="POST">
+                    {% csrf_token %}
+                    {% bootstrap_form form %}
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-default">{% trans "Create" %}</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+{% endblock content %}

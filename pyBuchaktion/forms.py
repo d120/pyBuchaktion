@@ -1,9 +1,12 @@
+from datetime import datetime
+
 from django import forms
 from django.core.exceptions import ValidationError
 from django.utils.translation import ugettext_lazy as _
 from django.http.request import QueryDict
+from django.db.models import Sum
 
-from .models import Student, Order, Book
+from .models import Student, Order, Book, OrderTimeframe
 
 class BookOrderForm(forms.ModelForm):
     class Meta:
@@ -11,13 +14,30 @@ class BookOrderForm(forms.ModelForm):
         fields = []
 
     def clean(self):
+        order = self.instance
+        student = order.student
+        book = order.book
+
         # Can the book be ordered
-        if self.instance.book.state != Book.ACCEPTED:
+        if book.state != Book.ACCEPTED:
             raise ValidationError(_("This book is not available for ordering"), code='not_available')
 
         # does the student have an order for this already
-        if self.instance.student.order_set.filter(book__pk=self.instance.book_id).count() > 0:
-            raise ValidationError(_("You already ordered this book"), code='already_ordered')
+        # if Order.objects.student_book_order_count(student, book) > 0:
+        #    raise ValidationError(_("You already ordered this book"), code='already_ordered')
+
+        timeframe = OrderTimeframe.objects.current()
+        if not timeframe:
+            raise ValidationError(_("Book ordering is not active for the current date"), code='no_timeframe')
+
+        semester = timeframe.semester
+        budget_spent = Order.objects.student_semester_order_count(student, semester)
+        budget_max = OrderTimeframe.objects.semester_budget(semester)
+        budget_left = budget_max - budget_spent
+
+        if budget_left <= 0:
+            raise ValidationError(_("You may not order any more books in this timeframe."), code='no_budget_left')
+
 
 
 class BookSearchForm(forms.Form):
@@ -44,5 +64,9 @@ class ModuleSearchForm(forms.Form):
 class AccountEditForm(forms.ModelForm):
     class Meta:
         model = Student
-        fields = ['library_id']
-        help_texts = {'library_id': _("The library id number assigned by the ULB")}
+        fields = ['email', 'library_id', 'language']
+        help_texts = {
+            'library_id': _("The library id number assigned by the ULB, required for if you want the book to be reserved for you"),
+            'language': _("The preferred language for notification emails"),
+            'email': _("The e-mail address to recieve status updates"),
+        }

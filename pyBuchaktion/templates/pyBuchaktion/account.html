@@ -1,4 +1,4 @@
-{% extends "page.html" %} {% load cms_tags view_tools i18n bootstrap_tags sekizai_tags %}
+{% extends "page.html" %} {% load cms_tags view_tools i18n bootstrap_tags sekizai_tags bootstrap3 %}
 
 {% block content %}
 
@@ -21,16 +21,17 @@
         </style>{% endaddtoblock "css" %}
 
     {% if student %}
+        <!-- {% date %} -->
         <div class="panel panel-default">
             <div class="panel-heading">
                 <h4 class="panel-title">
-                    {% trans "Account" %} #{{ student.id }}
+                    {{ student.tuid_user }}
                 </h4>
             </div>
             <div class="panel-body">
                 <form method="POST">
                     {% csrf_token %}
-                    {% form form %}
+                    {% bootstrap_form form %}
                     <div class="form-group">
                         <button type="submit" class="btn btn-default">{% trans "Update" %}</button>
                     </div>
@@ -39,30 +40,17 @@
             </div>
             <div class="panel-footer">
                 <a href="{% url "pyTUID:logout" %}?next={% url "pyBuchaktion:books" %}" class="btn btn-danger">{% trans "Logout" %}</a>
-                <a href="{% url "pyTUID:logout" %}?next={% url "pyBuchaktion:books" %}&cas_logout=True" class="btn btn-danger">
+                <a href="{% url "pyTUID:logout" %}?next={% url "pyBuchaktion:books" %}&amp;cas_logout=True" class="btn btn-danger">
                     {% trans "Logout &amp; CAS Logout" %}
                 </a>
             </div>
         </div>
 
+        {% if student.order_set.count > 0 %}
         <div class="panel panel-default">
             <div class="panel-heading">
                 <h3 class="panel-title">{% trans "Orders" %}</h3>
             </div>
-            <!--<div class="list-group">
-        {% for order in student.order_set.all %}
-                <a href="{% url "pyBuchaktion:order" pk=order.id %}" class="list-group-item">
-                    <h4 class="list-group-item-heading">#{{order.id}}: {{ order.book|truncatechars:70 }}
-                        <span class="label label-{{ order.status|get_status_class }} pull-right">
-                            {{ order.statusname }}
-                        </span>
-                    </h4>
-            {% if order.hint %}
-                    <b>{% trans "Hint" %}:</b> {{ order.hint }}
-            {% endif %}
-                </a>
-        {% endfor %}
-            </div>-->
             <table class="table order-table">
                 {% for order in student.order_set.all %}
                     <tr class="order">
@@ -91,6 +79,7 @@
                 {% endfor %}
             </table>
         </div>
+        {% endif %}
     {% else %}
         <div class="alert alert-danger">
         {% trans "You are not logged in" %}
