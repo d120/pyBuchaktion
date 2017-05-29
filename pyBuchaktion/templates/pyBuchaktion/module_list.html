@@ -1,4 +1,4 @@
-{% extends "pyBuchaktion/search_base.html" %} {% load view_tools bootstrap_tags i18n %}
+{% extends "pyBuchaktion/search_base.html" %} {% load view_tools bootstrap_tags i18n bootstrap3 %}
 
 {% block search_content %}
     <div class="panel panel-default">
@@ -7,9 +7,7 @@
         </div>
         <div class="panel-body">
             <form method="GET" class="form-inline search-form">
-                {% for field in form %}
-                {% form_field field %}
-                {% endfor %}
+                {% bootstrap_form form layout='inline' bound_css_class='' %}
                 <button type="submit" class="btn btn-primary">{% trans "Search" %}</button>
             </form>
         </div>
@@ -39,4 +37,5 @@
         {% trans "Sorry, no modules matching this query were found!" %}
     </div>
     {% endif %}
+    {% include "bootstrap/pagination.html" %}
 {% endblock search_content %}

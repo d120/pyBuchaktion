@@ -217,6 +217,15 @@ class Order(models.Model):
         verbose_name = _("order")
         verbose_name_plural = _("orders")
 
+
+class StudentManager(models.Manager):
+
+    def from_tuid(self, tuid_user):
+        if not tuid_user:
+            return None
+        return self.filter(tuid_user=tuid_user).first()
+
+
 class Student(models.Model):
 
     """
@@ -225,6 +234,9 @@ class Student(models.Model):
         system either manually or via LDAP group membership for the department
         of computer science.
     """
+
+    # The custom manager
+    objects = StudentManager()
 
     # The library id for this student
     library_id = models.CharField(

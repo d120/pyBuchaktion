@@ -1,4 +1,4 @@
-{% extends "pyBuchaktion/search_base.html" %} {% load view_tools bootstrap_tags i18n sekizai_tags %}
+{% extends "pyBuchaktion/search_base.html" %} {% load view_tools bootstrap_tags i18n sekizai_tags bootstrap3 %}
 
 {% block search_content %}
 
@@ -21,9 +21,7 @@
         </div>
         <div class="panel-body">
             <form method="GET" class="form-inline search-form">
-                {% for field in form %}
-                {% form_field field %}
-                {% endfor %}
+                {% bootstrap_form form layout='inline' bound_css_class='' %}
                 <button type="submit" class="btn btn-primary">{% trans "Search" %}</button>
             </form>
             <a href="{% url "pyBuchaktion:modules" %}">{% trans "Search for modules" %}</a>

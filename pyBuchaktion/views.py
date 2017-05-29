@@ -7,7 +7,7 @@ from django.db.models import F, Count, ExpressionWrapper, Prefetch
 
 from .forms import BookSearchForm, ModuleSearchForm, AccountEditForm, BookOrderForm
 from .models import Book, TucanModule, Order, Student, OrderTimeframe
-from .mixins import SearchFormContextMixin, StudentRequestMixin, StudentLoginRequiredMixin, NeverCacheMixin, UnregisteredStudentLoginRequiredMixin
+from .mixins import SearchFormContextMixin, StudentRequestMixin, StudentRequiredMixin, NeverCacheMixin, UnregisteredStudentRequiredMixin
 
 
 class VarPagedListView(ListView):
@@ -61,7 +61,7 @@ class BookListView(StudentRequestMixin, SearchFormContextMixin, VarPagedListView
     def get_queryset(self):
         queryset = super().get_queryset()
         if hasattr(self.request, 'student'):
-            order_query = Order.objects.filter(student=self.student)
+            order_query = Order.objects.filter(student=self.request.student)
             queryset = queryset.prefetch_related(
                 Prefetch('order_set', queryset=order_query, to_attr='ordercount')
             )
@@ -86,13 +86,13 @@ class BookView(StudentRequestMixin, NeverCacheMixin, DetailView):
 
     def get_context_data(self, **kwargs):
         context = super(BookView, self).get_context_data(**kwargs)
-        if 'student' in context and 'book' in context:
-            if context['student'] and context['book']:
-                context['orders'] = context['book'].order_set.filter(student=context['student'])
+        if hasattr(self.request, 'student') and self.request.student is not None:
+                orders = self.object.order_set.filter(student=self.request.student)
+                context.update({'orders': orders})
         return context
 
 
-class BookOrderView(StudentLoginRequiredMixin, NeverCacheMixin, CreateView):
+class BookOrderView(StudentRequiredMixin, NeverCacheMixin, CreateView):
     model = Book
     form_class = BookOrderForm
     template_name_suffix = '_order_form'
@@ -108,14 +108,13 @@ class BookOrderView(StudentLoginRequiredMixin, NeverCacheMixin, CreateView):
         kwargs.update({'instance': Order(
             book = Book.objects.get(pk=self.kwargs['pk']),
             status = Order.PENDING,
-            student = self.student,
+            student = self.request.student,
             order_timeframe = OrderTimeframe.objects.current(),
         )})
         return kwargs
 
     def get_context_data(self, **kwargs):
         context = super(BookOrderView, self).get_context_data(**kwargs)
-        context.update({'student': self.student})
         timeframe = OrderTimeframe.objects.current();
         if timeframe:
             context.update({'current_timeframe': timeframe.end_date})
@@ -153,16 +152,16 @@ class ModuleDetailView(StudentRequestMixin, DetailView):
     context_object_name = 'module'
 
 
-class OrderListView(StudentLoginRequiredMixin, NeverCacheMixin, VarPagedListView):
+class OrderListView(StudentRequiredMixin, NeverCacheMixin, VarPagedListView):
 
     def get_queryset(self):
-        return Order.objects.filter(student=self.student)
+        return Order.objects.filter(student=self.request.student)
 
 
-class OrderDetailView(StudentLoginRequiredMixin, NeverCacheMixin, DetailView):
+class OrderDetailView(StudentRequiredMixin, NeverCacheMixin, DetailView):
 
     def get_queryset(self):
-        student = self.student
+        student = self.request.student
         return Order.objects.filter(student=student)
 
 
@@ -180,7 +179,7 @@ class OrderAbortView(DeleteView, OrderDetailView):
         return reverse("pyBuchaktion:account")
 
 
-class AccountView(StudentLoginRequiredMixin, NeverCacheMixin, UpdateView):
+class AccountView(StudentRequiredMixin, NeverCacheMixin, UpdateView):
     template_name = 'pyBuchaktion/account.html'
 
     def get_form_class(self):
@@ -190,10 +189,10 @@ class AccountView(StudentLoginRequiredMixin, NeverCacheMixin, UpdateView):
         return reverse("pyBuchaktion:account")
 
     def get_object(self, queryset=None):
-        return self.student
+        return self.request.student
 
 
-class AccountCreateView(UnregisteredStudentLoginRequiredMixin, NeverCacheMixin, CreateView):
+class AccountCreateView(UnregisteredStudentRequiredMixin, NeverCacheMixin, CreateView):
     template_name = 'pyBuchaktion/account_create.html'
 
     def get_form_class(self):
