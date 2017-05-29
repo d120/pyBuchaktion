@@ -1,0 +1,10 @@
+{% extends "page.html" %} {% load i18n buchaktion_tags %}
+
+{% block content %}
+    {% message "modulecategories_list_intro" %}
+    {% for category in modulecategory_list %}
+        {% modulecategory_panel category.name category.module_set.all %}
+    {% endfor %}
+        {% trans "Miscellaneous" as misc_title %}
+        {% modulecategory_panel misc_title misc_module_list %}
+{% endblock %}

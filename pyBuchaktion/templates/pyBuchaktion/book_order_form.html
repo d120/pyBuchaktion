@@ -1,4 +1,4 @@
-{% extends "pyBuchaktion/book_base.html" %} {% load cms_tags view_tools bootstrap_tags i18n %}
+{% extends "pyBuchaktion/book_base.html" %} {% load buchaktion_tags i18n %}
 
 {% block content %}
     <form method="post">
@@ -13,11 +13,12 @@
     {% else %}
     <div class="alert alert-info">
         {% if current_timeframe %}
-            {% trans "If you order now, the order will be posted to our merchant by" %} <b>{{ current_timeframe }}</b>
+            {% message "book_order_active" date=current_timeframe|date %}
         {% else %}
-            <b>{% trans "Book ordering is not active for the current date" %}</b>
+            <b>{% message "book_order_inactive" %}</b>
         {% endif %}
     </div>
+    {% message "book_order_intro" %}
     {% endif %}
     {{ block.super }}
     </form>

@@ -7,6 +7,7 @@
 from django.contrib.admin import ModelAdmin, register, helpers
 from django.db.models import Count
 from django.utils.translation import ugettext_lazy as _
+from django.utils.text import Truncator
 from django.http import HttpResponse
 from django.template.response import TemplateResponse
 from django.core.mail.message import EmailMessage
@@ -16,7 +17,7 @@ from import_export.admin import ImportExportMixin
 from import_export.widgets import ManyToManyWidget
 from import_export.fields import Field
 
-from .models import Book, Order, Student, OrderTimeframe, TucanModule, Semester
+from .models import Book, Order, Student, OrderTimeframe, Module, Semester, ModuleCategory, DisplayMessage
 from .mixins import ForeignKeyImportResourceMixin
 from .data import net_library_csv
 from .mail import OrderAcceptedMessage, OrderArrivedMessage, OrderRejectedMessage, CustomMessage
@@ -355,7 +356,7 @@ class ModuleResource(ForeignKeyImportResourceMixin, ModelResource):
     )
 
     class Meta:
-        model = TucanModule
+        model = Module
         import_id_fields = (
             'module_id',
             'last_offered__year',
@@ -367,7 +368,7 @@ class ModuleResource(ForeignKeyImportResourceMixin, ModelResource):
         )
 
 
-@register(TucanModule)
+@register(Module)
 class ModuleAdmin(ImportExportMixin, ModelAdmin):
 
     """
@@ -379,9 +380,69 @@ class ModuleAdmin(ImportExportMixin, ModelAdmin):
     list_display = (
         'name',
         'module_id',
+        'category',
     )
 
     search_fields = [
         'name',
         'module_id',
     ]
+
+    list_filter = (
+        'category',
+    )
+
+
+@register(ModuleCategory)
+class ModuleCategoryAdmin(ModelAdmin):
+
+    list_display = (
+        'id',
+        'name_de',
+        'name_en',
+    )
+
+    list_display_links = (
+        'name_de',
+    )
+
+    fieldsets = (
+        ('Namen', {
+            'fields': (('name_de', 'name_en'),)
+        }),
+    )
+
+
+class DisplayMessageResource(ModelResource):
+
+    class Meta:
+        model = DisplayMessage
+        import_id_fields = 'key',
+        fields = import_id_fields + (
+            'text_de',
+            'text_en',
+        )
+
+@register(DisplayMessage)
+class DisplayMessageAdmin(ImportExportMixin, ModelAdmin):
+
+    """
+        The book admin displays title, author and isbn of a book,
+        as well as the number of orders for this book.
+    """
+
+    resource_class = DisplayMessageResource
+
+    list_display = (
+        'key',
+        'trunc_de',
+        'trunc_en',
+    )
+
+    def trunc_de(self, obj):
+        return Truncator(obj.text_de).chars(60)
+    trunc_de.short_description = _("german text")
+
+    def trunc_en(self, obj):
+        return Truncator(obj.text_en).chars(60)
+    trunc_en.short_description = _("english text")

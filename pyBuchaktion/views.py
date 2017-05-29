@@ -6,7 +6,7 @@ from django.http import HttpResponseRedirect
 from django.db.models import F, Count, ExpressionWrapper, Prefetch
 
 from .forms import BookSearchForm, ModuleSearchForm, AccountEditForm, BookOrderForm
-from .models import Book, TucanModule, Order, Student, OrderTimeframe
+from .models import Book, Module, Order, Student, OrderTimeframe, ModuleCategory
 from .mixins import SearchFormContextMixin, StudentRequestMixin, StudentRequiredMixin, NeverCacheMixin, UnregisteredStudentRequiredMixin
 
 
@@ -132,13 +132,13 @@ class ModuleListView(StudentRequestMixin, SearchFormContextMixin, VarPagedListVi
     The list view for all TUCaN modules.
     """
 
-    model = TucanModule
+    model = Module
     template_name = 'pyBuchaktion/module_list.html'
     context_object_name = 'modules'
     form_class = ModuleSearchForm
 
     def get_queryset(self):
-        return TucanModule.objects.annotate(book_count=Count('literature')).filter(book_count__gt=0)
+        return Module.objects.annotate(book_count=Count('literature')).filter(book_count__gt=0)
 
 
 class ModuleDetailView(StudentRequestMixin, DetailView):
@@ -147,9 +147,21 @@ class ModuleDetailView(StudentRequestMixin, DetailView):
     The view for one specific module.
     """
 
-    model = TucanModule
+    model = Module
     template_name = 'pyBuchaktion/module.html'
     context_object_name = 'module'
+
+
+class ModuleCategoriesView(StudentRequestMixin, ListView):
+    """
+    The view that displays all modules within the respective category
+    """
+    model = ModuleCategory
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context.update({'misc_module_list': Module.objects.filter(category=None)})
+        return context
 
 
 class OrderListView(StudentRequiredMixin, NeverCacheMixin, VarPagedListView):

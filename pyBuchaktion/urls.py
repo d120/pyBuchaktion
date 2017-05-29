@@ -12,8 +12,9 @@ urlpatterns = [
         ])),
     ])),
     url(r'^module/', include([
-        url(r'^$', ModuleListView.as_view(), name='modules'),
         url(r'^(?P<pk>\d*)/$', ModuleDetailView.as_view(), name = 'module'),
+        url(r'^search/', ModuleListView.as_view(), name='module_search'),
+        url(r'^$', ModuleCategoriesView.as_view(), name = 'modules'),
     ])),
     url(r'^account/', include([
         url(r'^$', AccountView.as_view(), name = 'account'),
