@@ -210,6 +210,8 @@ class Order(models.Model):
 
     # Get the name of the current status from the options
     def statusname(self):
+        if self.status == Order.PENDING and self.book.state == Book.PROPOSED:
+            return _("proposed book")
         return [v for s, v in self.STATE_CHOICES if s == self.status][0]
 
     # Set the singular and plural names for i18n

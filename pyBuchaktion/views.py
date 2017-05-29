@@ -225,14 +225,20 @@ class BookProposeView(StudentLoginRequiredMixin, CreateView):
     template_name_suffix = '_propose'
     form_class = BookProposeForm
 
+    def get_form(self, form_class=None):
+        form = super().get_form(form_class)
+        form.student = self.student
+        return form
+
+
     def form_valid(self, form):
         form.instance.state = Book.PROPOSED
-        result = super(BookProposeView, self).form_valid(form)
+        result = super().form_valid(form)
         order = Order(
             book=form.instance,
-            student=self.request.student,
+            student=self.student,
             status=Order.PENDING,
-            order_timeframe=OrderTimeframe.current()
+            order_timeframe=OrderTimeframe.objects.current()
         )
         order.save()
         return result

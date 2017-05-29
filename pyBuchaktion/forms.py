@@ -52,13 +52,29 @@ class BookProposeForm(forms.ModelForm):
         model = Book
         fields = ['isbn_13', 'title', 'author', 'publisher', 'year']
 
+    def clean(self):
+        cleaned_data = super().clean()
+        book = self.instance
+        student = self.student
+
+        timeframe = OrderTimeframe.objects.current()
+        if not timeframe:
+            raise ValidationError(_("Book proposal is not active for the current date."), code='no_timeframe')
+
+        semester = timeframe.semester
+        budget_spent = Order.objects.student_semester_order_count(student, semester)
+        budget_max = OrderTimeframe.objects.semester_budget(semester)
+        budget_left = budget_max - budget_spent
+
+        if budget_left <= 0:
+            raise ValidationError(_("You may not order or propose any more books in this timeframe."), code='no_budget_left')
+
+        return cleaned_data
+
 
 class ModuleSearchForm(forms.Form):
     name = forms.CharField(label=_("Name"), max_length=100, required=False)
     module_id = forms.CharField(label="Module ID", max_length=13, required=False)
-
-    def is_valid(self):
-        return super(ModuleSearchForm, self).is_valid()
 
 
 class AccountEditForm(forms.ModelForm):
