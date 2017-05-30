@@ -8,7 +8,7 @@
                 </h4>
             </div>
             <div class="panel-body">
-                {% trans "Currently logged in as" %}: <b>{{ tuid_user }}</b>
+                {% trans "Currently logged in as" %}: <b>{{ request.TUIDUser }}</b>
                 <form method="POST">
                     {% csrf_token %}
                     {% bootstrap_form form %}

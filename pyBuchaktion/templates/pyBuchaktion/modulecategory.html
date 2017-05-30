@@ -1,0 +1,14 @@
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">{{ name }}</h3>
+            </div>
+            <div class="list-group">
+                {% for module in module_list %}
+                <a href="{% url "pyBuchaktion:module" pk=module.id %}" class="list-group-item">
+                    <h4 class="list-group-item-heading">{{ module.name }}&nbsp;
+                        <small><i>{{ module.module_id }}</i></small>
+                    </h4>
+                </a>
+                {% endfor %}
+            </div>
+        </div>
