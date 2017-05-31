@@ -1,0 +1,18 @@
+{% load i18n %}
+<table class="table book-list">
+    <thead>
+        <tr>
+            <th>&nbsp;</th>
+            <th>{% trans "Author" %}</th>
+            <th>{% trans "ISBN-13" %}</th>
+            <th>{% trans "Publisher" %}</th>
+            <th>{% trans "Year" %}</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for book in books %}
+    {% include "pyBuchaktion/tags/table_row_book.html" %}
+    {% endfor %}
+    </tbody>
+</table>

@@ -1,0 +1,6 @@
+{% extends "page.html" %} {% load sekizai_tags static %}
+{% block content %}
+    {% addtoblock "css" %}
+        <link rel="stylesheet" type="text/css" href="{% static "pyBuchaktion/pyBuchaktion.css" %}"/>
+    {% endaddtoblock "css" %}
+{% endblock %}

@@ -1,0 +1,29 @@
+{% load i18n view_tools %}
+<tr>
+    <th colspan="4">{{ book.title }}</th>
+    <td colspan="2" style="text-align: right">
+        {% if book.state != 'AC' %}
+        <span class="label label-{{ book.state|get_state_class }}">
+            {{ book.statename }}
+        </span>
+        {% elif book.orderset|length > 0 %}
+        <span class="label label-success">
+            {% trans "Ordered" %}
+        </span>
+        {% else %}
+        <a href="{% url "pyBuchaktion:book_order" pk=book.id %}">
+            {% trans "Order this book" %}
+        </a>
+        {% endif %}
+    </td>
+</tr>
+<tr>
+    <td>&nbsp;</td>
+    <td>{{ book.author }}</td>
+    <td>{{ book.isbn_13 }}</td>
+    <td>{{ book.publisher }}</td>
+    <td>{{ book.year }}</td>
+    <td style="text-align: right">
+        <a class="btn btn-default" href="{% url "pyBuchaktion:book" pk=book.id %}">{% trans "Details" %}</a>
+    </td>
+</tr>

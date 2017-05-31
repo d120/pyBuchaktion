@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: pyBuchaktion\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-05-30 06:19+0200\n"
-"PO-Revision-Date: 2017-05-30 06:19+0100\n"
+"POT-Creation-Date: 2017-05-31 06:21+0200\n"
+"PO-Revision-Date: 2017-05-30 18:46+0100\n"
 "Last-Translator: Daniel Schweighöfer <dschweighoefer@d120.de>\n"
 "Language-Team: UA Buchaktion <buchaktion@d120.de>\n"
 "Language: de\n"
@@ -18,7 +18,7 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Poedit 1.6.10\n"
 
-#: admin.py:79 admin.py:289 models.py:221
+#: admin.py:79 admin.py:289 models.py:230
 msgid "orders"
 msgstr "Bestellungen"
 
@@ -30,7 +30,7 @@ msgstr "Ausgewählte Bücher akzeptieren"
 msgid "title"
 msgstr "Titel"
 
-#: admin.py:146 admin.py:147 models.py:369 models.py:370
+#: admin.py:146 admin.py:147 models.py:386 models.py:387
 msgid "{:%Y-%m-%d}"
 msgstr "{:%d.%m.%Y}"
 
@@ -39,7 +39,7 @@ msgstr "{:%d.%m.%Y}"
 msgid "%(start)s to %(end)s"
 msgstr "%(start)s bis %(end)s"
 
-#: admin.py:150 models.py:205 models.py:383
+#: admin.py:150 models.py:214 models.py:400
 msgid "order timeframe"
 msgstr "Bestellzeitraum"
 
@@ -90,7 +90,7 @@ msgstr ""
 msgid "order selected orders"
 msgstr "Ausgewählte Bestellungen bestellen"
 
-#: admin.py:294 models.py:248
+#: admin.py:294 models.py:257
 msgid "library id"
 msgstr "Büchereinummer"
 
@@ -109,11 +109,11 @@ msgstr ""
 msgid "send mail to students"
 msgstr "Ausgewählten Studenten eine E-Mail senden"
 
-#: admin.py:444 models.py:513
+#: admin.py:444 models.py:530
 msgid "german text"
 msgstr "deutscher Text"
 
-#: admin.py:448 models.py:516
+#: admin.py:448 models.py:533
 msgid "english text"
 msgstr "englischer Text"
 
@@ -125,7 +125,7 @@ msgstr ""
 msgid "Buchaktion Menu"
 msgstr "Buchaktionsmenü"
 
-#: cms_menus.py:15 templates/pyBuchaktion/books/base.html:35
+#: cms_menus.py:15 templates/pyBuchaktion/books/base.html:12
 msgid "Books"
 msgstr "Bücher"
 
@@ -133,34 +133,28 @@ msgstr "Bücher"
 msgid "All Books"
 msgstr "Alle Bücher"
 
-#: cms_menus.py:17 templates/pyBuchaktion/module_list.html:20
+#: cms_menus.py:17 templates/pyBuchaktion/module_list.html:9
 msgid "Modules"
 msgstr "Module"
 
-#: cms_menus.py:18 templates/pyBuchaktion/books/base.html:20
-#: templates/pyBuchaktion/books/base.html:25
-#: templates/pyBuchaktion/module_list.html:6
-#: templates/pyBuchaktion/module_list.html:11
+#: cms_menus.py:18 templates/pyBuchaktion/search_base.html:10
+#: templates/pyBuchaktion/search_base.html:15
 msgid "Search"
 msgstr "Suchen"
 
-#: cms_menus.py:25
+#: cms_menus.py:21
 msgid "Account"
 msgstr "Account"
 
-#: cms_menus.py:26 templates/pyBuchaktion/book_propose.html:15
+#: cms_menus.py:26 templates/pyBuchaktion/book_propose.html:16
 msgid "Propose"
 msgstr "Vorschlagen"
 
-#: cms_menus.py:28
-msgid "Login"
-msgstr ""
-
-#: cms_menus.py:45
+#: cms_menus.py:43
 msgid "Order book"
 msgstr "Buch bestellen"
 
-#: cms_menus.py:68
+#: cms_menus.py:66
 #, python-format
 msgid "Order #%s"
 msgstr "Bestellung #%s"
@@ -177,23 +171,28 @@ msgstr "Buchbestellungen sind für das aktuelle Datum nicht aktiviert."
 msgid "You may not order any more books in this timeframe."
 msgstr "Sie können in diesem Zeitrahmen keine Bücher mehr bestellen."
 
-#: forms.py:44 mail.py:77 templates/pyBuchaktion/books/base.html:44
+#: forms.py:44 mail.py:77 templates/pyBuchaktion/tags/table_orders.html:6
 msgid "Title"
 msgstr "Titel"
 
-#: forms.py:45 mail.py:78 templates/pyBuchaktion/book_base.html:19
-#: templates/pyBuchaktion/books/base.html:46
-#: templates/pyBuchaktion/order_detail.html:38
+#: forms.py:45 mail.py:78 templates/pyBuchaktion/order_detail.html:39
+#: templates/pyBuchaktion/tags/dlist_book.html:3
+#: templates/pyBuchaktion/tags/table_book.html:5
+#: templates/pyBuchaktion/tags/table_books.html:6
+#: templates/pyBuchaktion/tags/table_orders.html:7
 msgid "Author"
 msgstr "Autor"
 
-#: forms.py:46 mail.py:80 templates/pyBuchaktion/book_base.html:21
-#: templates/pyBuchaktion/books/base.html:47
+#: forms.py:46 mail.py:80 templates/pyBuchaktion/tags/dlist_book.html:7
+#: templates/pyBuchaktion/tags/table_book.html:7
+#: templates/pyBuchaktion/tags/table_books.html:7
+#: templates/pyBuchaktion/tags/table_orders.html:8
 msgid "ISBN-13"
 msgstr "ISBN-13"
 
-#: forms.py:47 templates/pyBuchaktion/book_base.html:20
-#: templates/pyBuchaktion/books/base.html:48
+#: forms.py:47 templates/pyBuchaktion/tags/dlist_book.html:5
+#: templates/pyBuchaktion/tags/table_book.html:6
+#: templates/pyBuchaktion/tags/table_books.html:8
 msgid "Publisher"
 msgstr "Verlag"
 
@@ -243,7 +242,7 @@ msgstr "Das Buchaktions Team"
 msgid "Published"
 msgstr "Erschienen"
 
-#: mail.py:86 templates/pyBuchaktion/order_detail.html:12
+#: mail.py:86 templates/pyBuchaktion/order_detail.html:16
 msgid "Hint"
 msgstr "Hinweis"
 
@@ -304,6 +303,60 @@ msgstr ""
 "Der voraussichtliche Termin für Bestellung bei unserem Händler ist der "
 "<b>{date}</b>"
 
+#: messages.py:11
+msgid ""
+"You may use this form to propose a book to us. This will automatically "
+"generate an order for that book for the current timeframe, helping us keep "
+"track on how many people would like to see the book available. \n"
+"\n"
+"You may cancel this order at any time, revoking your contribution to "
+"proposing this book."
+msgstr ""
+"Dieses Formular kann genutzt werden um uns ein Buch vorzuschlagen. Das wird "
+"automatisch eine Bestellung für das betreffende Buch erzeugen im aktuellen "
+"Bestellzeitraum erzeugen, um einen Einblick darin zu bekommen, wie viele "
+"Studenten das Buch gerne bestellen würden.Die Bestellung kann jederzeit "
+"wieder zurückgezogen werden und damit deinen Anteil am Buchvorschlag "
+"zurücknehmen."
+
+#: messages.py:15
+msgid ""
+"This order is associated with a proposed book. Until the book is confirmed, "
+"it will not be proceeded with. In any case, this order expresses your "
+"interest in this book, which improves the chance that it will get confirmed."
+msgstr ""
+"Diese Bestellung gehört zu einem vorgeschlagenen Buch. Bis das Buch "
+"bestätigt ist, wird die Bestellung nicht weiterverarbeitet. In jedem Fall "
+"drückt die Bestellung Interesse an dem Buch aus, was die Wahrscheinlichkeit "
+"erhöht, dass es bestätigt wird."
+
+#: messages.py:18
+#, python-brace-format
+msgid ""
+"This order is marked to be ordered from our book retailer on <b>{date}<b/>."
+msgstr ""
+"Diese Bestellung ist für den <b>{date}</b> zur Weitergabe an unseren Händler "
+"vorgemerkt."
+
+#: messages.py:19
+#, python-brace-format
+msgid ""
+"Below, you find the list of your orders. The current order timeframe is from "
+"<b>{start_date}</b> to <b>{end_date}</b>. You currently have "
+"<b>{budget_spent} of {budget_max}</b> available orders posted."
+msgstr ""
+"Dies ist die Liste aller deiner Bestellungen. Der aktuelle Bestellzeitraum "
+"ist vom <b>{start_date}</b> bis zum <b>{end_date}</b>. Du hast momentan "
+"<b>{budget_spent} von {budget_max}</b> erlaubte Bestellungen aufgegeben."
+
+#: messages.py:22
+msgid "No orders found!"
+msgstr "Keine Bestellungen gefunden!"
+
+#: messages.py:23
+msgid "You have not ordered any books!"
+msgstr "Du hast keine Bücher bestellt!"
+
 #: mixins.py:18
 msgid "This function is only available for students from faculty 20!"
 msgstr "Diese Funktion steht nur Studenten des Fachbereich 20 zur Verfügung!"
@@ -312,7 +365,7 @@ msgstr "Diese Funktion steht nur Studenten des Fachbereich 20 zur Verfügung!"
 msgid "Accepted"
 msgstr "Akzeptiert"
 
-#: models.py:63 models.py:169
+#: models.py:63 models.py:178
 msgid "Rejected"
 msgstr "Abgelehnt"
 
@@ -324,7 +377,7 @@ msgstr "Vorgeschlagen"
 msgid "Obsolete"
 msgstr "Veraltet"
 
-#: models.py:73 models.py:178
+#: models.py:73 models.py:187
 msgid "status"
 msgstr "Status"
 
@@ -340,15 +393,15 @@ msgstr "Preis"
 msgid "publisher"
 msgstr "Verlag"
 
-#: models.py:96 models.py:417
+#: models.py:96 models.py:434
 msgid "year"
 msgstr "Jahr"
 
-#: models.py:100 models.py:183
+#: models.py:100 models.py:192
 msgid "hint"
 msgstr "Hinweis"
 
-#: models.py:122 models.py:191
+#: models.py:122 models.py:200
 msgid "book"
 msgstr "Buch"
 
@@ -356,170 +409,170 @@ msgstr "Buch"
 msgid "books"
 msgstr "Bücher"
 
-#: models.py:167
+#: models.py:176
 msgid "Pending"
 msgstr "Offen"
 
-#: models.py:168 templates/pyBuchaktion/books/base.html:64
+#: models.py:177 templates/pyBuchaktion/tags/table_row_book.html:11
 msgid "Ordered"
 msgstr "Bestellt"
 
-#: models.py:170
+#: models.py:179
 msgid "Arrived"
 msgstr "Angekommen"
 
-#: models.py:198 models.py:294
+#: models.py:207 models.py:303
 msgid "student"
 msgstr "Student"
 
-#: models.py:215
-msgid "proposed book"
-msgstr "Buchvorschlag"
+#: models.py:224
+msgid "proposal"
+msgstr "Vorschlag"
 
-#: models.py:220
+#: models.py:229
 msgid "order"
 msgstr "Bestellung"
 
-#: models.py:257
+#: models.py:266
 msgid "TUID User"
 msgstr "TUID Benutzer"
 
-#: models.py:261
+#: models.py:270
 msgid "email"
 msgstr "E-Mail"
 
-#: models.py:270
+#: models.py:279
 msgid "Not selected"
 msgstr "Nicht gesetzt"
 
-#: models.py:271
+#: models.py:280
 msgid "German"
 msgstr "Deutsch"
 
-#: models.py:272
+#: models.py:281
 msgid "English"
 msgstr "Englisch"
 
-#: models.py:280
+#: models.py:289
 msgid "preferred language"
 msgstr "bevorzugte Sprache"
 
-#: models.py:295
+#: models.py:304
 msgid "students"
 msgstr "Studenten"
 
-#: models.py:339
+#: models.py:356
 msgid "start date"
 msgstr "Startdatum"
 
-#: models.py:344
+#: models.py:361
 msgid "end date"
 msgstr "Enddatum"
 
-#: models.py:350
+#: models.py:367
 msgid "allowed orders"
 msgstr "Erlaubte Bestellungen"
 
-#: models.py:357
+#: models.py:374
 msgid "spendings"
 msgstr "Ausgaben"
 
-#: models.py:364 models.py:444
+#: models.py:381 models.py:461
 msgid "semester"
 msgstr "Semester"
 
-#: models.py:371
+#: models.py:388
 #, python-format
 msgid "%(start)s to %(end)s (%(semester)s)"
 msgstr "%(start)s bis %(end)s (%(semester)s)"
 
-#: models.py:384
+#: models.py:401
 msgid "order timeframes"
 msgstr "Bestellzeiträume"
 
-#: models.py:401
+#: models.py:418
 msgid "Winter term"
 msgstr "Wintersemester"
 
-#: models.py:402
+#: models.py:419
 msgid "Summer term"
 msgstr "Sommersemester"
 
-#: models.py:410
+#: models.py:427
 msgid "season"
 msgstr "Saison"
 
-#: models.py:424
+#: models.py:441
 msgid "budget"
 msgstr "Budget"
 
-#: models.py:430
+#: models.py:447
 #, python-format
 msgid "Winter term 20%(year)d/%(next_year)d"
 msgstr "Wintersemester 20%(year)d/%(next_year)d"
 
-#: models.py:434
+#: models.py:451
 #, python-format
 msgid "Summer term 20%(year)d"
 msgstr "Sommersemester 20%(year)d"
 
-#: models.py:445
+#: models.py:462
 msgid "semesters"
 msgstr "Semester"
 
-#: models.py:459
+#: models.py:476
 msgid "module id"
 msgstr "Modul ID"
 
-#: models.py:462
+#: models.py:479
 msgid "name"
 msgstr "Name"
 
-#: models.py:465
+#: models.py:482
 msgid "last offered"
 msgstr "Zuletzt angeboten"
 
-#: models.py:468
+#: models.py:485
 msgid "literature"
 msgstr "Literatur"
 
-#: models.py:471
+#: models.py:488
 msgid "category"
 msgstr "Kategorie"
 
-#: models.py:483
+#: models.py:500
 msgid "module"
 msgstr "Modul"
 
-#: models.py:484
+#: models.py:501
 msgid "modules"
 msgstr "Module"
 
-#: models.py:490
+#: models.py:507
 msgid "german name"
 msgstr "deutscher Name"
 
-#: models.py:493
+#: models.py:510
 msgid "english name"
 msgstr "englischer Name"
 
-#: models.py:503
+#: models.py:520
 msgid "module category"
 msgstr "Modulkategorie"
 
-#: models.py:504
+#: models.py:521
 msgid "module categories"
 msgstr "Modulkategorien"
 
-#: models.py:510
+#: models.py:527
 msgid "key"
 msgstr "Schlüssel"
 
-#: models.py:525
+#: models.py:542
 msgid "display message"
 msgstr "Anzeigenachricht"
 
-#: models.py:526
+#: models.py:543
 msgid "display messages"
 msgstr "Anzeigenachrichten"
 
@@ -543,29 +596,21 @@ msgstr "von"
 msgid "Next Page"
 msgstr "Nächste Seite"
 
-#: templates/pyBuchaktion/account.html:36
+#: templates/pyBuchaktion/account.html:17
 msgid "Update"
 msgstr "Speichern"
 
-#: templates/pyBuchaktion/account.html:42
+#: templates/pyBuchaktion/account.html:22
 msgid "Logout"
 msgstr "Abmelden"
 
-#: templates/pyBuchaktion/account.html:44
+#: templates/pyBuchaktion/account.html:24
 msgid "Logout &amp; CAS Logout"
 msgstr "Abmelden &amp; aus CAS abmelden"
 
-#: templates/pyBuchaktion/account.html:52
+#: templates/pyBuchaktion/account.html:31
 msgid "Orders"
 msgstr "Bestellungen"
-
-#: templates/pyBuchaktion/account.html:68
-msgid "View"
-msgstr "Ansehen"
-
-#: templates/pyBuchaktion/account.html:85
-msgid "You are not logged in"
-msgstr "Du bist nicht angemeldet"
 
 #: templates/pyBuchaktion/account_create.html:7
 msgid "Registration for the Buchaktion"
@@ -628,10 +673,6 @@ msgstr "Senden"
 msgid "Cancel"
 msgstr "Abbrechen"
 
-#: templates/pyBuchaktion/book_base.html:22
-msgid "Publication year"
-msgstr "Erscheinungsjahr"
-
 #: templates/pyBuchaktion/book_detail.html:9
 msgid "Recommended by"
 msgstr "Empfohlen von"
@@ -640,9 +681,13 @@ msgstr "Empfohlen von"
 msgid "Order"
 msgstr "Bestellung"
 
+#: templates/pyBuchaktion/book_detail.html:30
+msgid "on"
+msgstr "am"
+
 #: templates/pyBuchaktion/book_detail.html:40
 #: templates/pyBuchaktion/book_order_form.html:31
-#: templates/pyBuchaktion/books/base.html:68
+#: templates/pyBuchaktion/tags/table_row_book.html:15
 msgid "Order this book"
 msgstr "Dieses Buch bestellen"
 
@@ -673,27 +718,19 @@ msgstr "Vollständige Liste"
 msgid "If you want to propose this book to us, you can send an email to"
 msgstr "Wenn du dieses Buch vorschlagen möchtest, schreib uns eine E-Mail an"
 
-#: templates/pyBuchaktion/books/base.html:27
+#: templates/pyBuchaktion/books/base.html:4
 msgid "Search for modules"
 msgstr "Suche nach Modulen"
 
-#: templates/pyBuchaktion/books/base.html:49
-msgid "Year"
-msgstr "Jahr"
-
-#: templates/pyBuchaktion/books/base.html:80
-msgid "Details"
-msgstr "Details"
-
-#: templates/pyBuchaktion/module.html:9
+#: templates/pyBuchaktion/module.html:10
 msgid "Last offered"
 msgstr "Zuletzt angeboten"
 
-#: templates/pyBuchaktion/module.html:16
+#: templates/pyBuchaktion/module.html:17
 msgid "Literature"
 msgstr "Literatur"
 
-#: templates/pyBuchaktion/module_list.html:37
+#: templates/pyBuchaktion/module_list.html:19
 msgid "Sorry, no modules matching this query were found!"
 msgstr "Entschuldige, keine passenden Module wurden gefunden!"
 
@@ -721,17 +758,38 @@ msgstr "Nein, Bestellung behalten"
 msgid "Order #"
 msgstr "Bestellung #"
 
-#: templates/pyBuchaktion/order_detail.html:16
-msgid "This order is marked to be ordered from our book retailer on "
-msgstr "Diese Bestellung ist zur Weitergabe an unseren Händler vorgemerkt am"
-
-#: templates/pyBuchaktion/order_detail.html:26
+#: templates/pyBuchaktion/order_detail.html:27
 msgid "Abort order"
 msgstr "Bestellung abbrechen"
 
-#: templates/pyBuchaktion/order_detail.html:34
+#: templates/pyBuchaktion/order_detail.html:35
 msgid "Book"
 msgstr "Buch"
+
+#: templates/pyBuchaktion/tags/dlist_book.html:9
+msgid "Publication year"
+msgstr "Erscheinungsjahr"
+
+#: templates/pyBuchaktion/tags/table_book.html:8
+#: templates/pyBuchaktion/tags/table_books.html:9
+msgid "Year"
+msgstr "Jahr"
+
+#: templates/pyBuchaktion/tags/table_orders.html:5
+msgid "ID"
+msgstr "ID"
+
+#: templates/pyBuchaktion/tags/table_orders.html:9
+msgid "Order on"
+msgstr "Bestellung am"
+
+#: templates/pyBuchaktion/tags/table_row_book.html:27
+msgid "Details"
+msgstr "Details"
+
+#: templates/pyBuchaktion/tags/table_row_order.html:15
+msgid "View"
+msgstr "Ansehen"
 
 #: templatetags/view_tools.py:25
 msgid "This book has been rejected, and may not be ordered"
@@ -739,13 +797,18 @@ msgstr "Dieses Buch wurde abgelehnt, und kann nicht bestellt werden"
 
 #: templatetags/view_tools.py:26
 msgid ""
-"This book has been proposed, but has yet to be confirmed by our team. Until "
-"then it may not be ordered."
+"This book has been proposed, but has yet to be confirmed by our team. Orders "
+"may be posted but will not be proceeded with before confirmation. An order "
+"of a proposed book expresses your interest in it, and will increase the "
+"probability of it being confirmed."
 msgstr ""
-"Dieses Buch wurde vorgeschlagen, muss aber erst vom Team der Buchaktion "
-"freigeschaltet werden, und kann solange nicht bestellt werden!"
+"Dieses Buch wurde vorgeschlagen, aber noch nicht von unserem Team bestätigt. "
+"Bestellungen können aufgegeben werden, die aber bis zur Bestätigung nicht "
+"weiterverarbeitet werden. Die Bestellung eines vorgeschlagenen Buches drückt "
+"Interesse daran aus, und erhöht damit die Wahrscheinlichkeit, dass dieses "
+"Buch bestätigt wird."
 
-#: templatetags/view_tools.py:28
+#: templatetags/view_tools.py:30
 msgid ""
 "This book has been marked obsolete, a new version is available. It may not "
 "be ordered"
@@ -753,7 +816,7 @@ msgstr ""
 "Dieses Buch ist als veraltet gekennzeichnet, eine neuere Version ist "
 "verfügbar. Es kann nicht bestellt werden."
 
-#: templatetags/view_tools.py:47
+#: templatetags/view_tools.py:49
 msgid ""
 "This book is marked for, but has not yet been ordered from our merchant. "
 "Until then, the order can be aborted at any time. We'll inform you when we "
@@ -763,7 +826,7 @@ msgstr ""
 "Bis dahin kann die Bestellung jederzeit storniert werden. Wir informieren "
 "dich wenn es endgültig bestellt oder abgelehnt wird."
 
-#: templatetags/view_tools.py:50
+#: templatetags/view_tools.py:52
 msgid ""
 "This book has been ordered from our merchant. We'll inform you when it "
 "arrived."
@@ -771,18 +834,31 @@ msgstr ""
 "Dieses Buch wurde bei unserem Händler bestellt, wir werden dich informieren "
 "wenn es angekommen ist"
 
-#: templatetags/view_tools.py:51
+#: templatetags/view_tools.py:53
 msgid "This order has been rejected."
 msgstr "Diese Bestellung wurde abgelehnt."
 
-#: templatetags/view_tools.py:52
+#: templatetags/view_tools.py:54
 msgid "The order was fulfilled, the book is now available."
 msgstr "Die Bestellung war erfolgreich, das Buch ist angekommen."
 
-#: views.py:124
+#: views.py:123
 #, python-format
 msgid "No %(verbose_name)s found matching the query"
 msgstr "Kein(e) %(verbose_name)s zu dieser Suche gefunden"
+
+#~ msgid "proposed book"
+#~ msgstr "Buchvorschlag"
+
+#~ msgid "You are not logged in"
+#~ msgstr "Du bist nicht angemeldet"
+
+#~ msgid ""
+#~ "This book has been proposed, but has yet to be confirmed by our team. "
+#~ "Until then it may not be ordered."
+#~ msgstr ""
+#~ "Dieses Buch wurde vorgeschlagen, muss aber erst vom Team der Buchaktion "
+#~ "freigeschaltet werden, und kann solange nicht bestellt werden!"
 
 #~ msgid "If you order now, the order will be posted to our merchant by"
 #~ msgstr ""
@@ -799,9 +875,6 @@ msgstr "Kein(e) %(verbose_name)s zu dieser Suche gefunden"
 
 #~ msgid "Forbidden"
 #~ msgstr "Zugriff verweigert"
-
-#~ msgid "You already ordered this book"
-#~ msgstr "Du hast dieses Buch bereits bestellt"
 
 #, fuzzy
 #~| msgid "Hint"
@@ -826,9 +899,6 @@ msgstr "Kein(e) %(verbose_name)s zu dieser Suche gefunden"
 
 #~ msgid "Not logged in"
 #~ msgstr "Nicht angemeldet"
-
-#~ msgid "Order not found"
-#~ msgstr "Bestellung nicht gefunden"
 
 #~ msgid "Are you sure?"
 #~ msgstr "Sind Sie sicher?"

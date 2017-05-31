@@ -96,7 +96,7 @@ class SearchFormContextMixin(ContextMixin):
         return queryset
 
     def get_queryset(self):
-        queryset = super(SearchFormContextMixin, self).get_queryset()
+        queryset = super().get_queryset()
         if self.request.form.is_valid():
             queryset = self.get_form_queryset(self.request.form.cleaned_data, queryset)
         return queryset

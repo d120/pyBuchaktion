@@ -1,21 +1,23 @@
-{% extends "page.html" %} {% load cms_tags view_tools i18n %}
+{% extends "pyBuchaktion/page.html" %} {% load buchaktion_tags view_tools i18n %}
 
 {% block content %}
+{{ block.super }}
     <div class="panel panel-{{ order.status|get_status_class }}">
         <div class="panel-heading">
             <h3 class="panel-title">{% trans "Order #" %}{{ order.id }}</h3>
         </div>
         <div class="panel-body">
         {% block panel-body %}
-            {{ order.status|get_status_text }}
+            {% if order.book.state == "PP" %}
+                {% message "proposal_order_intro" %}
+            {% else %}
+                {{ order.status|get_status_text }}
+            {% endif %}
             {% if order.hint %}
-            <br/><b>{% trans "Hint" %}:</b> {{ order.hint }}
+                <br/><b>{% trans "Hint" %}:</b> {{ order.hint }}
             {% endif %}
             {% if order.status == "PD" %}
-            <p>
-                {% trans "This order is marked to be ordered from our book retailer on " %}
-                <b>{{ order.order_timeframe.end_date }}</b>
-            </p>
+                {% message "order_marked_date" date=order.order_timeframe.end_date|date %}
             {% endif %}
         {% endblock panel-body %}
         </div>
@@ -35,8 +37,7 @@
         </div>
         <div class="list-group">
             <a class="list-group-item" href="{% url "pyBuchaktion:book" pk=order.book.id %}">
-                <b>{% trans "Author" %}</b>: <i>{{ order.book.author }}</i><br/>
-                <b>ISBN-13</b>: <i>{{ order.book.isbn_13 }}</i>
+                {% dlist_book order.book %}
             </a>
         </div>
     </div>

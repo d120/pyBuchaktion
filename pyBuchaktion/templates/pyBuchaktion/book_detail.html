@@ -1,4 +1,4 @@
-{% extends "pyBuchaktion/book_base.html" %} {% load cms_tags view_tools bootstrap_tags i18n %}
+{% extends "pyBuchaktion/book_base.html" %} {% load view_tools i18n %}
 
 {% block book_panels %}
 
@@ -27,7 +27,7 @@
             <div class="list-group">
                 {% for order in orders %}
                 <a class="list-group-item" href="{% url "pyBuchaktion:order" pk=order.id %}">
-                    {{ order }}
+                    #{{ order.id }}: {{ order.student }} {% trans "on" %} {{ order.order_timeframe.end_date }}
                     <span class="label label-{{ order.status|get_status_class }} pull-right">
                         {{ order.statusname }}
                     </span>

@@ -14,7 +14,7 @@
 from datetime import datetime
 
 from django.db import models
-from django.db.models import Sum
+from django.db.models import Sum, Prefetch
 from django.db.models.signals import pre_save
 from django.core.urlresolvers import reverse
 from django.utils.translation import ugettext_lazy as _
@@ -139,6 +139,15 @@ class OrderManager(models.Manager):
     def student_book_order_count(self, student, book):
         return self.student_book_orders(student, book).count()
 
+    def student_semester_budget_left(student, semester):
+        budget_spent = self.student_semester_order_count(student, semester)
+        budget_max = OrderTimeframe.objects.semester_budget(semester)
+        return budget_max - budget_spent
+
+    def student_annotate_book_queryset(self, student, queryset):
+        orders = self.filter(student=student)
+        return queryset.prefetch_related(Prefetch('order_set', queryset=orders, to_attr='orderset'))
+
 
 class Order(models.Model):
 
@@ -212,7 +221,7 @@ class Order(models.Model):
     # Get the name of the current status from the options
     def statusname(self):
         if self.status == Order.PENDING and self.book.state == Book.PROPOSED:
-            return _("proposed book")
+            return _("proposal")
         return [v for s, v in self.STATE_CHOICES if s == self.status][0]
 
     # Set the singular and plural names for i18n
@@ -321,6 +330,14 @@ class OrderTimeframeManager(models.Manager):
                 .filter(start_date__lte=date) \
                 .filter(end_date__gte=date) \
                 .earliest('end_date')
+        except OrderTimeframe.DoesNotExist as e:
+            return None
+
+    def upcoming(self, date=None):
+        if not date:
+            date = datetime.now()
+        try:
+            return self.filter(start_date__gt=date).earliest('end_date')
         except OrderTimeframe.DoesNotExist as e:
             return None
 

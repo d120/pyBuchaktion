@@ -1,0 +1,20 @@
+{% load buchaktion_tags i18n %}
+<table class="table order-table">
+    <thead>
+        <tr>
+            <th>{% trans "ID" %}</th>
+            <th>{% trans "Title" %}</th>
+            <th>{% trans "Author" %}</th>
+            <th>{% trans "ISBN-13" %}</th>
+            <th>{% trans "Order on" %}</th>
+            <th colspan="2"></th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for order in orders %}
+        {% include "pyBuchaktion/tags/table_row_order.html" %}
+    {% empty %}
+        <tr><td><div style="margin: 10px 20px 0 20px;">{% message none_key %}</div></td></tr>
+    {% endfor %}
+    </tbody>
+</table>

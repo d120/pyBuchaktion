@@ -1,0 +1,11 @@
+{% load i18n %}
+<dl class="dl-horizontal dlist-book">
+    <dt>{% trans "Author" %}</dt>
+    <dd>{{ book.author }}</dd>
+    <dt>{% trans "Publisher" %}</dt>
+    <dd>{{ book.publisher }}</dd>
+    <dt>{% trans "ISBN-13" %}</dt>
+    <dd>{{ book.isbn_13 }}</dd>
+    <dt>{% trans "Publication year" %}</dt>
+    <dd>{{ book.year }}</dd>
+</dl>

@@ -1,6 +1,7 @@
-{% extends "page.html" %} {% load cms_tags i18n %}
+{% extends "pyBuchaktion/page.html" %} {% load buchaktion_tags i18n %}
 
 {% block content %}
+{{ block.super }}
         <div class="panel panel-default">
             <div class="panel-heading">
                 <h4 class="panel-title">{{ module }}</h4>
@@ -15,13 +16,7 @@
             <div class="panel-heading">
                 <h4 class="panel-title">{% trans "Literature" %}</h4>
             </div>
-            <div class="list-group">
-        {% for book in module.literature.all %}
-                <a class="list-group-item" href="{% url "pyBuchaktion:book" pk=book.id %}">
-                    {{ book }}
-                </a>
-        {% endfor %}
-            </div>
+            {% table_books literature %}
         </div>
     {% endif %}
 {% endblock content %}

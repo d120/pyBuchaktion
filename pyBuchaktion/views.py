@@ -60,11 +60,10 @@ class BookListView(StudentRequestMixin, SearchFormContextMixin, VarPagedListView
 
     def get_queryset(self):
         queryset = super().get_queryset()
-        if hasattr(self.request, 'student'):
-            order_query = Order.objects.filter(student=self.request.student)
-            queryset = queryset.prefetch_related(
-                Prefetch('order_set', queryset=order_query, to_attr='ordercount')
-            )
+
+        if self.request.student:
+            queryset = Order.objects.student_annotate_book_queryset(self.request.student, queryset)
+
         return queryset
 
 
@@ -129,7 +128,7 @@ class BookOrderView(StudentRequiredMixin, NeverCacheMixin, CreateView):
 class ModuleListView(StudentRequestMixin, SearchFormContextMixin, VarPagedListView):
 
     """
-    The list view for all TUCaN modules.
+    The list view for all modules.
     """
 
     model = Module
@@ -138,7 +137,8 @@ class ModuleListView(StudentRequestMixin, SearchFormContextMixin, VarPagedListVi
     form_class = ModuleSearchForm
 
     def get_queryset(self):
-        return Module.objects.annotate(book_count=Count('literature')).filter(book_count__gt=0)
+        queryset = super().get_queryset()
+        return queryset.annotate(book_count=Count('literature')).filter(book_count__gt=0)
 
 
 class ModuleDetailView(StudentRequestMixin, DetailView):
@@ -150,6 +150,17 @@ class ModuleDetailView(StudentRequestMixin, DetailView):
     model = Module
     template_name = 'pyBuchaktion/module.html'
     context_object_name = 'module'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        if self.request.student:
+            context.update({'literature':
+                Order.objects.student_annotate_book_queryset(
+                    self.request.student,
+                    self.object.literature,
+                )
+            })
+        return context
 
 
 class ModuleCategoriesView(StudentRequestMixin, ListView):
@@ -203,6 +214,32 @@ class AccountView(StudentRequiredMixin, NeverCacheMixin, UpdateView):
     def get_object(self, queryset=None):
         return self.request.student
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        timeframe = OrderTimeframe.objects.current()
+        if timeframe:
+            context_name = 'timeframe'
+        else:
+            timeframe = OrderTimeframe.objects.upcoming()
+            if timeframe:
+                context_name = 'timeframe_upcoming'
+
+        if timeframe:
+            budget_spent = Order.objects.student_semester_order_count(self.request.student, timeframe.semester)
+            budget_max = OrderTimeframe.objects.semester_budget(timeframe.semester)
+
+            context.update({
+                context_name: timeframe,
+                'budget': {
+                    'spent': budget_spent,
+                    'max': budget_max,
+                    'left': budget_max - budget_spent,
+                },
+            })
+
+        return context
+
 
 class AccountCreateView(UnregisteredStudentRequiredMixin, NeverCacheMixin, CreateView):
     template_name = 'pyBuchaktion/account_create.html'
@@ -225,11 +262,6 @@ class AccountCreateView(UnregisteredStudentRequiredMixin, NeverCacheMixin, Creat
             kwargs['initial'] = {'email': tuid_user.email}
         return kwargs
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context.update({'tuid_user': self.request.TUIDUser})
-        return context
-
 
 class BookProposeView(StudentRequiredMixin, CreateView):
     model = Book
@@ -238,7 +270,7 @@ class BookProposeView(StudentRequiredMixin, CreateView):
 
     def get_form(self, form_class=None):
         form = super().get_form(form_class)
-        form.student = self.student
+        form.student = self.request.student
         return form
 
     def form_valid(self, form):
@@ -246,7 +278,7 @@ class BookProposeView(StudentRequiredMixin, CreateView):
         result = super().form_valid(form)
         order = Order(
             book=form.instance,
-            student=self.student,
+            student=self.request.student,
             status=Order.PENDING,
             order_timeframe=OrderTimeframe.objects.current()
         )

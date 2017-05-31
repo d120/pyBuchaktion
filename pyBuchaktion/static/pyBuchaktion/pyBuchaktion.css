@@ -1,0 +1,43 @@
+table.table.book-list > tbody > tr:nth-child(4n+1),
+table.table.book-list > tbody > tr:nth-child(4n+2) {
+    background-color: #eee;
+}
+
+table.table.book-list > tbody > tr:nth-child(2n+2) > td {
+    border-top: 0 !important;
+    padding-top: 0;
+    vertical-align: middle;
+}
+
+form.form-inline.search-form > * {
+    margin: 5px;
+}
+
+form.form-inline.search-form {
+    text-align: left;
+}
+
+table.order-table > tr.order > td > b,
+table.order-table > tbody > tr.order > td > b {
+    line-height: 30px;
+}
+
+table.order-table > tr.order > td,
+table.order-table > tbody > tr.order > td {
+	vertical-align: middle;
+}
+
+table.order-table > tbody > tr.order > td > a {
+    float: right;
+}
+
+table.order-table > tbody > tr.order > td > span.label {
+    line-height: inherit;
+    margin: 5px auto;
+    padding-top: 2px;
+    padding-bottom: 2px;
+}
+
+.panel>.panel-body>*:last-child, dl.dlist-book {
+    margin-bottom: 0;
+}

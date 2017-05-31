@@ -1,88 +1,45 @@
-{% extends "page.html" %} {% load cms_tags view_tools i18n bootstrap_tags sekizai_tags bootstrap3 %}
+{% extends "pyBuchaktion/page.html" %} {% load buchaktion_tags i18n bootstrap3 %}
 
 {% block content %}
+{{ block.super }}
 
-    {% addtoblock "css" %}
-        <style type="text/css">
-            table.order-table > tr.order > td > b,
-            table.order-table > tbody > tr.order > td > b {
-                vertical-align: middle;
-                line-height: 30px;
-            }
-            table.order-table > tbody > tr.order > td > a {
-                float: right;
-            }
-            table.order-table > tbody > tr.order > td > span.label {
-                line-height: inherit;
-                margin: 5px auto;
-                padding-top: 2px;
-                padding-bottom: 2px;
-            }
-        </style>{% endaddtoblock "css" %}
-
-    {% if student %}
-        <!-- {% date %} -->
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <h4 class="panel-title">
-                    {{ student.tuid_user }}
-                </h4>
-            </div>
-            <div class="panel-body">
-                <form method="POST">
-                    {% csrf_token %}
-                    {% bootstrap_form form %}
-                    <div class="form-group">
-                        <button type="submit" class="btn btn-default">{% trans "Update" %}</button>
-                    </div>
-                </form>
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h4 class="panel-title">
+                {{ student.tuid_user }}
+            </h4>
+        </div>
+        <div class="panel-body">
+            <form method="POST">
+                {% csrf_token %}
+                {% bootstrap_form form %}
+                <div class="form-group">
+                    <button type="submit" class="btn btn-default">{% trans "Update" %}</button>
+                </div>
             </form>
-            </div>
-            <div class="panel-footer">
-                <a href="{% url "pyTUID:logout" %}?next={% url "pyBuchaktion:books" %}" class="btn btn-danger">{% trans "Logout" %}</a>
-                <a href="{% url "pyTUID:logout" %}?next={% url "pyBuchaktion:books" %}&amp;cas_logout=True" class="btn btn-danger">
-                    {% trans "Logout &amp; CAS Logout" %}
-                </a>
-            </div>
         </div>
+        <div class="panel-footer">
+            <a href="{% url "pyTUID:logout" %}?next={% url "pyBuchaktion:books" %}" class="btn btn-danger">{% trans "Logout" %}</a>
+            <a href="{% url "pyTUID:logout" %}?next={% url "pyBuchaktion:books" %}&amp;cas_logout=True" class="btn btn-danger">
+                {% trans "Logout &amp; CAS Logout" %}
+            </a>
+        </div>
+    </div>
 
-        {% if student.order_set.count > 0 %}
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <h3 class="panel-title">{% trans "Orders" %}</h3>
-            </div>
-            <table class="table order-table">
-                {% for order in student.order_set.all %}
-                    <tr class="order">
-                        <td><b>#{{ order.id }}</b></td>
-                        <td><b>{{ order.book.title }}</b></td>
-                        <td><b>{{ order.book.author }}</b></td>
-                        <td><b>{{ order.book.isbn_13 }}</b></td>
-                        <td>
-                            <span class="label label-{{ order.status|get_status_class }} pull-right">
-                                {{ order.statusname }}
-                            </span>
-                        </td>
-                        <td>
-                            <a href="{% url "pyBuchaktion:order" pk=order.id %}" class="btn btn-default btn-sm">
-                                {% trans "View" %}
-                            </a>
-                        </td>
-                    {% if order.hint %}
-                    </tr>
-                    <tr><td colspan="6" style="border-top:initial; padding-top:0">
-                        <div class="well well-sm" style="margin-bottom: 0">
-                            {{ order.hint }}
-                        </div>
-                    </td></tr>
-                    {% endif %}
-                {% endfor %}
-            </table>
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title">{% trans "Orders" %}</h3>
         </div>
-        {% endif %}
-    {% else %}
-        <div class="alert alert-danger">
-        {% trans "You are not logged in" %}
+        <div class="panel-body">
+            {% if timeframe %}
+                {% message "account_orders_active" start_date=timeframe.start_date|date end_date=timeframe.end_date|date budget_spent=budget.spent budget_max=budget.max budget_left=budget.left %}
+            {% elif timeframe_upcoming %}
+                {% message "account_orders_active" start_date=timeframe_upcoming.start_date|date end_date=timeframe_upcoming.end_date|date budget_spent=budget.spent budget_max=budget.max budget_left=budget.left %}
+            {% else %}
+                {% message "account_orders_inactive" %}
+            {% endif %}
         </div>
-    {% endif %}
+        {% table_orders student.order_set.all "account_no_orders" %}
+    </div>
+
 {% endblock content %}

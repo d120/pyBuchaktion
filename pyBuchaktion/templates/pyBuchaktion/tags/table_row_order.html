@@ -1,0 +1,26 @@
+{% load i18n view_tools %}
+<tr class="order">
+    <td>#{{ order.id }}</td>
+    <td>{{ order.book.title|truncatechars:"20" }}</td>
+    <td>{{ order.book.author|truncatechars:"20" }}</td>
+    <td>{{ order.book.isbn_13 }}</td>
+    <td>{{ order.order_timeframe.end_date }}</td>
+    <td>
+        <span class="label label-{{ order.status|get_status_class }} pull-right">
+            {{ order.statusname }}
+        </span>
+    </td>
+    <td>
+        <a href="{% url "pyBuchaktion:order" pk=order.id %}" class="btn btn-default btn-sm">
+            {% trans "View" %}
+        </a>
+    </td>
+{% if order.hint %}
+</tr>
+<tr><td colspan="6" style="border-top:initial; padding-top:0">
+    <div class="well well-sm" style="margin-bottom: 0">
+        {{ order.hint }}
+    </div>
+</td>
+{% endif %}
+</tr>

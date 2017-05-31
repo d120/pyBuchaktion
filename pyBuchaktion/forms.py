@@ -19,7 +19,7 @@ class BookOrderForm(forms.ModelForm):
         book = order.book
 
         # Can the book be ordered
-        if book.state != Book.ACCEPTED:
+        if book.state not in (Book.ACCEPTED, Book.PROPOSED):
             raise ValidationError(_("This book is not available for ordering"), code='not_available')
 
         # does the student have an order for this already
