@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: pyBuchaktion\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-05-31 06:21+0200\n"
+"POT-Creation-Date: 2017-06-01 16:54+0200\n"
 "PO-Revision-Date: 2017-05-30 18:46+0100\n"
 "Last-Translator: Daniel Schweighöfer <dschweighoefer@d120.de>\n"
 "Language-Team: UA Buchaktion <buchaktion@d120.de>\n"
@@ -18,102 +18,102 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Poedit 1.6.10\n"
 
-#: admin.py:79 admin.py:289 models.py:230
+#: admin.py:85 admin.py:295 models.py:230
 msgid "orders"
 msgstr "Bestellungen"
 
-#: admin.py:84
+#: admin.py:90
 msgid "Accept selected books"
 msgstr "Ausgewählte Bücher akzeptieren"
 
-#: admin.py:142 models.py:48
+#: admin.py:148 models.py:48
 msgid "title"
 msgstr "Titel"
 
-#: admin.py:146 admin.py:147 models.py:386 models.py:387
+#: admin.py:152 admin.py:153 models.py:386 models.py:387
 msgid "{:%Y-%m-%d}"
 msgstr "{:%d.%m.%Y}"
 
-#: admin.py:148
+#: admin.py:154
 #, python-format
 msgid "%(start)s to %(end)s"
 msgstr "%(start)s bis %(end)s"
 
-#: admin.py:150 models.py:214 models.py:400
+#: admin.py:156 models.py:214 models.py:400
 msgid "order timeframe"
 msgstr "Bestellzeitraum"
 
-#: admin.py:158
+#: admin.py:164
 msgid "Export orders to custom CSV"
 msgstr "Exportiere Bestellungen als CSV"
 
-#: admin.py:175
+#: admin.py:181
 msgid "Rejecting orders: Are you sure?"
 msgstr "Bestellungen ablehnen: Bist du sicher?"
 
-#: admin.py:176
+#: admin.py:182
 msgid "The follwing orders will be rejected. Are you sure?"
 msgstr "Die folgenden Bestellungen werden abgelehnt. Bist du sicher?"
 
-#: admin.py:184
+#: admin.py:190
 msgid "reject selected orders"
 msgstr "Ausgewählte Bestellungen ablehnen"
 
-#: admin.py:201
+#: admin.py:207
 msgid "Marking as arrived: Are you sure?"
 msgstr "Als angekommen markieren: Bist du sicher?"
 
-#: admin.py:202
+#: admin.py:208
 msgid ""
 "The follwing orders will be marked as having been delivered. Are you sure?"
 msgstr ""
 "Die folgenden Bestellungen werden als angekommen markiert. Bist du sicher?"
 
-#: admin.py:210
+#: admin.py:216
 msgid "mark selected orders as arrived"
 msgstr "Ausgewählte Bestellungen als Angekommen markieren"
 
-#: admin.py:226
+#: admin.py:232
 msgid "Ordering: CSV-Export"
 msgstr "Bestellen: CSV-Export"
 
-#: admin.py:237
+#: admin.py:243
 msgid "Ordering: Are you sure?"
 msgstr "Bestellen: Bist du sicher?"
 
-#: admin.py:238
+#: admin.py:244
 msgid "The following orders will be marked as ordered. Are you sure?"
 msgstr ""
 "Die folgenden Bestellungen werden als bestellt markiert. Bist du sicher?"
 
-#: admin.py:246
+#: admin.py:252
 msgid "order selected orders"
 msgstr "Ausgewählte Bestellungen bestellen"
 
-#: admin.py:294 models.py:257
+#: admin.py:300 models.py:257
 msgid "library id"
 msgstr "Büchereinummer"
 
-#: admin.py:308
+#: admin.py:314
 msgid "Send notification email"
 msgstr "Hinweis-Nachricht senden"
 
-#: admin.py:309
+#: admin.py:315
 msgid ""
 "Write a custom notification here, which will be sent to all selected students"
 msgstr ""
 "Gebe eine beliebige Nachricht ein, die an alle ausgewählten Studenten "
 "gesendet werden soll"
 
-#: admin.py:317
+#: admin.py:323
 msgid "send mail to students"
 msgstr "Ausgewählten Studenten eine E-Mail senden"
 
-#: admin.py:444 models.py:530
+#: admin.py:452 models.py:537
 msgid "german text"
 msgstr "deutscher Text"
 
-#: admin.py:448 models.py:533
+#: admin.py:456 models.py:540
 msgid "english text"
 msgstr "englischer Text"
 
@@ -175,8 +175,7 @@ msgstr "Sie können in diesem Zeitrahmen keine Bücher mehr bestellen."
 msgid "Title"
 msgstr "Titel"
 
-#: forms.py:45 mail.py:78 templates/pyBuchaktion/order_detail.html:39
-#: templates/pyBuchaktion/tags/dlist_book.html:3
+#: forms.py:45 mail.py:78 templates/pyBuchaktion/tags/dlist_book.html:3
 #: templates/pyBuchaktion/tags/table_book.html:5
 #: templates/pyBuchaktion/tags/table_books.html:6
 #: templates/pyBuchaktion/tags/table_orders.html:7
@@ -242,7 +241,7 @@ msgstr "Das Buchaktions Team"
 msgid "Published"
 msgstr "Erschienen"
 
-#: mail.py:86 templates/pyBuchaktion/order_detail.html:16
+#: mail.py:86 templates/pyBuchaktion/order_detail.html:17
 msgid "Hint"
 msgstr "Hinweis"
 
@@ -524,55 +523,51 @@ msgstr "Semester"
 msgid "module id"
 msgstr "Modul ID"
 
-#: models.py:479
-msgid "name"
-msgstr "Name"
-
-#: models.py:482
-msgid "last offered"
-msgstr "Zuletzt angeboten"
-
-#: models.py:485
-msgid "literature"
-msgstr "Literatur"
-
-#: models.py:488
-msgid "category"
-msgstr "Kategorie"
-
-#: models.py:500
-msgid "module"
-msgstr "Modul"
-
-#: models.py:501
-msgid "modules"
-msgstr "Module"
-
-#: models.py:507
+#: models.py:479 models.py:514
 msgid "german name"
 msgstr "deutscher Name"
 
-#: models.py:510
+#: models.py:482 models.py:517
 msgid "english name"
 msgstr "englischer Name"
 
-#: models.py:520
+#: models.py:485
+msgid "last offered"
+msgstr "Zuletzt angeboten"
+
+#: models.py:488
+msgid "literature"
+msgstr "Literatur"
+
+#: models.py:491
+msgid "category"
+msgstr "Kategorie"
+
+#: models.py:507
+msgid "module"
+msgstr "Modul"
+
+#: models.py:508
+msgid "modules"
+msgstr "Module"
+
+#: models.py:527
 msgid "module category"
 msgstr "Modulkategorie"
 
-#: models.py:521
+#: models.py:528
 msgid "module categories"
 msgstr "Modulkategorien"
 
-#: models.py:527
+#: models.py:534
 msgid "key"
 msgstr "Schlüssel"
 
-#: models.py:542
+#: models.py:549
 msgid "display message"
 msgstr "Anzeigenachricht"
 
-#: models.py:543
+#: models.py:550
 msgid "display messages"
 msgstr "Anzeigenachrichten"
 
@@ -754,15 +749,15 @@ msgstr "Ja, Bestellung abbrechen"
 msgid "No, keep the order"
 msgstr "Nein, Bestellung behalten"
 
-#: templates/pyBuchaktion/order_detail.html:6
+#: templates/pyBuchaktion/order_detail.html:7
 msgid "Order #"
 msgstr "Bestellung #"
 
-#: templates/pyBuchaktion/order_detail.html:27
+#: templates/pyBuchaktion/order_detail.html:28
 msgid "Abort order"
 msgstr "Bestellung abbrechen"
 
-#: templates/pyBuchaktion/order_detail.html:35
+#: templates/pyBuchaktion/order_detail.html:36
 msgid "Book"
 msgstr "Buch"
 
@@ -846,6 +841,9 @@ msgstr "Die Bestellung war erfolgreich, das Buch ist angekommen."
 #, python-format
 msgid "No %(verbose_name)s found matching the query"
 msgstr "Kein(e) %(verbose_name)s zu dieser Suche gefunden"
+
+#~ msgid "name"
+#~ msgstr "Name"
 
 #~ msgid "proposed book"
 #~ msgstr "Buchvorschlag"

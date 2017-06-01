@@ -475,8 +475,11 @@ class Module(models.Model):
     # The custom id for a module
     module_id = models.CharField(max_length=13, unique=True, verbose_name=_("module id"))
 
-    # The name of the module
-    name = models.CharField(max_length=128, verbose_name=_("name"))
+    # The german name of the module
+    name_de = models.CharField(max_length=128, verbose_name=_("german name"))
+
+    # The english name of the module
+    name_en = models.CharField(max_length=128, verbose_name=_("english name"), blank = True)
 
     # The semester when the module was last offered
     last_offered = models.ForeignKey('Semester', on_delete=models.CASCADE, verbose_name=_("last offered"))
@@ -485,11 +488,15 @@ class Module(models.Model):
     literature = models.ManyToManyField('Book', verbose_name=_("literature"))
 
     # The category that this module will appear in
-    category = models.ForeignKey('ModuleCategory', on_delete=models.SET_NULL, null=True, verbose_name=_('category'))
+    category = models.ForeignKey('ModuleCategory', on_delete=models.SET_NULL, null=True, blank=True, verbose_name=_('category'))
 
     # Get the default string representation as "<name> [<module_id>]"
     def __str__(self):
         return '%(name)s [%(module_id)s]' % {'name': self.name, 'module_id': self.module_id}
+
+    @property
+    def name(self):
+        return self.name_en if get_language() == 'en' and self.name_en else self.name_de
 
     # Get the frontend url for this module via the module view
     def get_absolute_url(self):

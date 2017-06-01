@@ -140,6 +140,10 @@ class ModuleListView(StudentRequestMixin, SearchFormContextMixin, VarPagedListVi
         queryset = super().get_queryset()
         return queryset.annotate(book_count=Count('literature')).filter(book_count__gt=0)
 
+    def get_localized_field(self, field_key):
+        if field_key == 'name':
+            return 'name_' + get_language()
+
 
 class ModuleDetailView(StudentRequestMixin, DetailView):
 

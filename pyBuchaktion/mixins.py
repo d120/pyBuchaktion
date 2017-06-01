@@ -88,8 +88,12 @@ class SearchFormContextMixin(ContextMixin):
         context['form'] = self.request.form
         return context
 
+    def get_localized_field(self, field_key):
+        return field_key
+
     def get_form_queryset(self, data, queryset):
         for key, value in data.items():
+            key = self.get_localized_field(key)
             for val in value.split():
                 kwargs = {key + "__icontains": val}
                 queryset = queryset.filter(**kwargs)

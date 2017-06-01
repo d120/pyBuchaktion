@@ -61,6 +61,12 @@ class BookAdmin(ImportExportMixin, ModelAdmin):
         'state',
     )
 
+    search_fields = (
+        'title',
+        'author',
+        'isbn_13',
+    )
+
     actions = [
         'accept_selected',
     ]
@@ -378,13 +384,15 @@ class ModuleAdmin(ImportExportMixin, ModelAdmin):
     resource_class = ModuleResource
 
     list_display = (
-        'name',
+        'name_de',
+        'name_en',
         'module_id',
         'category',
     )
 
     search_fields = [
-        'name',
+        'name_de',
+        'name_en',
         'module_id',
     ]
 
