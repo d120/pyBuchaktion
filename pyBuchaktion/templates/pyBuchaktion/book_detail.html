@@ -2,7 +2,7 @@
 
 {% block book_panels %}
 
-    {% if book.tucanmodule_set.all %}
+    {% if book.module_set.all %}
         <div class="panel panel-default">
             <div class="panel-heading">
                 <h4 class="panel-title">
@@ -10,7 +10,7 @@
                 </h4>
             </div>
             <div class="list-group">
-                {% for mod in book.tucanmodule_set.all %}
+                {% for mod in book.module_set.all %}
                 <a class="list-group-item" href="{% url "pyBuchaktion:module" pk=mod.id %}">{{ mod }}</a>
                 {% endfor %}
             </div>

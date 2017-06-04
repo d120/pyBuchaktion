@@ -14,7 +14,7 @@ from django.core.mail.message import EmailMessage
 
 from import_export.resources import ModelResource
 from import_export.admin import ImportExportMixin
-from import_export.widgets import ManyToManyWidget
+from import_export.widgets import ManyToManyWidget, ForeignKeyWidget
 from import_export.fields import Field
 
 from .models import Book, Order, Student, OrderTimeframe, Module, Semester, ModuleCategory, DisplayMessage
@@ -351,13 +351,22 @@ class SemesterAdmin(ModelAdmin):
 
 
 class ModuleResource(ForeignKeyImportResourceMixin, ModelResource):
-    author = Field(
+    books = Field(
         column_name = 'books',
         attribute = 'literature',
         widget = ManyToManyWidget(
             Book,
             separator = '|',
             field = 'isbn_13',
+        ),
+    )
+
+    category = Field(
+        column_name = 'category__name_de',
+        attribute = 'category',
+        widget = ForeignKeyWidget(
+            ModuleCategory,
+            field = 'name_de',
         ),
     )
 
@@ -369,7 +378,9 @@ class ModuleResource(ForeignKeyImportResourceMixin, ModelResource):
             'last_offered__season',
         )
         fields = import_id_fields + (
-            'name',
+            'name_de',
+            'name_en',
+            'category',
             'books',
         )
 
@@ -401,8 +412,21 @@ class ModuleAdmin(ImportExportMixin, ModelAdmin):
     )
 
 
+class ModuleCategoryResource(ModelResource):
+
+    class Meta:
+        model = ModuleCategory
+        import_id_fields = (
+            'id',
+            'name_de',
+        )
+        fields = import_id_fields
+
+
 @register(ModuleCategory)
-class ModuleCategoryAdmin(ModelAdmin):
+class ModuleCategoryAdmin(ImportExportMixin, ModelAdmin):
+
+    resource_class = ModuleCategoryResource
 
     list_display = (
         'id',

@@ -21,6 +21,7 @@ MESSAGES = {
         "of {budget_max}</b> available orders posted."),
     'orders_none_found': _("No orders found!"),
     'account_no_orders': _("You have not ordered any books!"),
+    'module_no_literature': _("It seems that this module does not have any literature associated with it.")
 }
 
 def get_message(key):

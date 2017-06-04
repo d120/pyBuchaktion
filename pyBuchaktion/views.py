@@ -26,9 +26,11 @@ class VarPagedListView(ListView):
     def get_paginate_by(self, queryset):
         opts = self.request.GET
         if 'limit' in opts:
-            limit = int(opts['limit'])
-            if (limit in self.paginate_by_options):
+            try:
+                limit = int(opts['limit'])
                 self.paginate_by = limit
+            except (TypeError, ValueError):
+                self.paginate_by = self.paginate_by_default
         else:
             self.paginate_by = self.paginate_by_default
 
@@ -177,6 +179,16 @@ class ModuleCategoriesView(StudentRequestMixin, ListView):
         context = super().get_context_data(**kwargs)
         context.update({'misc_module_list': Module.objects.filter(category=None)})
         return context
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        queryset = queryset.annotate(module_count=Count('module'))
+        queryset = queryset.filter(module_count__gt=0)
+        modules = Module.objects.annotate(book_count=Count('literature'))
+        queryset = queryset.prefetch_related(
+            Prefetch('module_set', queryset=modules)
+        )
+        return queryset
 
 
 class OrderListView(StudentRequiredMixin, NeverCacheMixin, VarPagedListView):

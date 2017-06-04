@@ -82,9 +82,11 @@ class Book:
 
 # Model class to store a module.
 class Module:
-    def __init__(self, cid, name, url, candidates):
+    def __init__(self, cid, name, name_en, category, url, candidates):
         self.cid = cid
         self.name = name
+        self.name_en = name_en
+        self.category = category
         self.url = url
         self.books = []
         self.candidates = candidates
@@ -172,6 +174,9 @@ class IsbnMagic:
 # Class to access TUCaN and return the results as modules (see Module).
 class Tucan:
 
+    def __init__(self):
+        self.categories = []
+
     def should_consider(self, book_string):
         if len(book_string) < 15:
             return False
@@ -179,7 +184,7 @@ class Tucan:
             return False
         return True
 
-    def retrieveModule(self, module_url):
+    def retrieveModule(self, module_url, category):
         browser = self._createBrowser()
         browser.open(TUCAN_URL + module_url)
 
@@ -188,39 +193,92 @@ class Tucan:
         cid = cidname_match.group(1);
         name = cidname_match.group(2);
 
-        information = browser.select(TUCAN_MODULE_INFORMATION_SELECTOR);
-        literature = None
-        for info in information:
-            text = info.select(TUCAN_MODULE_INFORMATION_TYPE_SELECTOR)[0].text.lower()
-            if text.startswith('literatur'):
-                literature = info
-                break
+        elements = browser.select("table:nth-of-type(1) td.tbdata > *")
+        found = False
+        elems = []
+        for elem in elements:
+            titles = elem.select("b")
+            if len(titles) > 0:
+                if found:
+                    break
+                else:
+                    for tag in titles:
+                        if tag.string.lower().startswith('literatur'):
+                            found = True
+            if found:
+                elems.append(elem)
+
+        # Flatten Elems:
+        flat = False
+        while not flat:
+            flat = True
+            new_elems = []
+            for tag in elems:
+                if hasattr(tag,'name') and tag.name:
+                    new_elems += tag.contents
+                    flat = False
+                elif str(tag):
+                    new_elems.append(tag)
+            elems = new_elems
+
+        # Check the remaining
+        texts = []
+        for tag in elems:
+            tag = str(tag).strip()
+            texts.append(tag)
+
+        #information = browser.select(TUCAN_MODULE_INFORMATION_SELECTOR);
+        #literature = None
+        #for info in information:
+        #    text = info.select(TUCAN_MODULE_INFORMATION_TYPE_SELECTOR)[0].text.lower()
+        #    if text.startswith('literatur'):
+        #        literature = info
+        #        break
+
+        module_url_en = module_url.replace('-N000000000000001', '-N000000000000002')
+        browser.open(TUCAN_URL + module_url_en)
+
+        cidname_element_en = browser.select(TUCAN_MODULE_COURSE_IDNAME_SELECTOR)[0];
+        cidname_match_en = TUCAN_MODULE_COURSE_IDNAME_PATTERN.match(cidname_element_en.text);
+        cid_en = cidname_match_en.group(1);
+        name_en = cidname_match_en.group(2);
+
+        print(name)
+        print(name_en)
+
         candidates = []
-        if literature:
-            # Only process if there is literature, of course.
 
-            literature_content = TUCAN_MODULE_LITERATURE_CONTENT_PATTERN.sub(r'\2', str(literature).replace('\n', '').replace('\r', ''))
-            next_book = None
-            pause = False
-            for char in literature_content:
-                book = None
-                if char == '<':
-                    if next_book:
-                        book_string = unescape(TUCAN_MODULE_COURSE_NAME_NORMALIZE_PATTERN.sub(r'\1', next_book))
-                        if self.should_consider(book_string):
-                            candidates.append(book_string)
-                        next_book = None
-                    pause = True
-                elif char == '>':
-                    pause = False
-                elif not pause:
-                    next_book = next_book + char if next_book else char
-            if next_book:
-                book_string = unescape(TUCAN_MODULE_COURSE_NAME_NORMALIZE_PATTERN.sub(r'\1', next_book))
-                if self.should_consider(book_string):
-                    candidates.append(book_string)
+        for text in texts:
+            print(text)
+            if self.should_consider(text):
+                candidates.append(text)
 
-        return Module(cid, name, module_url, candidates)
+        #if literature:
+        #    # Only process if there is literature, of course.
+
+        #   literature_content = TUCAN_MODULE_LITERATURE_CONTENT_PATTERN.sub(r'\2', str(literature).replace('\n', '').replace('\r', ''))
+        #   next_book = None
+        #   pause = False
+        #   for char in literature_content:
+        #       book = None
+        #       if char == '<':
+        #           if next_book:
+        #               book_string = unescape(TUCAN_MODULE_COURSE_NAME_NORMALIZE_PATTERN.sub(r'\1', next_book))
+        #               if self.should_consider(book_string):
+        #                   candidates.append(book_string)
+        #               next_book = None
+        #           pause = True
+        #       elif char == '>':
+        #           pause = False
+        #       elif not pause:
+        #           next_book = next_book + char if next_book else char
+        #   if next_book:
+        #       book_string = unescape(TUCAN_MODULE_COURSE_NAME_NORMALIZE_PATTERN.sub(r'\1', next_book))
+        #       if self.should_consider(book_string):
+        #           candidates.append(book_string)
+
+        print("")
+        return Module(cid, name, name_en, category, module_url, candidates)
 
 
     def retrieveModules(self):
@@ -231,11 +289,12 @@ class Tucan:
         module_cids = []
         modules = {}
         i = 1
-        for url in module_urls:
+        for url, category in module_urls:
             try:
                 print("Loading module %d/%d..." % (i, len(module_urls)))
+                print(category)
 
-                module = tucan.retrieveModule(url)
+                module = tucan.retrieveModule(url, category)
                 if module.cid in modules:
                     print("Skipping module %d/%d as it is a duplicate!" % (i, len(module_urls)))
                 else:
@@ -244,8 +303,8 @@ class Tucan:
                 print("Loaded module %d." % i)
 
                 i += 1
-                #if i > 10:
-                #    break;
+                #if i > 5:
+                #    break
             except:
                 logging.warning("Failed to process module at <%s>! Error:" % url, exc_info = True)
 
@@ -270,15 +329,17 @@ class Tucan:
 
 
     def _retrieveModuleUrls(self, browser):
-        links = [ module['href'] for module in browser.select(TUCAN_MODULE_SELECTOR) ]
         breadcrumbs = browser.select(TUCAN_BREADCRUMBS_SELECTOR)
         breadcrumb = ""
-        for crumb in breadcrumbs:
-            tag_text = str(crumb)
-            text = TUCAN_LINK_NAME_PATTERN.match(tag_text)
-            txt = unescape(text.group(2)).replace(" &gt; ", " > ")
-            breadcrumb += txt
+        #for crumb in breadcrumbs:
+        crumb = breadcrumbs[-2]
+        tag_text = str(crumb)
+        text = TUCAN_LINK_NAME_PATTERN.match(tag_text)
+        txt = unescape(text.group(2))
+        breadcrumb += txt
         print(breadcrumb)
+        self.categories.append(breadcrumb)
+        links = [ (module['href'], breadcrumb) for module in browser.select(TUCAN_MODULE_SELECTOR) ]
         containers = browser.select(TUCAN_MODULE_CONTAINER_SELECTOR);
         for container in containers:
             if not 'Computational Engineering' in str(container):
@@ -304,13 +365,13 @@ class Tucan:
 ### SCRIPT ###
 ##############
 
-if len(argv) < 4:
+if len(argv) < 5:
     print("Usage: python ./tucan-export.py <books csv-file> <modules csv-file> <api-key>")
     exit(1)
 
 tucan = Tucan()
 modules = tucan.retrieveModules()
-isbnMagic = IsbnMagic(argv[3])
+isbnMagic = IsbnMagic(argv[4])
 books = {}
 i = 1
 imax = len(modules)
@@ -352,8 +413,17 @@ with open(book_export_file, 'w') as file:
 module_export_file = argv[2]
 with open(module_export_file, 'w') as file:
     writer = csv.writer(file, delimiter = ',', quotechar = '"', quoting = csv.QUOTE_MINIMAL)
-    writer.writerow(['books', 'module_id', 'name', 'last_offered__year', 'last_offered__season'])
-    print('Writing books file...')
+    writer.writerow(['books', 'category__name_de', 'module_id', 'name_de', 'name_en', 'last_offered__year', 'last_offered__season'])
+    print('Writing modules file...')
     for module in modules:
-        writer.writerow(['|'.join(module.books), module.cid, module.name, module.last_offered_year, module.last_offered_season])
+        writer.writerow(['|'.join(module.books), module.category, module.cid, module.name, module.name_en, module.last_offered_year, module.last_offered_season])
+    print(" Done!")
+
+category_export_file = argv[3]
+with open(category_export_file, 'w') as file:
+    writer = csv.writer(file, delimiter = ',', quotechar = '"', quoting = csv.QUOTE_MINIMAL)
+    writer.writerow(['name_de'])
+    print('Writing categories file...')
+    for category in tucan.categories:
+        writer.writerow([category,])
     print(" Done!")

@@ -5,6 +5,8 @@
     {% for category in modulecategory_list %}
         {% modulecategory_panel category.name category.module_set.all %}
     {% endfor %}
+    {% if misc_module_list %}
         {% trans "Miscellaneous" as misc_title %}
         {% modulecategory_panel misc_title misc_module_list %}
+    {% endif %}
 {% endblock %}

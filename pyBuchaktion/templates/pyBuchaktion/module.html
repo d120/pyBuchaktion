@@ -7,16 +7,26 @@
                 <h4 class="panel-title">{{ module }}</h4>
             </div>
             <div class="panel-body">
-                <b>{% trans "Last offered" %}:</b> {{ module.last_offered }}
+                <dl class="dl-horizontal">
+                    <dt>{% trans "Last offered" %}:</dt>
+                    <dd>{{ module.last_offered }}</dd>
+                    <dt>{% trans "Category" %}:</dt>
+                    <dd>{{ module.category }}</dd>
             </div>
         </div>
 
-    {% if literature %}
         <div class="panel panel-default">
             <div class="panel-heading">
                 <h4 class="panel-title">{% trans "Literature" %}</h4>
             </div>
-            {% table_books literature %}
+            {% if literature %}
+                {% table_books literature %}
+            {% else %}
+            <div class="panel-body">
+                {% url "pyBuchaktion:book_propose" as propose %}
+                {% message "module_no_literature" propose=propose %}
+            </div>
+            {% endif %}
         </div>
-    {% endif %}
+
 {% endblock content %}
