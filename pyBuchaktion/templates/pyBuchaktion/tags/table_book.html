@@ -1,4 +1,4 @@
-{% load i18n %}
+{% load i18n buchaktion_tags %}
 <table class="table table-bordered">
     <tbody>
         <tr>
@@ -10,7 +10,7 @@
         <tr>
             <td>{{ book.author }}</td>
             <td>{{ book.publisher }}</td>
-            <td>{{ book.isbn_13 }}</td>
+            <td>{{ book.isbn_13|isbn }}</td>
             <td>{{ book.year }}</td>
         </tr>
     </tbody>

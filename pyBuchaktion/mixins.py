@@ -15,7 +15,7 @@ from .settings import BUCHAKTION_STUDENT_LDAP_GROUP
 class LDAPLoginGate(TUIDUserInGroupMixin):
 
     group_required = BUCHAKTION_STUDENT_LDAP_GROUP
-    permission_denied_message = _("This function is only available for students from faculty 20!")
+    permission_denied_message = _("This feature is only available for students at the department of computer science! (dept. 20)")
 
 
 class StudentRequestMixin(View):

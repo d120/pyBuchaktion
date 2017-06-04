@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: pyBuchaktion\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-06-04 21:48+0200\n"
-"PO-Revision-Date: 2017-06-04 21:50+0100\n"
+"POT-Creation-Date: 2017-06-05 00:08+0200\n"
+"PO-Revision-Date: 2017-06-05 00:08+0100\n"
 "Last-Translator: Daniel Schweighöfer <dschweighoefer@d120.de>\n"
 "Language-Team: UA Buchaktion <buchaktion@d120.de>\n"
 "Language: de\n"
@@ -363,8 +363,12 @@ msgstr ""
 "Es scheint so, als ob zu diesem Modul keine Buchvorschläge vorhanden sind."
 
 #: mixins.py:18
-msgid "This function is only available for students from faculty 20!"
-msgstr "Diese Funktion steht nur Studenten des Fachbereich 20 zur Verfügung!"
+msgid ""
+"This feature is only available for students at the department of computer "
+"science! (dept. 20)"
+msgstr ""
+"Diese Funktion steht nur Studenten des Fachbereich Informatik (FB20) zur "
+"Verfügung!"
 
 #: models.py:62
 msgid "Accepted"
@@ -724,14 +728,18 @@ msgid "Search for modules"
 msgstr "Suche nach Modulen"
 
 #: templates/pyBuchaktion/module.html:11
+msgid "Module ID"
+msgstr "Modul ID"
+
+#: templates/pyBuchaktion/module.html:13
 msgid "Last offered"
 msgstr "Zuletzt angeboten"
 
-#: templates/pyBuchaktion/module.html:13
+#: templates/pyBuchaktion/module.html:15
 msgid "Category"
 msgstr "Kategorie"
 
-#: templates/pyBuchaktion/module.html:20
+#: templates/pyBuchaktion/module.html:22
 msgid "Literature"
 msgstr "Literatur"
 

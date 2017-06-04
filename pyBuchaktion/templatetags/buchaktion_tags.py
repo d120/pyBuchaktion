@@ -34,3 +34,9 @@ def table_orders(order_list, none_key='orders_none_found'):
 def message(key, **kwargs):
     stuff = format_html(linebreaks(get_message(key)), **kwargs)
     return stuff
+
+@register.filter()
+def isbn(isbn):
+    if len(isbn) < 13:
+        return isbn
+    return "-".join([isbn[0:3], isbn[3:5], isbn[5:9], isbn[9:12], isbn[12]])

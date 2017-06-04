@@ -1,4 +1,4 @@
-{% load i18n view_tools %}
+{% load i18n view_tools buchaktion_tags %}
 <tr>
     <th colspan="4">{{ book.title }}</th>
     <td colspan="2" style="text-align: right">
@@ -20,7 +20,7 @@
 <tr>
     <td>&nbsp;</td>
     <td>{{ book.author }}</td>
-    <td>{{ book.isbn_13 }}</td>
+    <td>{{ book.isbn_13|isbn }}</td>
     <td>{{ book.publisher }}</td>
     <td>{{ book.year }}</td>
     <td style="text-align: right">

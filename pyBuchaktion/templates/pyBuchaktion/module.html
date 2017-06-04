@@ -4,10 +4,12 @@
 {{ block.super }}
         <div class="panel panel-default">
             <div class="panel-heading">
-                <h4 class="panel-title">{{ module }}</h4>
+                <h4 class="panel-title">{{ module.name }}</h4>
             </div>
             <div class="panel-body">
                 <dl class="dl-horizontal">
+                    <dt>{% trans "Module ID" %}:</dt>
+                    <dd>{{ module.module_id }}</dd>
                     <dt>{% trans "Last offered" %}:</dt>
                     <dd>{{ module.last_offered }}</dd>
                     <dt>{% trans "Category" %}:</dt>
