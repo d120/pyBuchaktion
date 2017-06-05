@@ -121,6 +121,7 @@ class Book(models.Model):
     class Meta:
         verbose_name = _("book")
         verbose_name_plural = _("books")
+        ordering = ['title']
 
 
 class OrderManager(models.Manager):
@@ -506,6 +507,7 @@ class Module(models.Model):
     class Meta:
         verbose_name = _("module")
         verbose_name_plural = _("modules")
+        ordering = ['module_id']
 
 
 class ModuleCategory(models.Model):

@@ -40,3 +40,7 @@ def isbn(isbn):
     if len(isbn) < 13:
         return isbn
     return "-".join([isbn[0:3], isbn[3:5], isbn[5:9], isbn[9:12], isbn[12]])
+
+@register.filter()
+def prefix(text, prefix):
+    return prefix + text

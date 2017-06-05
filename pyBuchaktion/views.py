@@ -300,3 +300,12 @@ class BookProposeView(StudentRequiredMixin, CreateView):
         )
         order.save()
         return result
+
+    def form_invalid(self, form):
+        if form.has_error('isbn_13', 'unique'):
+            try:
+                book = Book.objects.get(isbn_13=self.request.POST.get('isbn_13', None))
+                return HttpResponseRedirect(reverse('pyBuchaktion:book', kwargs={'pk': book.pk}))
+            except (TypeError, ValueError, Book.DoesNotExist) as e:
+                form.add_error(ValidationError(e))
+        return super().form_invalid(form)

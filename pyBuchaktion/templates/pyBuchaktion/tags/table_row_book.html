@@ -1,7 +1,7 @@
 {% load i18n view_tools buchaktion_tags %}
 <tr>
-    <th colspan="4">{{ book.title }}</th>
-    <td colspan="2" style="text-align: right">
+    <th colspan="3">{{ book.title }}</th>
+    <td colspan="3" style="text-align: right">
         {% if book.state != 'AC' %}
         <span class="label label-{{ book.state|get_state_class }}">
             {{ book.statename }}

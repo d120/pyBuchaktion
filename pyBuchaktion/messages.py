@@ -21,7 +21,12 @@ MESSAGES = {
         "of {budget_max}</b> available orders posted."),
     'orders_none_found': _("No orders found!"),
     'account_no_orders': _("You have not ordered any books!"),
-    'module_no_literature': _("It seems that this module does not have any literature associated with it.")
+    'module_no_literature': _("It seems that this module does not have any literature associated with it."),
+    'book_state_RJ': _("This book has been rejected, and may not be ordered"),
+    'book_state_PP': _("This book has been proposed, but has yet to be confirmed by our team."),
+    'book_state_OL': _("This book has been marked obsolete, a new version is available. It may not be ordered"),
+    'book_not_ordered': _("You have not ordered this book"),
+    'order_proposed_book': _("Orders for proposed books will be proceeded with once the book is confirmed."),
 }
 
 def get_message(key):

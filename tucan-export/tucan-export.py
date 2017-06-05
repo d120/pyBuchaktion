@@ -402,12 +402,12 @@ print("Retrieved %d books." % count)
 book_export_file = argv[1]
 with open(book_export_file, 'w') as file:
     writer = csv.writer(file, delimiter = ',', quotechar = '"', quoting = csv.QUOTE_MINIMAL)
-    writer.writerow(['isbn_13', 'title', 'state', 'author', 'price', 'publisher', 'year'])
+    writer.writerow(['isbn_13', 'title', 'author', 'price', 'publisher', 'year'])
     print('Writing books file...', end='')
     count = 0
     for book in books.values():
         count += 1
-        writer.writerow([book.isbn, book.title, 'PP', book.author, book.price, book.publisher, book.year])
+        writer.writerow([book.isbn, book.title, book.author, book.price, book.publisher, book.year])
     print(" Done! Wrote {} books.".format(count))
 
 module_export_file = argv[2]

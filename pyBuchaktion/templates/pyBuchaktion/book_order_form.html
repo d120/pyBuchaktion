@@ -1,35 +1,40 @@
 {% extends "pyBuchaktion/book_base.html" %} {% load buchaktion_tags i18n %}
 
 {% block content %}
-    <form method="post">
-    {% csrf_token %}
-    <input type="hidden" name="book_id" value="{{ book.id }}">
-    {% if form.non_field_errors %}
-    <div class="alert alert-danger">
-        {% for error in form.non_field_errors %}
-            <b>{{ error|escape }}</b> {% if not forloop.first %}<br/>{% endif %}
-        {% endfor %}
-    </div>
-    {% else %}
-    <div class="alert alert-info">
-        {% if current_timeframe %}
-            {% message "book_order_active" date=current_timeframe|date %}
-        {% else %}
-            <b>{% message "book_order_inactive" %}</b>
-        {% endif %}
-    </div>
-    {% message "book_order_intro" %}
-    {% endif %}
     {{ block.super }}
-    </form>
-{% endblock content %}
 
-{% block panel_footer %}
-        {% if current_timeframe %}
-            <div class="panel-footer">
-                <button class="btn btn-primary" type="submit" value="Submit">
-                    {% trans "Order this book" %}
-                </button>
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title">{% trans "Order" %}</h3>
+        </div>
+        <div class="list-group">
+            {% for error in form.non_field_errors %}
+            <div class="list-group-item list-group-item-danger">
+                <b>{{ error|escape }}</b>
             </div>
+            {% empty %}
+            <div class="list-group-item list-group-item-info">
+                {% if current_timeframe %}
+                    {% message "book_order_active" date=current_timeframe|date %}
+                {% else %}
+                    {% message "book_order_inactive" %}
+                {% endif %}
+            </div>
+            {% endfor %}
+            <div class="list-group-item">
+                {% message "book_order_intro" %}
+            </div>
+        </div>
+        {% if current_timeframe %}
+        <div class="panel-footer">
+            <form method="post">
+                {% csrf_token %}
+                <input type="hidden" name="book_id" value="{{ book.id }}">
+                <button class="btn btn-primary" type="submit" value="Submit">
+                    {% trans "Post order" %}
+                </button>
+            </form>
+        </div>
         {% endif %}
-{% endblock panel_footer %}
+    </div>
+{% endblock content %}

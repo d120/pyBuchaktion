@@ -20,20 +20,6 @@ BOOK_STATE_CLASSES = {
 def get_state_class(state):
     return BOOK_STATE_CLASSES.get(state)
 
-BOOK_STATE_TEXTS = {
-    'AC': "",
-    'RJ': _("This book has been rejected, and may not be ordered"),
-    'PP': _("This book has been proposed, but has yet to be confirmed by our team. "
-            "Orders may be posted but will not be proceeded with before confirmation. "
-            "An order of a proposed book expresses your interest in it, and will increase "
-            "the probability of it being confirmed."),
-    'OL': _("This book has been marked obsolete, a new version is available. It may not be ordered"),
-}
-
-@register.filter
-def get_state_text(state):
-    return BOOK_STATE_TEXTS.get(state)
-
 ORDER_STATUS_CLASSES = {
     'PD': 'info',
     'OD': 'success',

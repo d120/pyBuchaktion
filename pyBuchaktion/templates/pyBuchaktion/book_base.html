@@ -1,22 +1,24 @@
-{% extends "pyBuchaktion/page.html" %} {% load cms_tags view_tools bootstrap_tags i18n %}
+{% extends "pyBuchaktion/page.html" %} {% load cms_tags buchaktion_tags view_tools bootstrap_tags i18n %}
 
 {% block content %}
 {{ block.super }}
-        {% if book.state != 'AC' %}
-        <div class="alert alert-{{ book.state|get_state_class }}">
-                {{ book.state|get_state_text }}
-        </div>
-        {% endif %}
-
         <div class="panel panel-default">
             <div class="panel-heading">
                 <h4 class="panel-title">
                     <i>{{ book.title }}</i>
                 </h4>
             </div>
+            {% if book.state != 'AC' %}
+                <div class="list-group">
+                    <div class="list-group-item list-group-item-{{ book.state|get_state_class }}">
+                        {% message book.state|prefix:"book_state_" %}
+                    </div>
+                </div>
+            {% endif %}
             <div class="panel-body">
                 {% include "pyBuchaktion/tags/dlist_book.html" %}
             </div>
+            {% block panel_content %}{% endblock panel_content %}
             {% block panel_footer %}{% endblock panel_footer %}
         </div>
 

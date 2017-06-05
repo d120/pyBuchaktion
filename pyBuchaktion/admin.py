@@ -21,8 +21,13 @@ from .models import Book, Order, Student, OrderTimeframe, Module, Semester, Modu
 from .mixins import ForeignKeyImportResourceMixin
 from .data import net_library_csv
 from .mail import OrderAcceptedMessage, OrderArrivedMessage, OrderRejectedMessage, CustomMessage
+from .templatetags.buchaktion_tags import isbn
 
 class BookResource(ModelResource):
+    
+    def init_instance(self, row):
+        return Book(state = Book.PROPOSED)
+
     class Meta:
         model = Book
         import_id_fields = (
@@ -30,7 +35,6 @@ class BookResource(ModelResource):
         )
         fields = import_id_fields + (
             'title',
-            'state',
             'author',
             'price',
             'publisher',
@@ -49,9 +53,9 @@ class BookAdmin(ImportExportMixin, ModelAdmin):
 
     # The columns that are displayed in the list view
     list_display = (
-        'title',
-        'author',
-        'isbn_13',
+        'title_truncated',
+        'author_truncated',
+        'isbn_pretty',
         'number_of_orders',
         'state',
     )
@@ -82,12 +86,27 @@ class BookAdmin(ImportExportMixin, ModelAdmin):
         return book.order__count
 
     number_of_orders.admin_order_field = 'order__count'
-    number_of_orders.short_description = _("orders")
+    number_of_orders.short_description = _("# ord.")
 
     def accept_selected(self, request, queryset):
         queryset.values("id").update(state=Book.ACCEPTED)
 
     accept_selected.short_description = _("Accept selected books")
+
+    def title_truncated(self, book):
+        return Truncator(book.title).chars(40)
+    title_truncated.admin_order_field = 'title'
+    title_truncated.short_description = _("title")
+
+    def author_truncated(self, book):
+        return Truncator(book.author).chars(40)
+    author_truncated.admin_order_field = 'author'
+    author_truncated.short_description = _("author")
+
+    def isbn_pretty(self, book):
+        return isbn(book.isbn_13)
+    isbn_pretty.admin_order_field = 'isbn_13'
+    isbn_pretty.short_description = _("ISBN-13")
 
 
 class OrderResource(ForeignKeyImportResourceMixin, ModelResource):

@@ -39,6 +39,6 @@ table.order-table > tbody > tr.order > td > span.label {
     padding-bottom: 2px;
 }
 
-.panel>.panel-body>*:last-child, dl.dlist-book {
+.panel>.panel-body>*:last-child, dl.dlist-book, .list-group-item>*:last-child {
     margin-bottom: 0;
 }
