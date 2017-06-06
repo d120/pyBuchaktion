@@ -384,11 +384,11 @@ class TUCaNLiteratureField(Field):
         ids = []
         for book in self.clean(data):
             literature, created = Literature.objects.get_or_create(
-                book=book, module=obj, source__in=(Literature.TUCAN, Literature.STAFF)
+                book=book, module=obj, source=Literature.TUCAN,
             )
             ids.append(literature.pk)
         obj.refresh_from_db(fields=['literature',])
-        Literature.objects.filter(source=Literature.TUCAN).exclude(pk__in=ids).delete()
+        Literature.objects.filter(source=Literature.TUCAN, module=obj).exclude(pk__in=ids).delete()
 
     def get_value(self, obj):
         return Book.objects.filter(
@@ -491,7 +491,6 @@ class ModuleCategoryResource(ModelResource):
     class Meta:
         model = ModuleCategory
         import_id_fields = (
-            'id',
             'name_de',
         )
         fields = import_id_fields
