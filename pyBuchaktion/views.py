@@ -159,13 +159,13 @@ class ModuleDetailView(StudentRequestMixin, DetailView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        literature = self.object.literature.all()
         if self.request.student:
-            context.update({'literature':
-                Order.objects.student_annotate_book_queryset(
-                    self.request.student,
-                    self.object.literature,
-                )
-            })
+            literature = Order.objects.student_annotate_book_queryset(
+                self.request.student,
+                literature,
+            ).all()
+        context.update({'literature': literature})
         return context
 
 
