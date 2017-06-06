@@ -486,7 +486,7 @@ class Module(models.Model):
     last_offered = models.ForeignKey('Semester', on_delete=models.CASCADE, verbose_name=_("last offered"))
 
     # The literature that is recommended by this module
-    literature = models.ManyToManyField('Book', verbose_name=_("literature"))
+    literature = models.ManyToManyField('Book', through='Literature', verbose_name=_("literature"))
 
     # The category that this module will appear in
     category = models.ForeignKey('ModuleCategory', on_delete=models.SET_NULL, null=True, blank=True, verbose_name=_('category'))
@@ -508,6 +508,34 @@ class Module(models.Model):
         verbose_name = _("module")
         verbose_name_plural = _("modules")
         ordering = ['module_id']
+
+
+class Literature(models.Model):
+    module = models.ForeignKey(Module, on_delete=models.CASCADE, related_name='literature_info')
+    book = models.ForeignKey(Book, on_delete=models.CASCADE, related_name='literature_info')
+
+    TUCAN='TC'
+    STAFF='SF'
+    STUDENT='SD'
+
+    # The options for seasons available
+    SOURCE_CHOICES = (
+        (TUCAN, _('TUCaN Export')),
+        (STAFF, _('Module Staff')),
+        (STUDENT, _('Student')),
+    )
+
+    # The season for this semester
+    source = models.CharField(
+        max_length=2,
+        choices=SOURCE_CHOICES,
+        default=TUCAN,
+        verbose_name=_("source"),
+    )
+
+    class Meta:
+        verbose_name = _("literature")
+        verbose_name_plural = _("literature")
 
 
 class ModuleCategory(models.Model):

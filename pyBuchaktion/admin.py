@@ -6,6 +6,7 @@
 
 from django.contrib.admin import ModelAdmin, register, helpers
 from django.db.models import Count
+from django.db.models.query import Prefetch
 from django.utils.translation import ugettext_lazy as _
 from django.utils.text import Truncator
 from django.http import HttpResponse
@@ -14,17 +15,17 @@ from django.core.mail.message import EmailMessage
 
 from import_export.resources import ModelResource
 from import_export.admin import ImportExportMixin
-from import_export.widgets import ManyToManyWidget, ForeignKeyWidget
+from import_export.widgets import ManyToManyWidget, ForeignKeyWidget, Widget
 from import_export.fields import Field
 
-from .models import Book, Order, Student, OrderTimeframe, Module, Semester, ModuleCategory, DisplayMessage
+from .models import Book, Order, Student, OrderTimeframe, Module, Literature, Semester, ModuleCategory, DisplayMessage
 from .mixins import ForeignKeyImportResourceMixin
 from .data import net_library_csv
 from .mail import OrderAcceptedMessage, OrderArrivedMessage, OrderRejectedMessage, CustomMessage
 from .templatetags.buchaktion_tags import isbn
 
 class BookResource(ModelResource):
-    
+
     def init_instance(self, row):
         return Book(state = Book.PROPOSED)
 
@@ -369,17 +370,42 @@ class SemesterAdmin(ModelAdmin):
     pass
 
 
-class ModuleResource(ForeignKeyImportResourceMixin, ModelResource):
-    books = Field(
-        column_name = 'books',
-        attribute = 'literature',
-        widget = ManyToManyWidget(
-            Book,
-            separator = '|',
-            field = 'isbn_13',
-        ),
-    )
+class TUCaNLiteratureWidget(ManyToManyWidget):
 
+    def __init__(self):
+        super().__init__(Book, separator = '|', field = 'isbn_13')
+
+class TUCaNLiteratureField(Field):
+
+    def __init__(self):
+        super().__init__(column_name='books', attribute='literature', widget=TUCaNLiteratureWidget())
+
+    def save(self, obj, data):
+        ids = []
+        for book in self.clean(data):
+            literature, created = Literature.objects.get_or_create(
+                book=book, module=obj, source__in=(Literature.TUCAN, Literature.STAFF)
+            )
+            ids.append(literature.pk)
+        obj.refresh_from_db(fields=['literature',])
+        Literature.objects.filter(source=Literature.TUCAN).exclude(pk__in=ids).delete()
+
+    def get_value(self, obj):
+        return Book.objects.filter(
+            literature_info__module=obj,
+            literature_info__source__in=[Literature.TUCAN, Literature.STAFF],
+        )
+
+
+class ModuleResource(ForeignKeyImportResourceMixin, ModelResource):
+    
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        queryset.prefetch_related(Prefetch('literature'))
+        return queryset
+
+
+    books = TUCaNLiteratureField()
     category = Field(
         column_name = 'category__name_de',
         attribute = 'category',
@@ -429,6 +455,35 @@ class ModuleAdmin(ImportExportMixin, ModelAdmin):
     list_filter = (
         'category',
     )
+
+
+@register(Literature)
+class LiteratureAdmin(ModelAdmin):
+
+    def get_queryset(self, request):
+        queryset = super().get_queryset(request)
+        queryset = queryset.prefetch_related(Prefetch('book'))
+        queryset = queryset.prefetch_related(Prefetch('module'))
+        return queryset
+
+
+    list_display = (
+        'title',
+        'module_name',
+        'source',
+    )
+
+    list_filter = (
+        'source',
+    )
+
+    def title(self, obj):
+        return Truncator(obj.book.title).chars(50)
+    title.short_description = _("title")
+
+    def module_name(self, obj):
+        return Truncator(obj.module.name).chars(50)
+    module_name.short_description = _("module")
 
 
 class ModuleCategoryResource(ModelResource):
