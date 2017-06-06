@@ -398,7 +398,7 @@ class TUCaNLiteratureField(Field):
 
 
 class ModuleResource(ForeignKeyImportResourceMixin, ModelResource):
-    
+
     def get_queryset(self):
         queryset = super().get_queryset()
         queryset.prefetch_related(Prefetch('literature'))
