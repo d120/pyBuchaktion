@@ -24,8 +24,8 @@ TUCAN_STARTPAGE_URL = "%s/scripts/mgrqcgi?APPNAME=CampusNet&PRGNAME=EXTERNALPAGE
 GOOGLE_BOOKS_BASE_PATH = '/books/v1/volumes?'
 # CSS Selectors.
 TUCAN_CC_SELECTOR = '#pageTopNavi ul a'
-#TUCAN_DEPT_SELECTOR = '#auditRegistration_list li[title="Dept. 20 - Computer Science"] a'
-TUCAN_DEPT_SELECTOR = '#auditRegistration_list li[title="FB20 - Informatik"] a'
+TUCAN_DEPT_SELECTOR = '#auditRegistration_list li[title="Dept. 20 - Computer Science"] a'
+# TUCAN_DEPT_SELECTOR = '#auditRegistration_list li[title="FB04 - Mathematik"] a'
 TUCAN_MODULE_CONTAINER_SELECTOR = '#auditRegistration_list li a'
 TUCAN_BREADCRUMBS_SELECTOR = '.pageElementTop > h2 > a'
 TUCAN_MODULE_COURSE_IDNAME_SELECTOR = '#pageContent form h1';
@@ -91,8 +91,7 @@ class Module:
         self.books = []
         self.candidates = candidates
         # WARNING: This has to be changed every season!
-        self.last_offered_year = 17
-        self.last_offered_season = 'S'
+        self.last_offered = 'S17'
 
 
     def __str__(self):
@@ -359,14 +358,12 @@ class Tucan:
             exit(1)
 # end: Tucan
 
-
-
 ##############
 ### SCRIPT ###
 ##############
 
 if len(argv) < 5:
-    print("Usage: python ./tucan-export.py <books csv-file> <modules csv-file> <api-key>")
+    print("Usage: python ./tucan-export.py <books csv-file> <modules csv-file> <categories csv-file> <api-key>")
     exit(1)
 
 tucan = Tucan()
@@ -413,10 +410,10 @@ with open(book_export_file, 'w') as file:
 module_export_file = argv[2]
 with open(module_export_file, 'w') as file:
     writer = csv.writer(file, delimiter = ',', quotechar = '"', quoting = csv.QUOTE_MINIMAL)
-    writer.writerow(['books', 'category__name_de', 'module_id', 'name_de', 'name_en', 'last_offered__year', 'last_offered__season'])
+    writer.writerow(['books', 'category__name_de', 'module_id', 'name_de', 'name_en', 'last_offered'])
     print('Writing modules file...')
     for module in modules:
-        writer.writerow(['|'.join(module.books), module.category, module.cid, module.name, module.name_en, module.last_offered_year, module.last_offered_season])
+        writer.writerow([', '.join(module.books), module.category, module.cid, module.name, module.name_en, module.last_offered])
     print(" Done!")
 
 category_export_file = argv[3]

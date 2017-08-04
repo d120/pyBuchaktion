@@ -19,6 +19,10 @@ def list_group_modules(module_list):
 def table_books(book_list):
     return {'books': book_list}
 
+@register.inclusion_tag('pyBuchaktion/tags/grid_books.html')
+def grid_books(book_list):
+    return {'books': book_list}
+
 @register.inclusion_tag('pyBuchaktion/tags/dlist_book.html')
 def dlist_book(book):
     return {'book': book}

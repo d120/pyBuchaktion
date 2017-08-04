@@ -21,12 +21,13 @@ MESSAGES = {
         "of {budget_max}</b> available orders posted."),
     'orders_none_found': _("No orders found!"),
     'account_no_orders': _("You have not ordered any books!"),
-    'module_no_literature': _("It seems that this module does not have any literature associated with it."),
+    'module_not_much_literature': _("It seems that this module does not have much literature associated with it."),
     'book_state_RJ': _("This book has been rejected, and may not be ordered"),
     'book_state_PP': _("This book has been proposed, but has yet to be confirmed by our team."),
     'book_state_OL': _("This book has been marked obsolete, a new version is available. It may not be ordered"),
     'book_not_ordered': _("You have not ordered this book"),
     'order_proposed_book': _("Orders for proposed books will be proceeded with once the book is confirmed."),
+    'account_orders_inactive': _("At the moment, no orders may be posted!"),
 }
 
 def get_message(key):
@@ -45,6 +46,6 @@ def get_message(key):
 
     # When nothing was found, check for debug flag
     if BUCHAKTION_MESSAGES_DEBUG and message == None:
-        return '\\' + key + '\\'
+        return '[msg:' + key + ']'
     else:
         return ""

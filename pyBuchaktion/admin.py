@@ -4,6 +4,8 @@
     and filters for the list view.
 """
 
+import re
+
 from django.contrib.admin import ModelAdmin, register, helpers
 from django.db.models import Count
 from django.db.models.query import Prefetch
@@ -74,6 +76,12 @@ class BookAdmin(ImportExportMixin, ModelAdmin):
 
     actions = [
         'accept_selected',
+    ]
+
+    fieldsets = [
+        ("", {
+            'fields': (('title',), ('author',), ('publisher', 'year'), ('isbn_13', 'price', 'state'), ('note',))
+        }),
     ]
 
     # Annotate the queryset with the number of orders.
@@ -160,6 +168,15 @@ class OrderAdmin(ImportExportMixin, ModelAdmin):
         "mark_arrived_selected",
         "reject_selected",
     ]
+
+    fieldsets = (
+        (_('General'), {
+            'fields': (('book',), ('student',), ('status', 'order_timeframe'))
+        }),
+        (_('Details'), {
+            'fields': (('hint',),)
+        }),
+    )
 
     # The title of the book to be ordered
     def book_title(self, order):
@@ -301,6 +318,12 @@ class StudentAdmin(ModelAdmin):
         'tuid_user',
     )
 
+    fieldsets = [
+        ("", {
+            'fields': (('tuid_user', 'email'), ('library_id','language'))
+        }),
+    ]
+
     # Annotate the queryset with the number of orders.
     def get_queryset(self, request):
         qs = super().get_queryset(request)
@@ -358,6 +381,12 @@ class OrderTimeframeAdmin(ModelAdmin):
         'semester',
     )
 
+    fieldsets = [
+        ("", {
+            'fields': (('semester',), ('start_date', 'end_date'), ('allowed_orders', 'spendings'))
+        }),
+    ]
+
 
 @register(Semester)
 class SemesterAdmin(ModelAdmin):
@@ -366,14 +395,32 @@ class SemesterAdmin(ModelAdmin):
         The admin for a semester.
     """
 
+    fieldsets = [
+        ("", {
+            'fields': (('season','year'), ('budget',))
+        }),
+    ]
+
     #radio_fields = {"season": admin.VERTICAL}
     pass
 
 
+SEMESTER_REGEX = re.compile("(W|S)(\d*)")
+
+class SemesterWidget(Widget):
+
+    def clean(self, value, row=None, *args, **kwargs):
+        match = SEMESTER_REGEX.match(value)
+        get_args = {'season': match.groups()[0], 'year': match.groups()[1]}
+        return Semester.objects.get(**get_args)
+
+    def render(self, value, obj=None):
+        return "{0}{1}".format(value.season, value.year)
+
 class TUCaNLiteratureWidget(ManyToManyWidget):
 
     def __init__(self):
-        super().__init__(Book, separator = '|', field = 'isbn_13')
+        super().__init__(Book, separator = ', ', field = 'isbn_13')
 
 class TUCaNLiteratureField(Field):
 
@@ -383,17 +430,25 @@ class TUCaNLiteratureField(Field):
     def save(self, obj, data):
         ids = []
         for book in self.clean(data):
-            literature, created = Literature.objects.get_or_create(
-                book=book, module=obj, source=Literature.TUCAN,
-            )
-            ids.append(literature.pk)
+            try:
+                literature_info = Literature.objects.get(book=book, module=obj)
+                if not literature_info.in_tucan:
+                    literature_info.update(in_tucan=True)
+            except Literature.DoesNotExist:
+                literature_info = Literature.objects.create(
+                    book=book, module=module, source=Literature.TUCAN, in_tucan=True
+                )
+            ids.append(literature_info.pk)
         obj.refresh_from_db(fields=['literature',])
-        Literature.objects.filter(source=Literature.TUCAN, module=obj).exclude(pk__in=ids).delete()
+
+        literature = Literature.objects.filter(module=obj).exclude(pk__in=ids)
+        literature.filter(source=Literature.TUCAN).delete()
+        literature.filter(in_tucan=True).update(in_tucan=False)
 
     def get_value(self, obj):
         return Book.objects.filter(
             literature_info__module=obj,
-            literature_info__source__in=[Literature.TUCAN, Literature.STAFF],
+            literature_info__in_tucan=True,
         )
 
 
@@ -407,7 +462,7 @@ class ModuleResource(ForeignKeyImportResourceMixin, ModelResource):
 
     books = TUCaNLiteratureField()
     category = Field(
-        column_name = 'category__name_de',
+        column_name = 'category',
         attribute = 'category',
         widget = ForeignKeyWidget(
             ModuleCategory,
@@ -415,17 +470,22 @@ class ModuleResource(ForeignKeyImportResourceMixin, ModelResource):
         ),
     )
 
+    last_offered = Field(
+        column_name = 'last_offered',
+        attribute = 'last_offered',
+        widget = SemesterWidget()
+    )
+
     class Meta:
         model = Module
         import_id_fields = (
             'module_id',
-            'last_offered__year',
-            'last_offered__season',
         )
         fields = import_id_fields + (
             'name_de',
             'name_en',
             'category',
+            'last_offered',
             'books',
         )
 
@@ -438,10 +498,11 @@ class ModuleAdmin(ImportExportMixin, ModelAdmin):
     """
 
     resource_class = ModuleResource
+    import_template_name = 'pyBuchaktion/admin/import.html'
 
     list_display = (
-        'name_de',
-        'name_en',
+        'name_de_short',
+        'name_en_short',
         'module_id',
         'category',
     )
@@ -455,6 +516,22 @@ class ModuleAdmin(ImportExportMixin, ModelAdmin):
     list_filter = (
         'category',
     )
+
+    fieldsets = [
+        ("", {
+            'fields': (('name_de','name_en'), ('module_id', 'category'), ('last_offered'))
+        }),
+    ]
+
+    def name_de_short(self, obj):
+        return Truncator(obj.name_de).chars(30)
+    name_de_short.short_description = _("german name")
+    name_de_short.admin_order_field = 'name_de'
+
+    def name_en_short(self, obj):
+        return Truncator(obj.name_en).chars(30)
+    name_en_short.short_description = _("english name")
+    name_en_short.admin_order_field = 'name_en'
 
 
 @register(Literature)
@@ -476,6 +553,12 @@ class LiteratureAdmin(ModelAdmin):
     list_filter = (
         'source',
     )
+
+    fieldsets = [
+        ("", {
+            'fields': (('module',), ('book',), ('source', 'in_tucan', 'active'))
+        }),
+    ]
 
     def title(self, obj):
         return Truncator(obj.book.title).chars(50)
@@ -505,6 +588,7 @@ class ModuleCategoryAdmin(ImportExportMixin, ModelAdmin):
         'id',
         'name_de',
         'name_en',
+        'visible',
     )
 
     list_display_links = (
@@ -512,8 +596,11 @@ class ModuleCategoryAdmin(ImportExportMixin, ModelAdmin):
     )
 
     fieldsets = (
-        ('Namen', {
+        (_('Names'), {
             'fields': (('name_de', 'name_en'),)
+        }),
+        (_('Settings'), {
+            'fields': (('visible',),)
         }),
     )
 
@@ -542,6 +629,12 @@ class DisplayMessageAdmin(ImportExportMixin, ModelAdmin):
         'key',
         'trunc_de',
         'trunc_en',
+    )
+
+    fieldsets = (
+        ("", {
+            'fields': (('key'), ('text_de','text_en'))
+        }),
     )
 
     def trunc_de(self, obj):

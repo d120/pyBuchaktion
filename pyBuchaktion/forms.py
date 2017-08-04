@@ -6,7 +6,7 @@ from django.utils.translation import ugettext_lazy as _
 from django.http.request import QueryDict
 from django.db.models import Sum
 
-from .models import Student, Order, Book, OrderTimeframe
+from .models import Student, Order, Book, OrderTimeframe, Literature
 
 class BookOrderForm(forms.ModelForm):
     class Meta:
@@ -38,6 +38,25 @@ class BookOrderForm(forms.ModelForm):
         if budget_left <= 0:
             raise ValidationError(_("You may not order any more books in this timeframe."), code='no_budget_left')
 
+
+class LiteratureCreateForm(forms.ModelForm):
+    class Meta:
+        model = Literature
+        fields = ['book']
+
+    def clean(self):
+        cleaned_data = super().clean()
+        literature = self.instance
+
+        book = cleaned_data['book']
+
+        # if book.state != Book.ACCEPTED:
+        #    raise ValidationError({'book':_("This book has not been accepted yet")}, code='not_accepted')
+
+        if Literature.objects.filter(module=literature.module, book=book).count() > 0:
+            raise ValidationError({'book':_("This book is already proposed for this module")}, code='exists')
+
+        return cleaned_data
 
 
 class BookSearchForm(forms.Form):

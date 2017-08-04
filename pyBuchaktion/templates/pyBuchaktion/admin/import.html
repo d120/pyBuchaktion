@@ -1,0 +1,10 @@
+{% extends "admin/import_export/import.html" %}
+
+{% block extrastyle %}
+{{ block.super }}
+        <style type="text/css">
+            table > tbody > tr > td {
+                padding: 5px 10px;
+            }
+        </style>
+{% endblock %}

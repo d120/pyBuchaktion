@@ -1,4 +1,5 @@
 from django.conf.urls import include, url
+from django.utils.translation import ugettext_lazy as _
 from .views import *
 
 app_name = 'pyBuchaktion'
@@ -13,7 +14,10 @@ urlpatterns = [
         ])),
     ])),
     url(r'^module/', include([
-        url(r'^(?P<pk>\d*)/$', ModuleDetailView.as_view(), name = 'module'),
+        url(r'^(?P<pk>\d*)/', include([
+            url(r'^$', ModuleDetailView.as_view(), name = 'module'),
+            url(r'^addbook/$', LiteratureCreateView.as_view(), name = 'addbook'),
+        ])),
         url(r'^search/', ModuleListView.as_view(), name='module_search'),
         url(r'^$', ModuleCategoriesView.as_view(), name = 'modules'),
     ])),

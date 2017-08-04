@@ -1,34 +1,40 @@
-{% extends "pyBuchaktion/page.html" %} {% load buchaktion_tags i18n %}
+{% extends "pyBuchaktion/module_base.html" %} {% load buchaktion_tags i18n %}
 
 {% block content %}
 {{ block.super }}
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <h4 class="panel-title">{{ module.name }}</h4>
-            </div>
-            <div class="panel-body">
-                <dl class="dl-horizontal">
-                    <dt>{% trans "Module ID" %}:</dt>
-                    <dd>{{ module.module_id }}</dd>
-                    <dt>{% trans "Last offered" %}:</dt>
-                    <dd>{{ module.last_offered }}</dd>
-                    <dt>{% trans "Category" %}:</dt>
-                    <dd>{{ module.category }}</dd>
-            </div>
-        </div>
 
+        {% if literature %}
         <div class="panel panel-default">
             <div class="panel-heading">
                 <h4 class="panel-title">{% trans "Literature" %}</h4>
             </div>
-            {% if literature %}
-                {% table_books literature %}
-            {% else %}
+            <div class="panel-body">
+                {% message "module_literature" %}
+            </div>
+            <div class="book-grid">
+                {% include "pyBuchaktion/tags/grid_books_header.html" %}
+                {% grid_books literature %}
+            </div>
+        </div>
+        {% endif %}
+
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4 class="panel-title">{% trans "Recommendations by other students" %}</h4>
+            </div>
             <div class="panel-body">
                 {% url "pyBuchaktion:book_propose" as propose %}
-                {% message "module_no_literature" propose=propose %}
+                {% url "pyBuchaktion:addbook" pk=module.id as addbook %}
+        {% if recommendations %}
+                {% message "module_recommendations" propose=propose addbook=addbook %}
             </div>
-            {% endif %}
+            <div class="book-grid">
+                {% include "pyBuchaktion/tags/grid_books_header.html" %}
+                {% grid_books recommendations %}
+        {% else %}
+                {% message "module_no_recommendations" propose=propose addbook=addbook %}
+        {% endif %}
+            </div>
         </div>
 
 {% endblock content %}

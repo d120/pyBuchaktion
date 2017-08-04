@@ -511,12 +511,12 @@ class Module(models.Model):
 
 
 class Literature(models.Model):
-    module = models.ForeignKey(Module, on_delete=models.CASCADE, related_name='literature_info')
-    book = models.ForeignKey(Book, on_delete=models.CASCADE, related_name='literature_info')
+    module = models.ForeignKey(Module, on_delete=models.CASCADE, related_name='literature_info', verbose_name=_('module'))
+    book = models.ForeignKey(Book, on_delete=models.CASCADE, related_name='literature_info', verbose_name=_('book'))
 
-    TUCAN='TC'
     STAFF='SF'
     STUDENT='SD'
+    TUCAN='TC'
 
     # The options for seasons available
     SOURCE_CHOICES = (
@@ -533,7 +533,18 @@ class Literature(models.Model):
         verbose_name=_("source"),
     )
 
+    in_tucan = models.BooleanField(
+        default=True,
+        verbose_name=_("in TUCaN")
+    )
+
+    active = models.BooleanField(
+        default=True,
+        verbose_name=_("active")
+    )
+
     class Meta:
+        unique_together = ('book', 'module')
         verbose_name = _("literature")
         verbose_name_plural = _("literature")
 
@@ -545,6 +556,9 @@ class ModuleCategory(models.Model):
 
     # The name for this category
     name_en = models.CharField(max_length = 128, verbose_name = _("english name"), blank = True)
+
+    # Whether the category should be visible
+    visible = models.BooleanField(default=True, verbose_name = _("visible"))
 
     # Get the displayed name: english if given and active, else german
     def name(self):

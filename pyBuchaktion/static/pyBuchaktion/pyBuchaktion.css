@@ -1,9 +1,9 @@
-table.table.book-list > tbody > tr:nth-child(4n+1),
-table.table.book-list > tbody > tr:nth-child(4n+2) {
+table.table.book-list > tbody > tr.book-row:nth-child(4n+1),
+table.table.book-list > tbody > tr.book-row-content:nth-child(4n+2) {
     background-color: #eee;
 }
 
-table.table.book-list > tbody > tr:nth-child(2n+2) > td {
+table.table.book-list > tbody > tr.book-row-content > td {
     border-top: 0 !important;
     padding-top: 0;
     vertical-align: middle;
@@ -41,4 +41,36 @@ table.order-table > tbody > tr.order > td > span.label {
 
 .panel>.panel-body>*:last-child, dl.dlist-book, .list-group-item>*:last-child {
     margin-bottom: 0;
+}
+
+.book-grid-row > div > div.display {
+    line-height: 1.5em;
+    padding: 0.5em 1em;
+}
+
+.book-grid-header > div > div.display {
+    padding: 0.5em 1em;
+    font-weight: bold;
+}
+
+.book-grid > h4 {
+    padding: 0.75em 0.9em;
+    border-bottom: 1px solid #DDD;
+    margin: 0;
+}
+
+.book-grid > hr {
+    border-color: #ddd;
+}
+
+.book-grid > div:not(.book-grid-header):nth-of-type(2n) {
+    background-color: #eee;
+}
+
+.book-grid > div.grid-book:not(:last-child) {
+    border-bottom: 1px solid #ddd;
+}
+
+.no-margin {
+    margin: 0;
 }

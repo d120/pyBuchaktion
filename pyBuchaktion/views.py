@@ -5,8 +5,8 @@ from django.utils.translation import get_language
 from django.http import HttpResponseRedirect
 from django.db.models import F, Count, ExpressionWrapper, Prefetch
 
-from .forms import BookSearchForm, ModuleSearchForm, AccountEditForm, BookOrderForm, BookProposeForm
-from .models import Book, Module, Order, Student, OrderTimeframe, ModuleCategory
+from .forms import BookSearchForm, ModuleSearchForm, AccountEditForm, BookOrderForm, BookProposeForm, LiteratureCreateForm
+from .models import Book, Module, Order, Student, OrderTimeframe, ModuleCategory, Literature
 from .mixins import SearchFormContextMixin, StudentRequestMixin, StudentRequiredMixin, NeverCacheMixin, UnregisteredStudentRequiredMixin
 
 
@@ -159,13 +159,22 @@ class ModuleDetailView(StudentRequestMixin, DetailView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        literature = self.object.literature.all()
+        books = Book.objects.filter(literature_info__module=self.object)
+        books = books.filter(state=Book.ACCEPTED)
+        get_args = {'literature_info__source': Literature.STUDENT}
+        literature = books.exclude(**get_args)
+        recommendations = books.filter(**get_args)
         if self.request.student:
             literature = Order.objects.student_annotate_book_queryset(
-                self.request.student,
-                literature,
+                self.request.student, literature,
             ).all()
-        context.update({'literature': literature})
+            recommendations = Order.objects.student_annotate_book_queryset(
+                self.request.student, recommendations,
+            ).all()
+        context.update({
+            'literature': literature,
+            'recommendations': recommendations,
+        })
         return context
 
 
@@ -182,6 +191,7 @@ class ModuleCategoriesView(StudentRequestMixin, ListView):
 
     def get_queryset(self):
         queryset = super().get_queryset()
+        queryset = queryset.filter(visible=True)
         queryset = queryset.annotate(module_count=Count('module'))
         queryset = queryset.filter(module_count__gt=0)
         modules = Module.objects.annotate(book_count=Count('literature'))
@@ -309,3 +319,32 @@ class BookProposeView(StudentRequiredMixin, CreateView):
             except (TypeError, ValueError, Book.DoesNotExist) as e:
                 form.add_error(ValidationError(e))
         return super().form_invalid(form)
+
+
+class LiteratureCreateView(StudentRequiredMixin, CreateView):
+    model = Module
+    form_class = LiteratureCreateForm
+    template_name_suffix = '_literature_create'
+
+    def get_success_url(self):
+        return reverse("pyBuchaktion:module", kwargs={'pk': self.object.module.pk})
+
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        if kwargs['instance'] is None:
+            kwargs['instance'] = Literature()
+            kwargs['instance'].module = Module.objects.get(pk=self.kwargs.get('pk', None))
+            kwargs['instance'].source = Literature.STUDENT
+            kwargs['instance'].in_tucan = False
+            kwargs['instance'].active = True
+        return kwargs
+
+    def get_form(self, form_class=None):
+        form = super().get_form(form_class)
+        # form.fields["book"].queryset = Book.objects.filter(state=Book.ACCEPTED)
+        return form
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context.update({'module': Module.objects.get(pk=self.kwargs.get('pk', None))})
+        return context
