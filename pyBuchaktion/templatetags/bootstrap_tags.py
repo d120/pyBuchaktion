@@ -2,16 +2,19 @@ from django import template
 
 register = template.Library()
 
+
 @register.inclusion_tag('bootstrap/alert_dismiss_button.html')
 def alert_dismiss_button():
-	return {}
+    return {}
+
 
 @register.inclusion_tag('bootstrap/form_field.html')
 def form_field(field):
     return {
-        'field_output': field.as_widget(attrs={'class': "form-control", 'placeholder':field.label}),
+        'field_output': field.as_widget(attrs={'class': "form-control", 'placeholder': field.label}),
         'field': field,
     }
+
 
 @register.inclusion_tag('bootstrap/form_field_static.html')
 def form_field_static(field):
@@ -19,9 +22,11 @@ def form_field_static(field):
         'field': field,
     }
 
+
 @register.inclusion_tag('bootstrap/form.html')
-def form(form):
-    return {'form' : form}
+def form(_form):
+    return {'form': _form}
+
 
 @register.inclusion_tag('bootstrap/form_labeled_field.html')
 def form_labeled_field(field):
@@ -33,6 +38,7 @@ def form_labeled_field(field):
         'label_tag': field.label_tag,
         'help_text': field.help_text,
     }
+
 
 @register.inclusion_tag('bootstrap/form_errors.html')
 def form_errors(errors):

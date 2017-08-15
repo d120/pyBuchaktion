@@ -1,7 +1,7 @@
 """
-    This module configures the administration views for this app.
-    There is a class for each model that defines display columns
-    and filters for the list view.
+This module configures the administration views for this app.
+There is a class for each model that defines display columns
+and filters for the list view.
 """
 
 import re
@@ -28,14 +28,13 @@ from .mail import OrderAcceptedMessage, OrderArrivedMessage, OrderRejectedMessag
 
 
 class BookResource(ModelResource):
-
     """
-        The django-import-export resource used to configure
-        the fields for import and export.
+    The django-import-export resource used to configure
+    the fields for import and export.
     """
 
     def init_instance(self, row):
-        return Book(state = Book.PROPOSED)
+        return Book(state=Book.PROPOSED)
 
     class Meta:
         model = Book
@@ -54,10 +53,9 @@ class BookResource(ModelResource):
 
 @register(Book)
 class BookAdmin(ImportExportMixin, ModelAdmin):
-
     """
-        The book admin displays title, author and isbn of a book,
-        as well as the number of orders for this book.
+    The book admin displays title, author and isbn of a book,
+    as well as the number of orders for this book.
     """
 
     resource_class = BookResource
@@ -141,13 +139,12 @@ class OrderResource(ForeignKeyImportResourceMixin, ModelResource):
             'order_timeframe__id',
         )
         fields = (
-            'status',
-        ) + import_id_fields
+                     'status',
+                 ) + import_id_fields
 
 
 @register(Order)
 class OrderAdmin(ImportExportMixin, ModelAdmin):
-
     """
         The admin for the orders, displaying the title of the ordered book,
         the student ordering the book and the timeframe.
@@ -229,12 +226,12 @@ class OrderAdmin(ImportExportMixin, ModelAdmin):
         elif not request.POST.get('_cancel'):
             context = dict(
                 self.admin_site.each_context(request),
-                title = _("Rejecting orders: Are you sure?"),
-                intro = _("The follwing orders will be rejected. Are you sure?"),
-                action = 'reject_selected',
-                queryset = queryset,
-                opts = self.opts,
-                action_checkbox_name = helpers.ACTION_CHECKBOX_NAME,
+                title=_("Rejecting orders: Are you sure?"),
+                intro=_("The follwing orders will be rejected. Are you sure?"),
+                action='reject_selected',
+                queryset=queryset,
+                opts=self.opts,
+                action_checkbox_name=helpers.ACTION_CHECKBOX_NAME,
             )
             return TemplateResponse(request, 'pyBuchaktion/admin/order_modify_bulk.html', context)
 
@@ -255,12 +252,12 @@ class OrderAdmin(ImportExportMixin, ModelAdmin):
         elif not request.POST.get('_cancel'):
             context = dict(
                 self.admin_site.each_context(request),
-                title = _("Marking as arrived: Are you sure?"),
-                intro = _("The follwing orders will be marked as having been delivered. Are you sure?"),
-                action = 'mark_arrived_selected',
-                queryset = queryset,
-                opts = self.opts,
-                action_checkbox_name = helpers.ACTION_CHECKBOX_NAME,
+                title=_("Marking as arrived: Are you sure?"),
+                intro=_("The follwing orders will be marked as having been delivered. Are you sure?"),
+                action='mark_arrived_selected',
+                queryset=queryset,
+                opts=self.opts,
+                action_checkbox_name=helpers.ACTION_CHECKBOX_NAME,
             )
             return TemplateResponse(request, 'pyBuchaktion/admin/order_modify_bulk.html', context)
 
@@ -280,31 +277,31 @@ class OrderAdmin(ImportExportMixin, ModelAdmin):
                     email.send()
             context = dict(
                 self.admin_site.each_context(request),
-                title = _("Ordering: CSV-Export"),
-                queryset = queryset,
-                opts = self.opts,
-                action_checkbox_name = helpers.ACTION_CHECKBOX_NAME,
+                title=_("Ordering: CSV-Export"),
+                queryset=queryset,
+                opts=self.opts,
+                action_checkbox_name=helpers.ACTION_CHECKBOX_NAME,
             )
             return TemplateResponse(request, 'pyBuchaktion/admin/order_order_selected_csv.html', context)
         elif request.POST.get('_ok'):
-            pass # return to list view
+            pass  # return to list view
         elif not request.POST.get('_cancel'):
             context = dict(
                 self.admin_site.each_context(request),
-                title = _("Ordering: Are you sure?"),
-                intro = _("The following orders will be marked as ordered. Are you sure?"),
-                action = 'order_selected',
-                queryset = queryset,
-                opts = self.opts,
-                action_checkbox_name = helpers.ACTION_CHECKBOX_NAME,
+                title=_("Ordering: Are you sure?"),
+                intro=_("The following orders will be marked as ordered. Are you sure?"),
+                action='order_selected',
+                queryset=queryset,
+                opts=self.opts,
+                action_checkbox_name=helpers.ACTION_CHECKBOX_NAME,
             )
             return TemplateResponse(request, 'pyBuchaktion/admin/order_modify_bulk.html', context)
 
     order_selected.short_description = _("order selected orders")
 
+
 @register(Student)
 class StudentAdmin(ModelAdmin):
-
     """
         The admin for students.
     """
@@ -334,7 +331,7 @@ class StudentAdmin(ModelAdmin):
 
     fieldsets = [
         ("", {
-            'fields': (('tuid_user', 'email'), ('library_id','language'))
+            'fields': (('tuid_user', 'email'), ('library_id', 'language'))
         }),
     ]
 
@@ -353,6 +350,7 @@ class StudentAdmin(ModelAdmin):
 
     def has_library_id(self, student):
         return True if student.library_id else False
+
     has_library_id.boolean = True
     has_library_id.short_description = _("library id")
 
@@ -368,12 +366,12 @@ class StudentAdmin(ModelAdmin):
         elif not request.POST.get('_cancel'):
             context = dict(
                 self.admin_site.each_context(request),
-                title = _("Send notification email"),
-                intro = _("Write a custom notification here, which will be sent to all selected students"),
-                action = 'sendmail',
-                queryset = queryset,
-                opts = self.opts,
-                action_checkbox_name = helpers.ACTION_CHECKBOX_NAME,
+                title=_("Send notification email"),
+                intro=_("Write a custom notification here, which will be sent to all selected students"),
+                action='sendmail',
+                queryset=queryset,
+                opts=self.opts,
+                action_checkbox_name=helpers.ACTION_CHECKBOX_NAME,
             )
             return TemplateResponse(request, 'pyBuchaktion/admin/student_sendmail.html', context)
 
@@ -382,7 +380,6 @@ class StudentAdmin(ModelAdmin):
 
 @register(OrderTimeframe)
 class OrderTimeframeAdmin(ModelAdmin):
-
     """
         The admin for order timeframes displays the start and end dates and
         the semester the timeframe belongs to.
@@ -404,25 +401,24 @@ class OrderTimeframeAdmin(ModelAdmin):
 
 @register(Semester)
 class SemesterAdmin(ModelAdmin):
-
     """
         The admin for a semester.
     """
 
     fieldsets = [
         ("", {
-            'fields': (('season','year'), ('budget',))
+            'fields': (('season', 'year'), ('budget',))
         }),
     ]
 
-    #radio_fields = {"season": admin.VERTICAL}
+    # radio_fields = {"season": admin.VERTICAL}
     pass
 
 
 SEMESTER_REGEX = re.compile("(W|S)(\d*)")
 
-class SemesterWidget(Widget):
 
+class SemesterWidget(Widget):
     def clean(self, value, row=None, *args, **kwargs):
         match = SEMESTER_REGEX.match(value)
         get_args = {'season': match.groups()[0], 'year': match.groups()[1]}
@@ -431,13 +427,13 @@ class SemesterWidget(Widget):
     def render(self, value, obj=None):
         return "{0}{1}".format(value.season, value.year)
 
-class TUCaNLiteratureWidget(ManyToManyWidget):
 
+class TUCaNLiteratureWidget(ManyToManyWidget):
     def __init__(self):
-        super().__init__(Book, separator = ', ', field = 'isbn_13')
+        super().__init__(Book, separator=', ', field='isbn_13')
+
 
 class TUCaNLiteratureField(Field):
-
     def __init__(self):
         super().__init__(column_name='books', attribute='literature', widget=TUCaNLiteratureWidget())
 
@@ -453,7 +449,7 @@ class TUCaNLiteratureField(Field):
                     book=book, module=module, source=Literature.TUCAN, in_tucan=True
                 )
             ids.append(literature_info.pk)
-        obj.refresh_from_db(fields=['literature',])
+        obj.refresh_from_db(fields=['literature', ])
 
         literature = Literature.objects.filter(module=obj).exclude(pk__in=ids)
         literature.filter(source=Literature.TUCAN).delete()
@@ -467,27 +463,25 @@ class TUCaNLiteratureField(Field):
 
 
 class ModuleResource(ForeignKeyImportResourceMixin, ModelResource):
-
     def get_queryset(self):
         queryset = super().get_queryset()
         queryset.prefetch_related(Prefetch('literature'))
         return queryset
 
-
     books = TUCaNLiteratureField()
     category = Field(
-        column_name = 'category',
-        attribute = 'category',
-        widget = ForeignKeyWidget(
+        column_name='category',
+        attribute='category',
+        widget=ForeignKeyWidget(
             ModuleCategory,
-            field = 'name_de',
+            field='name_de',
         ),
     )
 
     last_offered = Field(
-        column_name = 'last_offered',
-        attribute = 'last_offered',
-        widget = SemesterWidget()
+        column_name='last_offered',
+        attribute='last_offered',
+        widget=SemesterWidget()
     )
 
     class Meta:
@@ -506,7 +500,6 @@ class ModuleResource(ForeignKeyImportResourceMixin, ModelResource):
 
 @register(Module)
 class ModuleAdmin(ImportExportMixin, ModelAdmin):
-
     """
         The admin for a module displays the name and module id.
     """
@@ -533,30 +526,30 @@ class ModuleAdmin(ImportExportMixin, ModelAdmin):
 
     fieldsets = [
         ("", {
-            'fields': (('name_de','name_en'), ('module_id', 'category'), ('last_offered'))
+            'fields': (('name_de', 'name_en'), ('module_id', 'category'), ('last_offered'))
         }),
     ]
 
     def name_de_short(self, obj):
         return Truncator(obj.name_de).chars(30)
+
     name_de_short.short_description = _("german name")
     name_de_short.admin_order_field = 'name_de'
 
     def name_en_short(self, obj):
         return Truncator(obj.name_en).chars(30)
+
     name_en_short.short_description = _("english name")
     name_en_short.admin_order_field = 'name_en'
 
 
 @register(Literature)
 class LiteratureAdmin(ModelAdmin):
-
     def get_queryset(self, request):
         queryset = super().get_queryset(request)
         queryset = queryset.prefetch_related(Prefetch('book'))
         queryset = queryset.prefetch_related(Prefetch('module'))
         return queryset
-
 
     list_display = (
         'title',
@@ -576,15 +569,16 @@ class LiteratureAdmin(ModelAdmin):
 
     def title(self, obj):
         return Truncator(obj.book.title).chars(50)
+
     title.short_description = _("title")
 
     def module_name(self, obj):
         return Truncator(obj.module.name).chars(50)
+
     module_name.short_description = _("module")
 
 
 class ModuleCategoryResource(ModelResource):
-
     class Meta:
         model = ModuleCategory
         import_id_fields = (
@@ -595,7 +589,6 @@ class ModuleCategoryResource(ModelResource):
 
 @register(ModuleCategory)
 class ModuleCategoryAdmin(ImportExportMixin, ModelAdmin):
-
     resource_class = ModuleCategoryResource
 
     list_display = (
@@ -620,7 +613,6 @@ class ModuleCategoryAdmin(ImportExportMixin, ModelAdmin):
 
 
 class DisplayMessageResource(ModelResource):
-
     class Meta:
         model = DisplayMessage
         import_id_fields = 'key',
@@ -629,9 +621,9 @@ class DisplayMessageResource(ModelResource):
             'text_en',
         )
 
+
 @register(DisplayMessage)
 class DisplayMessageAdmin(ImportExportMixin, ModelAdmin):
-
     """
         The book admin displays title, author and isbn of a book,
         as well as the number of orders for this book.
@@ -647,14 +639,16 @@ class DisplayMessageAdmin(ImportExportMixin, ModelAdmin):
 
     fieldsets = (
         ("", {
-            'fields': (('key'), ('text_de','text_en'))
+            'fields': (('key'), ('text_de', 'text_en'))
         }),
     )
 
     def trunc_de(self, obj):
         return Truncator(obj.text_de).chars(60)
+
     trunc_de.short_description = _("german text")
 
     def trunc_en(self, obj):
         return Truncator(obj.text_en).chars(60)
+
     trunc_en.short_description = _("english text")
