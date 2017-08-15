@@ -1,4 +1,4 @@
-{% extends "pyBuchaktion/books/base.html" %}{% load i18n %}
+{% extends "pyBuchaktion/books/base.html" %}{% load i18n buchaktion_tags %}
 
 {% block noresults %}
 	<div class="panel panel-danger">
@@ -8,10 +8,8 @@
             </h4>
         </div>
         <div class="panel-body">
-            {% trans "If you want to propose this book to us, you can send an email to" %}
-            <a href="mailto:buchaktion@fachschaft.informatik.tu-darmstadt.de">
-                buchaktion@fachschaft.informatik.tu-darmstadt.de
-            </a>
+            {% url "pyBuchaktion:book_propose" as propose %}
+            {% message "book_not_found_all" propose=propose email="buchaktion@fachschaft.informatik.tu-darmstadt.de" %}
         </div>
     </div>
 {% endblock noresults %}
