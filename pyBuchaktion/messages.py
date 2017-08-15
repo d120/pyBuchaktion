@@ -9,9 +9,8 @@ MESSAGES = {
     'book_order_inactive': _("Book ordering is not active for the current date"),
     'book_order_intro': "",
     'book_propose_intro': _("You may use this form to propose a book to us. This "
-        "will automatically generate an order for that book for the current timeframe, "
-        "helping us keep track on how many people would like to see the book available. \n\n"
-        "You may cancel this order at any time, revoking your contribution to proposing this book."),
+        "will automatically generate an order for that book, helping us keep track on how many people "
+        "would like to see the book available.\n\nYou may cancel this order at any time."),
     'proposal_order_intro': _("This order is associated with a proposed book. "
         "Until the book is confirmed, it will not be proceeded with. In any case, this order "
         "expresses your interest in this book, which improves the chance that it will get confirmed."),
@@ -28,11 +27,21 @@ MESSAGES = {
     'book_not_ordered': _("You have not ordered this book"),
     'order_proposed_book': _("Orders for proposed books will be proceeded with once the book is confirmed."),
     'account_orders_inactive': _("At the moment, no orders may be posted!"),
+    'library_id_help': _("Your library ID number"),
 }
 
 def get_message(key):
+
+    """
+    Gets the message for the associated key from the most
+    customized source possible. Check the database first, then fall
+    back to the MESSAGES dictionary.
+    """
+
     if not key:
+        # TODO: is this needed somewhere or can we replace this with an error?
         return ""
+        # raise RuntimeException('Empty message key not allowed')
 
     # Try the display message objects
     display_message = DisplayMessage.objects.filter(key=key).first()
@@ -49,3 +58,25 @@ def get_message(key):
         return '[msg:' + key + ']'
     else:
         return ""
+
+
+class Message(object):
+    """
+    A message object that can be used instead of get_message
+    in places where the function would only be called at compile
+    time, such as Meta classes. This way we don't have to restart
+    the server for text changes to have an effect.
+
+    Just use `Message('key')` instead of `get_message('key')`.
+    """
+
+    # Creates a new message object
+    def __init__(self, key):
+
+        if not key:
+            raise RuntimeException('Empty message key not allowed')
+        self.key = key
+
+    # Gets the represented message
+    def __repr__(self):
+        return get_message(self.key)

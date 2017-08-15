@@ -5,6 +5,7 @@
 """
 
 import re
+import isbnlib
 
 from django.contrib.admin import ModelAdmin, register, helpers
 from django.db.models import Count
@@ -24,9 +25,14 @@ from .models import Book, Order, Student, OrderTimeframe, Module, Literature, Se
 from .mixins import ForeignKeyImportResourceMixin
 from .data import net_library_csv
 from .mail import OrderAcceptedMessage, OrderArrivedMessage, OrderRejectedMessage, CustomMessage
-from .templatetags.buchaktion_tags import isbn
+
 
 class BookResource(ModelResource):
+
+    """
+        The django-import-export resource used to configure
+        the fields for import and export.
+    """
 
     def init_instance(self, row):
         return Book(state = Book.PROPOSED)
@@ -36,6 +42,7 @@ class BookResource(ModelResource):
         import_id_fields = (
             'isbn_13',
         )
+
         fields = import_id_fields + (
             'title',
             'author',
@@ -43,6 +50,7 @@ class BookResource(ModelResource):
             'publisher',
             'year',
         )
+
 
 @register(Book)
 class BookAdmin(ImportExportMixin, ModelAdmin):
@@ -104,16 +112,22 @@ class BookAdmin(ImportExportMixin, ModelAdmin):
 
     def title_truncated(self, book):
         return Truncator(book.title).chars(40)
+
     title_truncated.admin_order_field = 'title'
     title_truncated.short_description = _("title")
 
     def author_truncated(self, book):
         return Truncator(book.author).chars(40)
+
     author_truncated.admin_order_field = 'author'
     author_truncated.short_description = _("author")
 
     def isbn_pretty(self, book):
-        return isbn(book.isbn_13)
+        try:
+            return isbnlib.mask(book.isbn_13)
+        except:
+            return book.isbn_13
+
     isbn_pretty.admin_order_field = 'isbn_13'
     isbn_pretty.short_description = _("ISBN-13")
 

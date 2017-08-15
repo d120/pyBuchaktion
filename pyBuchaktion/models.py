@@ -12,6 +12,7 @@
 """
 
 from datetime import datetime
+from isbnlib import mask
 
 from django.db import models
 from django.db.models import Sum, Prefetch
@@ -103,7 +104,7 @@ class Book(models.Model):
 
     # The default string output for a book as "<title> (<author>) [ISBN: <isbn>)"
     def __str__(self):
-        return '%s (%s) [ISBN: %s]' % (self.title, self.author, self.isbn_13)
+        return '%s (%s) [ISBN: %s]' % (self.title, self.author, mask(self.isbn_13))
 
     # Get the name of the current state from the options
     def statename(self):

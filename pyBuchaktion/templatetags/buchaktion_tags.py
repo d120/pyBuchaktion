@@ -1,5 +1,8 @@
+import isbnlib
+
 from django import template
 from django.utils.html import linebreaks, format_html
+
 from pyBuchaktion.messages import get_message
 
 register = template.Library()
@@ -41,9 +44,10 @@ def message(key, **kwargs):
 
 @register.filter()
 def isbn(isbn):
-    if len(isbn) < 13:
+    try:
+        return isbnlib.mask(isbn)
+    except:
         return isbn
-    return "-".join([isbn[0:3], isbn[3:5], isbn[5:9], isbn[9:12], isbn[12]])
 
 @register.filter()
 def prefix(text, prefix):

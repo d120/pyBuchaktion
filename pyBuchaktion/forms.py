@@ -6,9 +6,18 @@ from django.utils.translation import ugettext_lazy as _
 from django.http.request import QueryDict
 from django.db.models import Sum
 
+from .messages import get_message, Message
+
+import isbnlib
+
 from .models import Student, Order, Book, OrderTimeframe, Literature
 
 class BookOrderForm(forms.ModelForm):
+    """
+    Form used to order a single book. Requires to be created with an instance
+    of Order containing book and student to perform correct validation.
+    """
+
     class Meta:
         model = Order
         fields = []
@@ -40,6 +49,10 @@ class BookOrderForm(forms.ModelForm):
 
 
 class LiteratureCreateForm(forms.ModelForm):
+    """
+    Form to create a literatur model, which is the bridge between a book and a module.
+    """
+
     class Meta:
         model = Literature
         fields = ['book']
@@ -67,15 +80,25 @@ class BookSearchForm(forms.Form):
 
 
 class BookProposeForm(forms.ModelForm):
+
+    # Custom isbn_13 field to allow XXX-XX-XXXXX-XX-X format
+    isbn_13 = forms.CharField(label=_("ISBN-13"), max_length=17, required=True)
+
     class Meta:
         model = Book
         fields = ['isbn_13', 'title', 'author', 'publisher', 'year']
 
     def clean(self):
         cleaned_data = super().clean()
-        book = self.instance
         student = self.student
 
+        # Remove all non digit characters from the ISBN
+        cleaned_data['isbn_13'] = isbnlib.canonical(cleaned_data['isbn_13'])
+
+        if not isbnlib.is_isbn13(cleaned_data['isbn_13']):
+            raise ValidationError({'isbn_13': _("Not a valid ISBN-13")}, code='isbn_invalid')
+
+        # Get the current timeframe
         timeframe = OrderTimeframe.objects.current()
         if not timeframe:
             raise ValidationError(_("Book proposal is not active for the current date."), code='no_timeframe')
@@ -97,11 +120,12 @@ class ModuleSearchForm(forms.Form):
 
 
 class AccountEditForm(forms.ModelForm):
+
     class Meta:
         model = Student
         fields = ['email', 'library_id', 'language']
         help_texts = {
-            'library_id': _("The library id number assigned by the ULB, required for if you want the book to be reserved for you"),
+            'library_id': Message('library_id_help'),
             'language': _("The preferred language for notification emails"),
             'email': _("The e-mail address to recieve status updates"),
         }
