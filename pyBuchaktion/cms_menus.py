@@ -12,18 +12,20 @@ class PyBuchaktionMenu(CMSAttachMenu):
     def get_nodes(self, request):
 
         #n1 = NavigationNode(_('Buchaktion'), reverse('pyBuchaktion:index'), 1)
-        n2 = NavigationNode(_('Books'), reverse('pyBuchaktion:books'), 5001)
-        n3 = NavigationNode(_('All Books'), reverse('pyBuchaktion:books_all'), 5002, 5001)
-        n4 = NavigationNode(_('Modules'), reverse('pyBuchaktion:modules'), 5004)
-        n5 = NavigationNode(_('Search'), reverse('pyBuchaktion:module_search'), 5015, 5004)
-        nodes = [n4, n5, n2, n3]
+        nodes += [
+            NavigationNode(_('Books'), reverse('pyBuchaktion:books'), 5001),
+            NavigationNode(_('All Books'), reverse('pyBuchaktion:books_all'), 5002, 5001),
+            NavigationNode(_('Modules'), reverse('pyBuchaktion:modules'), 5004),
+            NavigationNode(_('Search'), reverse('pyBuchaktion:module_search'), 5015, 5004),
+        ]
 
         nodes += [NavigationNode(_("Account"), reverse('pyBuchaktion:account'), 5006),]
         #nodes += [NavigationNode(_("Logout"), reverse('pyTUID:logout'), 5020, 5006),]
         #nodes += [NavigationNode(_("Login"), reverse('pyTUID:login'), 5020),]
 
-        if hasattr(request, 'student') and request.student:
-            nodes += [NavigationNode(_("Propose"), reverse('pyBuchaktion:book_propose'), 5008, 5001)]
+        # This does not work well with caching
+        # if hasattr(request, 'student') and request.student:
+        nodes += [NavigationNode(_("Propose"), reverse('pyBuchaktion:book_propose'), 5008, 5001)]
 
         match = request.resolver_match
         if match.url_name in ['book', 'book_order']:
