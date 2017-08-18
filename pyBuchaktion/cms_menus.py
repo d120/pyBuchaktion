@@ -12,7 +12,7 @@ class PyBuchaktionMenu(CMSAttachMenu):
     def get_nodes(self, request):
 
         #n1 = NavigationNode(_('Buchaktion'), reverse('pyBuchaktion:index'), 1)
-        nodes += [
+        nodes = [
             NavigationNode(_('Books'), reverse('pyBuchaktion:books'), 5001),
             NavigationNode(_('All Books'), reverse('pyBuchaktion:books_all'), 5002, 5001),
             NavigationNode(_('Modules'), reverse('pyBuchaktion:modules'), 5004),
