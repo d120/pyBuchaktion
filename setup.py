@@ -1,8 +1,11 @@
 import os
+
+from distutils.cmd import Command
+from distutils.command.build import build as _build
+
 from setuptools import find_packages, setup
 from setuptools.command.install_lib import install_lib as _install_lib
-from distutils.command.build import build as _build
-from distutils.cmd import Command
+
 
 # allow setup.py to be run from any path
 os.chdir(os.path.normpath(os.path.join(os.path.abspath(__file__), os.pardir)))
@@ -42,7 +45,7 @@ class install_lib(_install_lib):
 
 setup(
     name='pyBuchaktion',
-    version='1.0.3',
+    version='1.0.4',
     packages=find_packages(),
     include_package_data=True,
     license='AGPL-3.0',
@@ -57,12 +60,12 @@ setup(
     install_requires=[
         'django>=1.10.0',
         'django-import-export',
-        'pyTUID>=1.1.1',
+        'pyTUID>=1.2.0',
         'django-bootstrap3',
         'isbnlib',
     ],
     dependency_links=[
-      'git+https://github.com/d120/pyTUID#egg=pyTUID-1.1.1',
+      'git+https://github.com/d120/pyTUID#egg=pyTUID-1.2.0',
     ],
     classifiers=[
         'Environment :: Web Environment',
