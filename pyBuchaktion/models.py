@@ -319,7 +319,9 @@ def save_student(sender, **kwargs):
 
 class OrderTimeframeManager(models.Manager):
 
-    def semester_budget(self, semester, date=datetime.now()):
+    def semester_budget(self, semester, date=None):
+        if not date:
+            date = datetime.now()
         return semester.ordertimeframe_set \
             .filter(start_date__lte=date) \
             .aggregate(Sum('allowed_orders'))['allowed_orders__sum']
