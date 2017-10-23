@@ -475,7 +475,7 @@ class TUCaNLiteratureField(Field):
                     literature_info.update(in_tucan=True)
             except Literature.DoesNotExist:
                 literature_info = Literature.objects.create(
-                    book=book, module=module, source=Literature.TUCAN, in_tucan=True
+                    book=book, module=obj, source=Literature.TUCAN, in_tucan=True
                 )
             ids.append(literature_info.pk)
         obj.refresh_from_db(fields=['literature', ])
