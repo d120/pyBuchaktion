@@ -214,6 +214,7 @@ class OrderAdmin(ImportExportMixin, ModelAdmin):
     # The admin action for rejecting all selected orders at once.
     def reject_selected(self, request, queryset):
         if request.POST.get('_proceed'):
+            errors = []
             hint = request.POST.get('hint')
             sendmails = '_sendmails' in request.POST
             for order in queryset:
@@ -222,7 +223,18 @@ class OrderAdmin(ImportExportMixin, ModelAdmin):
                 order.save()
                 if sendmails:
                     email = OrderRejectedMessage(order)
-                    email.send()
+                    try:
+                        email.send()
+                    except Exception:
+                        errors += [order.student.email]
+            if len(errors) > 0:
+                context = dict(
+                    self.admin_site.each_context(request),
+                    title=_("Errors"),
+                    intro=_("The following emails could not be sent"),
+                    errors=errors
+                )
+                return TemplateResponse(request, 'pyBuchaktion/admin/order_error.html', context)
         elif not request.POST.get('_cancel'):
             context = dict(
                 self.admin_site.each_context(request),
@@ -240,6 +252,7 @@ class OrderAdmin(ImportExportMixin, ModelAdmin):
     # The admin action for marking all selected orders as arrived.
     def mark_arrived_selected(self, request, queryset):
         if request.POST.get('_proceed'):
+            errors=[]
             sendmails = '_sendmails' in request.POST
             hint = request.POST.get('hint', "")
             for order in queryset:
@@ -248,7 +261,18 @@ class OrderAdmin(ImportExportMixin, ModelAdmin):
                 order.save()
                 if sendmails:
                     email = OrderArrivedMessage(order)
-                    email.send()
+                    try:
+                        email.send()
+                    except Exception:
+                        errors += [order.student.email]
+            if len(errors) > 0:
+                context = dict(
+                    self.admin_site.each_context(request),
+                    title=_("Errors"),
+                    intro=_("The following emails could not be sent"),
+                    errors=errors
+                )
+                return TemplateResponse(request, 'pyBuchaktion/admin/order_error.html', context)
         elif not request.POST.get('_cancel'):
             context = dict(
                 self.admin_site.each_context(request),
@@ -266,6 +290,7 @@ class OrderAdmin(ImportExportMixin, ModelAdmin):
     # The admin action for ordering the selected books
     def order_selected(self, request, queryset):
         if request.POST.get('_proceed'):
+            errors=[]
             sendmails = '_sendmails' in request.POST
             hint = request.POST.get('hint', "")
             for order in queryset:
@@ -274,12 +299,16 @@ class OrderAdmin(ImportExportMixin, ModelAdmin):
                 order.save()
                 if sendmails:
                     email = OrderAcceptedMessage(order)
-                    email.send()
+                    try:
+                        email.send()
+                    except Exception:
+                        errors += [order.student.email]
             context = dict(
                 self.admin_site.each_context(request),
                 title=_("Ordering: CSV-Export"),
                 queryset=queryset,
                 opts=self.opts,
+                errors=[],
                 action_checkbox_name=helpers.ACTION_CHECKBOX_NAME,
             )
             return TemplateResponse(request, 'pyBuchaktion/admin/order_order_selected_csv.html', context)

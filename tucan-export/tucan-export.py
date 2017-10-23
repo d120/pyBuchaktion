@@ -24,8 +24,10 @@ TUCAN_STARTPAGE_URL = "%s/scripts/mgrqcgi?APPNAME=CampusNet&PRGNAME=EXTERNALPAGE
 GOOGLE_BOOKS_BASE_PATH = '/books/v1/volumes?'
 # CSS Selectors.
 TUCAN_CC_SELECTOR = '#pageTopNavi ul a'
-TUCAN_DEPT_SELECTOR = '#auditRegistration_list li[title="Dept. 20 - Computer Science"] a'
+#TUCAN_DEPT_SELECTOR = '#auditRegistration_list li[title="Dept. 20 - Computer Science"] a'
+TUCAN_DEPT_SELECTOR = '#auditRegistration_list li[title="FB20 - Informatik"] a'
 # TUCAN_DEPT_SELECTOR = '#auditRegistration_list li[title="FB04 - Mathematik"] a'
+
 TUCAN_MODULE_CONTAINER_SELECTOR = '#auditRegistration_list li a'
 TUCAN_BREADCRUMBS_SELECTOR = '.pageElementTop > h2 > a'
 TUCAN_MODULE_COURSE_IDNAME_SELECTOR = '#pageContent form h1';

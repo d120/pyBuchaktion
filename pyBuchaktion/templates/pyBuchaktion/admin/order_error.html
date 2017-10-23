@@ -1,0 +1,9 @@
+{% extends "pyBuchaktion/admin/admin_action_page.html" %}
+{% load i18n l10n %}
+
+{% block content %}
+    {% if len(errors) > 0 %}
+        <p>{{ intro }}</p>
+        <ul>{{ errors|unordered_list }}</ul>
+    {% endif %}
+{% endblock %}

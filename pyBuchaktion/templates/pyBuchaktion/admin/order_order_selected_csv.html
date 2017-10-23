@@ -3,6 +3,10 @@
 
 {% block content %}
 <form action="" method="post">{% csrf_token %}
+    {% if errors|length > 0 %}
+    <h4>{% trans "E-Mails that failed to send" %}</h4>
+    <ul>{{ errors|unordered_list }}</ul>
+    {% endif %}
     <p>{% trans "Copy the following list into the bulk-order mask at net-library!" %}</p>
     <textarea name="hint" rows="{{ queryset|length|add:1 }}">{{ queryset|net_csv }}</textarea><br/><br/>
     <div>
