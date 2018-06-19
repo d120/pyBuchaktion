@@ -60,12 +60,12 @@ setup(
     install_requires=[
         'django>=1.10.0',
         'django-import-export',
-        'pyTUID>=1.3.1',
+        'pyTUID>=1.3.2',
         'django-bootstrap3',
         'isbnlib',
     ],
     dependency_links=[
-      'git+https://github.com/d120/pyTUID#egg=pyTUID-1.3.1',
+      'git+https://github.com/d120/pyTUID#egg=pyTUID-1.3.2',
     ],
     classifiers=[
         'Environment :: Web Environment',
