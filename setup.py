@@ -45,7 +45,7 @@ class install_lib(_install_lib):
 
 setup(
     name='pyBuchaktion',
-    version='1.1.6',
+    version='1.1.7',
     packages=find_packages(),
     include_package_data=True,
     license='AGPL-3.0',
