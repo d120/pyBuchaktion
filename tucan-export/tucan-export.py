@@ -84,7 +84,7 @@ class Book:
 
 # Model class to store a module.
 class Module:
-    def __init__(self, cid, name, name_en, category, url, candidates):
+    def __init__(self, cid, name, name_en, category, url, candidates, semester):
         self.cid = cid
         self.name = name
         self.name_en = name_en
@@ -93,7 +93,7 @@ class Module:
         self.books = []
         self.candidates = candidates
         # WARNING: This has to be changed every season!
-        self.last_offered = 'S17'
+        self.last_offered = semester
 
 
     def __str__(self):
@@ -185,7 +185,7 @@ class Tucan:
             return False
         return True
 
-    def retrieveModule(self, module_url, category):
+    def retrieveModule(self, module_url, category, semester):
         browser = self._createBrowser()
         browser.open(TUCAN_URL + module_url)
 
@@ -279,10 +279,10 @@ class Tucan:
         #           candidates.append(book_string)
 
         print("")
-        return Module(cid, name, name_en, category, module_url, candidates)
+        return Module(cid, name, name_en, category, module_url, candidates, semester)
 
 
-    def retrieveModules(self):
+    def retrieveModules(self, semester):
         print('Retrieving modules...')
 
         module_urls = tucan.retrieveModuleUrls()
@@ -295,7 +295,7 @@ class Tucan:
                 print("Loading module %d/%d..." % (i, len(module_urls)))
                 print(category)
 
-                module = tucan.retrieveModule(url, category)
+                module = tucan.retrieveModule(url, category, semester)
                 if module.cid in modules:
                     print("Skipping module %d/%d as it is a duplicate!" % (i, len(module_urls)))
                 else:
@@ -364,13 +364,20 @@ class Tucan:
 ### SCRIPT ###
 ##############
 
-if len(argv) < 5:
-    print("Usage: python ./tucan-export.py <books csv-file> <modules csv-file> <categories csv-file> <api-key>")
+if len(argv) < 3:
+    print("Usage: python ./tucan-export.py <semester> <api-key>")
     exit(1)
 
+semester = argv[1]
+api_key = argv[2]
+
+book_export_file = semester + "/books.csv"
+module_export_file = semester + "/modules.csv"
+category_export_file = semester + "/category.csv"
+
 tucan = Tucan()
-modules = tucan.retrieveModules()
-isbnMagic = IsbnMagic(argv[4])
+modules = tucan.retrieveModules(semester)
+isbnMagic = IsbnMagic(api_key)
 books = {}
 i = 1
 imax = len(modules)
@@ -398,7 +405,6 @@ for module in modules:
     i += 1
 print("Retrieved %d books." % count)
 
-book_export_file = argv[1]
 with open(book_export_file, 'w') as file:
     writer = csv.writer(file, delimiter = ',', quotechar = '"', quoting = csv.QUOTE_MINIMAL)
     writer.writerow(['isbn_13', 'title', 'author', 'price', 'publisher', 'year'])
@@ -409,7 +415,6 @@ with open(book_export_file, 'w') as file:
         writer.writerow([book.isbn, book.title, book.author, book.price, book.publisher, book.year])
     print(" Done! Wrote {} books.".format(count))
 
-module_export_file = argv[2]
 with open(module_export_file, 'w') as file:
     writer = csv.writer(file, delimiter = ',', quotechar = '"', quoting = csv.QUOTE_MINIMAL)
     writer.writerow(['books', 'category__name_de', 'module_id', 'name_de', 'name_en', 'last_offered'])
@@ -418,7 +423,6 @@ with open(module_export_file, 'w') as file:
         writer.writerow([', '.join(module.books), module.category, module.cid, module.name, module.name_en, module.last_offered])
     print(" Done!")
 
-category_export_file = argv[3]
 with open(category_export_file, 'w') as file:
     writer = csv.writer(file, delimiter = ',', quotechar = '"', quoting = csv.QUOTE_MINIMAL)
     writer.writerow(['name_de'])
