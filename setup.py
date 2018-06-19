@@ -45,7 +45,7 @@ class install_lib(_install_lib):
 
 setup(
     name='pyBuchaktion',
-    version='1.1.4',
+    version='1.1.6',
     packages=find_packages(),
     include_package_data=True,
     license='AGPL-3.0',
@@ -60,12 +60,12 @@ setup(
     install_requires=[
         'django>=1.10.0',
         'django-import-export',
-        'pyTUID>=1.3.0',
+        'pyTUID>=1.3.1',
         'django-bootstrap3',
         'isbnlib',
     ],
     dependency_links=[
-      'git+https://github.com/d120/pyTUID#egg=pyTUID-1.3.0',
+      'git+https://github.com/d120/pyTUID#egg=pyTUID-1.3.1',
     ],
     classifiers=[
         'Environment :: Web Environment',
