@@ -8,4 +8,6 @@
     <dd>{{ book.isbn_13|isbn }}</dd>
     <dt>{% trans "Publication year" %}</dt>
     <dd>{{ book.year }}</dd>
+    <dt>{% trans "links" as tr_links %}{{tr_links|capfirst}}</dt>
+    <dd><a href="https://books.google.de/books?isbn={{book.isbn_13}}">https://books.google.de/books?isbn={{book.isbn_13}}</a></dd>
 </dl>
