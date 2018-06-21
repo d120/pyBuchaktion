@@ -1,6 +1,7 @@
 from django.views.generic import ListView, DetailView
 from django.views.generic.edit import UpdateView, CreateView, BaseCreateView, DeleteView
 from django.core.urlresolvers import reverse
+from django.core.exceptions import ValidationError
 from django.utils.translation import get_language
 from django.http import HttpResponseRedirect
 from django.db.models import F, Count, ExpressionWrapper, Prefetch
