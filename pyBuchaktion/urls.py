@@ -24,6 +24,7 @@ urlpatterns = [
     url(r'^account/', include([
         url(r'^$', AccountView.as_view(), name = 'account'),
         url(r'^create/$', AccountCreateView.as_view(), name = 'account_create'),
+        url(r'^delete/$', AccountDeleteView.as_view(), name = 'account_delete'),
     ])),
     url(r'^order/', include([
         url(r'^(?P<pk>\d*)/', include([

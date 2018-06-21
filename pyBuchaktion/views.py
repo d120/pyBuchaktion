@@ -1,10 +1,11 @@
-from django.views.generic import ListView, DetailView
+from django.views.generic import ListView, DetailView, TemplateView
 from django.views.generic.edit import UpdateView, CreateView, BaseCreateView, DeleteView
 from django.core.urlresolvers import reverse
 from django.core.exceptions import ValidationError
 from django.utils.translation import get_language
 from django.http import HttpResponseRedirect
-from django.db.models import F, Count, ExpressionWrapper, Prefetch
+from django.shortcuts import render
+from django.db.models import F, Count, ExpressionWrapper, Prefetch, ProtectedError
 
 from .forms import BookSearchForm, ModuleSearchForm, AccountEditForm, BookOrderForm, BookProposeForm, LiteratureCreateForm
 from .models import Book, Module, Order, Student, OrderTimeframe, ModuleCategory, Literature
@@ -289,6 +290,15 @@ class AccountCreateView(UnregisteredStudentRequiredMixin, NeverCacheMixin, Creat
             kwargs['initial'] = {'email': tuid_user.email}
         return kwargs
 
+class AccountDeleteView(StudentRequiredMixin, NeverCacheMixin, TemplateView):
+    template_name = 'pyBuchaktion/account_delete.html'
+
+    def post(self, request):
+        try:
+            request.TUIDUser.delete()
+        except ProtectedError as e:
+            return render(request, self.template_name, {'error': e})
+        return HttpResponseRedirect(reverse('pyBuchaktion:books'))
 
 class BookProposeView(StudentRequiredMixin, CreateView):
     model = Book

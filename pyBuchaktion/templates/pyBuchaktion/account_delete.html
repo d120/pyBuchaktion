@@ -1,0 +1,29 @@
+{% extends "page.html" %} {% load cms_tags view_tools i18n bootstrap_tags sekizai_tags bootstrap3 %}
+
+{% block content %}
+        {% if error %}
+        <div class="alert alert-danger">
+            <b>{% trans "The following orders are still pending!" %}</b>
+            <ul>
+            {% for protected in error.protected_objects %}
+            <li>{{ protected }}</li>
+            {% endfor %}
+            </ul>
+        </div>
+        {% endif %}
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4 class="panel-title">
+                    {% trans "Delete Account" %}
+                </h4>
+            </div>
+            <div class="panel-body">
+                {% trans "Are you certain you want to delete the account for" %}: <b>{{ request.TUIDUser }}</b>
+                {% url 'pyBuchaktion:account_delete' as url_delete_account %}
+                <form method="POST" action="{{url_delete_account}}" class="pull-right">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-danger">{% trans "Delete Account" %}</button>
+                </form>
+            </div>
+        </div>
+{% endblock content %}

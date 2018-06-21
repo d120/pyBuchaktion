@@ -18,6 +18,9 @@
             <div class="panel-body">
                 {% include "pyBuchaktion/tags/dlist_book.html" %}
             </div>
+            <div class="panel-footer">
+                <a href="https://books.google.de/books?isbn={{book.isbn_13}}">https://books.google.de/books?isbn={{book.isbn_13}}</a>
+            </div>
             {% block panel_content %}{% endblock panel_content %}
             {% block panel_footer %}{% endblock panel_footer %}
         </div>

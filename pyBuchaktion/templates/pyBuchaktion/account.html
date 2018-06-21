@@ -23,6 +23,9 @@
             <a href="{% url "pyTUID:logout" %}?next={% url "pyBuchaktion:books" %}&amp;cas_logout=True" class="btn btn-danger">
                 {% trans "Logout &amp; CAS Logout" %}
             </a>
+            <a href="{% url 'pyBuchaktion:account_delete' %}" class="btn btn-danger pull-right">
+                {% trans "Delete Account" %}
+            </a>
         </div>
     </div>
 
