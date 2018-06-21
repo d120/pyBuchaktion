@@ -7,7 +7,9 @@ and filters for the list view.
 import re
 import isbnlib
 
-from django.contrib.admin import ModelAdmin, register, helpers
+from datetime import datetime
+
+from django.contrib.admin import ModelAdmin, register, helpers, SimpleListFilter
 from django.db.models import Count
 from django.db.models.query import Prefetch
 from django.utils.translation import ugettext_lazy as _
@@ -25,6 +27,7 @@ from .models import Book, Order, Student, OrderTimeframe, Module, Literature, Se
 from .mixins import ForeignKeyImportResourceMixin
 from .data import net_library_csv
 from .mail import OrderAcceptedMessage, OrderArrivedMessage, OrderRejectedMessage, CustomMessage
+from .forms import OrderTimeframeForm
 
 
 class BookResource(ModelResource):
@@ -143,6 +146,32 @@ class OrderResource(ForeignKeyImportResourceMixin, ModelResource):
                  ) + import_id_fields
 
 
+class TimeframeFilter(SimpleListFilter):
+    title = _("order timeframe")
+    parameter_name = 'timeframe'
+
+    def lookups(self, request, model_admin):
+        now = datetime.now()
+        frames = []
+
+        if 'order_timeframe__semester__id__exact' in request.GET.keys():
+            semester_id = int(request.GET.get('order_timeframe__semester__id__exact'))
+            queryset = OrderTimeframe.objects.filter(semester__pk=semester_id)
+            frames = list(queryset)
+        else:
+            curr_frames = OrderTimeframe.objects.filter(end_date__gte=now)
+            past_frames = OrderTimeframe.objects.filter(end_date__lt=now).order_by('-start_date')[:3]
+            frames = list(curr_frames) + list(past_frames)
+
+        return tuple(((frame.pk, str(frame)) for frame in frames))
+
+    def queryset(self, request, queryset):
+
+        if not self.value():
+            return queryset
+        else:
+            return queryset.filter(pk=int(self.value()))
+
 @register(Order)
 class OrderAdmin(ImportExportMixin, ModelAdmin):
     """
@@ -165,7 +194,8 @@ class OrderAdmin(ImportExportMixin, ModelAdmin):
     list_filter = (
         'status',
         'book__state',
-        'order_timeframe',
+        'order_timeframe__semester',
+        TimeframeFilter,
     )
 
     search_fields = [
@@ -420,6 +450,8 @@ class OrderTimeframeAdmin(ModelAdmin):
         'start_date',
         'semester',
     )
+
+    form = OrderTimeframeForm
 
     fieldsets = [
         ("", {

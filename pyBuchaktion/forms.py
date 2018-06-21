@@ -7,10 +7,11 @@ from django.http.request import QueryDict
 from django.db.models import Sum
 
 from .messages import get_message, Message
+from . import models
 
 import isbnlib
 
-from .models import Student, Order, Book, OrderTimeframe, Literature
+
 
 class BookOrderForm(forms.ModelForm):
     """
@@ -19,7 +20,7 @@ class BookOrderForm(forms.ModelForm):
     """
 
     class Meta:
-        model = Order
+        model = models.Order
         fields = []
 
     def clean(self):
@@ -28,20 +29,20 @@ class BookOrderForm(forms.ModelForm):
         book = order.book
 
         # Can the book be ordered
-        if book.state not in (Book.ACCEPTED, Book.PROPOSED):
+        if book.state not in (models.Book.ACCEPTED, models.Book.PROPOSED):
             raise ValidationError(_("This book is not available for ordering"), code='not_available')
 
         # does the student have an order for this already
         # if Order.objects.student_book_order_count(student, book) > 0:
         #    raise ValidationError(_("You already ordered this book"), code='already_ordered')
 
-        timeframe = OrderTimeframe.objects.current()
+        timeframe = models.OrderTimeframe.objects.current()
         if not timeframe:
             raise ValidationError(_("Book ordering is not active for the current date"), code='no_timeframe')
 
         semester = timeframe.semester
-        budget_spent = Order.objects.student_semester_order_count(student, semester)
-        budget_max = OrderTimeframe.objects.semester_budget(semester)
+        budget_spent = models.Order.objects.student_semester_order_count(student, semester)
+        budget_max = models.OrderTimeframe.objects.semester_budget(semester)
         budget_left = budget_max - budget_spent
 
         if budget_left <= 0:
@@ -54,7 +55,7 @@ class LiteratureCreateForm(forms.ModelForm):
     """
 
     class Meta:
-        model = Literature
+        model = models.Literature
         fields = ['book']
 
     def clean(self):
@@ -66,7 +67,7 @@ class LiteratureCreateForm(forms.ModelForm):
         # if book.state != Book.ACCEPTED:
         #    raise ValidationError({'book':_("This book has not been accepted yet")}, code='not_accepted')
 
-        if Literature.objects.filter(module=literature.module, book=book).count() > 0:
+        if models.Literature.objects.filter(module=literature.module, book=book).count() > 0:
             raise ValidationError({'book':_("This book is already proposed for this module")}, code='exists')
 
         return cleaned_data
@@ -85,7 +86,7 @@ class BookProposeForm(forms.ModelForm):
     isbn_13 = forms.CharField(label=_("ISBN-13"), max_length=17, required=True)
 
     class Meta:
-        model = Book
+        model = models.Book
         fields = ['isbn_13', 'title', 'author', 'publisher', 'year']
 
     def clean(self):
@@ -99,13 +100,13 @@ class BookProposeForm(forms.ModelForm):
             raise ValidationError({'isbn_13': _("Not a valid ISBN-13")}, code='isbn_invalid')
 
         # Get the current timeframe
-        timeframe = OrderTimeframe.objects.current()
+        timeframe = models.OrderTimeframe.objects.current()
         if not timeframe:
             raise ValidationError(_("Book proposal is not active for the current date."), code='no_timeframe')
 
         semester = timeframe.semester
-        budget_spent = Order.objects.student_semester_order_count(student, semester)
-        budget_max = OrderTimeframe.objects.semester_budget(semester)
+        budget_spent = models.Order.objects.student_semester_order_count(student, semester)
+        budget_max = models.OrderTimeframe.objects.semester_budget(semester)
         budget_left = budget_max - budget_spent
 
         if budget_left <= 0:
@@ -122,10 +123,21 @@ class ModuleSearchForm(forms.Form):
 class AccountEditForm(forms.ModelForm):
 
     class Meta:
-        model = Student
+        model = models.Student
         fields = ['email', 'library_id', 'language']
         help_texts = {
             'library_id': Message('library_id_help'),
             'language': _("The preferred language for notification emails"),
             'email': _("The e-mail address to recieve status updates"),
         }
+
+class OrderTimeframeForm(forms.ModelForm):
+
+    def clean(self):
+        if self.cleaned_data['start_date'] > self.cleaned_data['end_date']:
+            raise ValidationError(_("start date must be before end date"))
+        return self.cleaned_data
+
+    class Meta:
+        model = models.OrderTimeframe
+        fields = ['semester', 'start_date', 'end_date', 'allowed_orders', 'spendings']
