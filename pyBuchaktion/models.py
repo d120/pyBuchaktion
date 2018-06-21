@@ -403,6 +403,9 @@ class OrderTimeframe(models.Model):
     def natural_key(self):
         return { "from": self.start_date, "to": self.end_date }
 
+    def student_count(self):
+        return self.order_set.values('student').distinct().count()
+
     # Set the singular and plural names for i18n
     class Meta:
         verbose_name = _("order timeframe")

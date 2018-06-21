@@ -449,6 +449,7 @@ class OrderTimeframeAdmin(ModelAdmin):
         'end_date',
         'start_date',
         'semester',
+        'student_count',
     )
 
     form = OrderTimeframeForm
